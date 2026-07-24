@@ -1,0 +1,547 @@
+openapi: 3.1.0
+info:
+  title: Fuse Accounts API
+  description: 'Lorum (Fuse) clearing, settlement and treasury API: multi-currency accounts, payments, exchanges, transfers, customers/KYC, documents, batch payments and sandbox simulation. Harvested from the provider''s public ReadMe reference (per-operation OpenAPI definitions).'
+  contact:
+    name: Lorum
+    url: https://docs.lorum.com
+  license:
+    name: Proprietary license
+  version: 0.1.0
+servers:
+- url: https://api.fuse.me
+  description: Production
+- url: https://api-sandbox.fuse.me
+  description: Sandbox
+security:
+- OAuth2: []
+tags:
+- name: Accounts
+paths:
+  /v1/customers/{customer_id}/accounts:
+    post:
+      tags:
+      - Accounts
+      summary: Create account
+      description: Create account
+      operationId: create_customer_account
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        description: Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountRequest'
+        required: true
+      responses:
+        '202':
+          description: The request to create an account has been accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAccountResponse'
+        '400':
+          description: Unable to complete request with data provided
+        '404':
+          description: Customer not found
+        '409':
+          description: Idempotency-Key concurrency conflict
+        '422':
+          description: Idempotency-Key reuse for a different request
+    get:
+      tags:
+      - Accounts
+      summary: List a customer's accounts
+      description: List a customer's accounts
+      operationId: list_customer_accounts
+      parameters:
+      - name: cursor
+        in: query
+        description: Cursor to the next page in the result set. If set all the other fields will be ignored.
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+          format: string
+      - name: page_size
+        in: query
+        description: Number of resource to return. Max 2000
+        required: false
+        schema:
+          type: integer
+          format: integer
+          minimum: 0
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successfully retrieved a customers accounts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAccountsPagedResponse'
+  /v1/accounts/{account_id}/confirmation-letter:
+    get:
+      tags:
+      - Accounts
+      summary: Get account confirmation letter.
+      description: Get account confirmation letter.
+      operationId: get_account_confirmation_letter
+      parameters:
+      - name: account_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Account Confirmation Letter
+          headers:
+            content-disposition:
+              schema:
+                type: string
+              description: Filename
+            content-type:
+              schema:
+                type: string
+              description: Document type
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /v1/accounts/{account_id}/history:
+    get:
+      tags:
+      - Accounts
+      summary: Get an account's balance history
+      description: Get an account's balance history
+      operationId: get_account_history
+      parameters:
+      - name: from
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: to
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: account_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: AccountHistory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountHistory'
+  /v1/accounts/{account_id}:
+    get:
+      tags:
+      - Accounts
+      summary: Get an account
+      description: Get an account
+      operationId: get_customer_account
+      parameters:
+      - name: account_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+    patch:
+      tags:
+      - Accounts
+      summary: Update account data
+      description: Update account data
+      operationId: patch_customer_account
+      parameters:
+      - name: account_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchAccountRequest'
+        required: true
+      responses:
+        '202':
+          description: Request to update account has been accepted
+  /v1/accounts:
+    get:
+      tags:
+      - Accounts
+      summary: List all accounts for organisation
+      description: List all accounts for organisation
+      operationId: list_all_customer_accounts
+      parameters:
+      - name: cursor
+        in: query
+        description: Cursor to the next page in the result set. If set all the other fields will be ignored.
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+          format: string
+      - name: page_size
+        in: query
+        description: Number of resource to return. Max 2000
+        required: false
+        schema:
+          type: integer
+          format: integer
+          minimum: 0
+      - name: external_id
+        in: query
+        description: Filter accounts that match the external ID
+        required: false
+        schema:
+          type: string
+          format: string
+      responses:
+        '200':
+          description: Successfully retrieved a customers accounts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAccountsPagedResponse'
+components:
+  schemas:
+    AccountHistory:
+      type: object
+      description: Balance history for an account.
+      required:
+      - id
+      - history
+      properties:
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/History'
+          description: List of daily summaries.
+        id:
+          type: string
+          format: uuid
+          description: Account id.
+    AddressableDetails:
+      type: object
+      description: Account details with supported payment schemes.
+      required:
+      - account_details
+      - payment_schemes
+      properties:
+        account_details:
+          $ref: '#/components/schemas/AccountDetailsIdentifier'
+        payment_schemes:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentScheme'
+          description: List of payment schemes that this account details are addressable over.
+    History:
+      type: object
+      required:
+      - date
+      - closing_balance
+      properties:
+        closing_balance:
+          type: integer
+          format: int64
+          description: End of day balance.
+          minimum: 0
+        date:
+          type: string
+          format: date
+          description: Summary date.
+    PaymentScheme:
+      type: string
+      enum:
+      - uae_fts
+      - uae_ipp
+      - swift
+      - fedwire
+      - ach
+      - sepa
+      - sepa_instant
+      - faster_payments
+    AccountStatus:
+      type: string
+      enum:
+      - open
+      - frozen
+      - closed
+    Cursor_String:
+      type: object
+      required:
+      - size
+      properties:
+        next:
+          type:
+          - string
+          - 'null'
+        size:
+          type: integer
+          minimum: 0
+    AccountType:
+      type: string
+      enum:
+      - primary
+      - payment
+      - virtual
+    AccountDetailsIdentifier:
+      oneOf:
+      - type: object
+        title: IBAN
+        required:
+        - iban
+        properties:
+          iban:
+            type: string
+            format: string
+      - type: object
+        title: Wire
+        required:
+        - wire
+        properties:
+          wire:
+            $ref: '#/components/schemas/WireBankDetails'
+      - type: object
+        title: SCAN
+        required:
+        - scan
+        properties:
+          scan:
+            $ref: '#/components/schemas/ScanDetails'
+    CreateAccountResponse:
+      type: object
+      required:
+      - account_id
+      properties:
+        account_id:
+          type: string
+          format: uuid
+    ScanDetails:
+      type: object
+      required:
+      - sort_code
+      - account_number
+      properties:
+        account_number:
+          type: string
+          format: string
+          maxLength: 8
+        sort_code:
+          type: string
+          format: string
+          maxLength: 6
+    CreateAccountRequest:
+      type: object
+      required:
+      - account_name
+      - external_id
+      - currency
+      - account_type
+      properties:
+        account_name:
+          type: string
+          format: string
+          description: Friendly label set by the client
+          maxLength: 140
+        account_type:
+          $ref: '#/components/schemas/CreateAccountType'
+          description: 'The account type of the account.
+
+            Note: ''payment'' is deprecated and not supported for new accounts. Use ''virtual'' instead.'
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: The desired currency for the account.
+        external_id:
+          type: string
+          format: string
+          description: Id to be set by the client
+          maxLength: 36
+    CreateAccountType:
+      type: string
+      description: 'The type of account to be created.
+
+        Note: ''Payment'' is deprecated and not supported for new accounts.
+
+        Account type will always be ''Virtual''.'
+      enum:
+      - payment
+      - virtual
+    PatchAccountRequest:
+      type: object
+      properties:
+        account_name:
+          type: string
+          format: string
+          description: Friendly label set by the client
+          maxLength: 140
+        external_id:
+          type: string
+          format: string
+          description: External account identifier
+          maxLength: 36
+      minProperties: 1
+    WireBankDetails:
+      type: object
+      required:
+      - account_number
+      - routing_number
+      properties:
+        account_number:
+          type: string
+          format: string
+          maxLength: 27
+        routing_number:
+          type: string
+          format: string
+          maxLength: 12
+    ListAccountsPagedResponse:
+      type: object
+      required:
+      - pages
+      - results
+      properties:
+        pages:
+          $ref: '#/components/schemas/Cursor_String'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+    Account:
+      type: object
+      description: Account.
+      required:
+      - id
+      - account_name
+      - account_owner
+      - status
+      - current_balance
+      - available_balance
+      - addressable_details
+      - currency
+      - account_type
+      properties:
+        account_name:
+          type: string
+          format: string
+          description: User-friendly account name.
+          maxLength: 140
+        account_owner:
+          type: string
+          format: string
+          description: 'Name of the account holder. This is the name that
+
+            will show up on any bank statement.'
+          maxLength: 140
+        account_type:
+          $ref: '#/components/schemas/AccountType'
+        addressable_details:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressableDetails'
+          description: 'A list of addressable account identifiers associated with this account.
+
+            These identifiers can be used to receive money into the account.
+
+            Please note that this can contain multiple details addressable over
+
+            a different payment schemes.'
+        available_balance:
+          type: integer
+          format: int64
+          description: 'Sum of the immediate available funds in the account.
+
+            This includes transactions that have not yet been cleared.'
+          minimum: 0
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: What currency the account holds funds in.
+        current_balance:
+          type: integer
+          format: int64
+          description: Sum of all the money in the account.
+          minimum: 0
+        customer_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        default_details:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/AccountDetailsIdentifier'
+            description: 'The account''s externally addressable detail.
+
+              It is used as details when sending money into the account,
+
+              and will show up un the account statements.'
+        external_id:
+          type:
+          - string
+          - 'null'
+          description: User-provided account id.
+        id:
+          type: string
+          format: uuid
+          description: Account id.
+        status:
+          $ref: '#/components/schemas/AccountStatus'
+          description: 'Which state the account is in: Open, Closed, Frozen.'
+    Currency:
+      type: string
+      enum:
+      - AED
+      - USD
+      - JOD
+      - EGP
+      - SAR
+      - GBP
+      - EUR
+      - HKD
+      - CNH
+      - SGD
+  securitySchemes:
+    OAuth2:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

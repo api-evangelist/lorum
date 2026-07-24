@@ -1,0 +1,202 @@
+openapi: 3.1.0
+info:
+  title: Fuse Accounts Documents API
+  description: 'Lorum (Fuse) clearing, settlement and treasury API: multi-currency accounts, payments, exchanges, transfers, customers/KYC, documents, batch payments and sandbox simulation. Harvested from the provider''s public ReadMe reference (per-operation OpenAPI definitions).'
+  contact:
+    name: Lorum
+    url: https://docs.lorum.com
+  license:
+    name: Proprietary license
+  version: 0.1.0
+servers:
+- url: https://api.fuse.me
+  description: Production
+- url: https://api-sandbox.fuse.me
+  description: Sandbox
+security:
+- OAuth2: []
+tags:
+- name: Documents
+paths:
+  /v1/documents/{document_id}:
+    get:
+      tags:
+      - Documents
+      summary: Get document
+      description: Get document
+      operationId: get_document
+      parameters:
+      - name: document_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successfully retrieved contents of directory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+  /v1/documents:
+    get:
+      tags:
+      - Documents
+      summary: List documents
+      description: List documents
+      operationId: list_documents
+      parameters:
+      - name: reference
+        in: query
+        required: false
+        schema:
+          type: string
+          format: string
+      - name: document_type
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/DocumentType'
+      responses:
+        '200':
+          description: Successfully retrieved contents of directory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDocumentsResponse'
+    post:
+      tags:
+      - Documents
+      summary: Upload Document
+      description: Upload Document
+      operationId: upload_document
+      requestBody:
+        description: Document
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadDocumentRequest'
+        required: true
+      responses:
+        '200':
+          description: Successfully uploaded file
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadDocumentResponse'
+components:
+  schemas:
+    UploadDocumentResponse:
+      type: object
+      required:
+      - document_id
+      properties:
+        document_id:
+          type: string
+          format: uuid
+    Document:
+      type: object
+      required:
+      - id
+      - reference
+      - document_type
+      - checksum
+      - url
+      properties:
+        checksum:
+          type: string
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        id:
+          type: string
+          format: uuid
+        reference:
+          type: string
+          format: string
+          maxLength: 35
+        size_bytes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        url:
+          type: string
+    DocumentSummary:
+      type: object
+      required:
+      - id
+      - document_type
+      - reference
+      properties:
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        id:
+          type: string
+          format: uuid
+        reference:
+          type: string
+          format: string
+          maxLength: 35
+    DocumentType:
+      type: string
+      description: Types of documents that can be uploaded for customers and transactions.
+      enum:
+      - passport
+      - visa
+      - national_id
+      - trade_licence
+      - commercial_licence
+      - identity_verification_biometrics
+      - incorporation_cert
+      - incumbency_cert
+      - memorandum_articles
+      - bank_statement
+      - photo
+      - proof_of_address
+      - regulatory_license
+      - articles_of_association
+      - source_of_funds
+      - aml_cft_sanctions_ind_audit
+      - aml_cft_sanctions_policy
+      - compliance_officer_resume
+      - financial_statements
+      - share_certificate
+      - corporate_resolution
+      - wolfsberg_gcbddq
+      - edd_concentration_form
+      - other
+    UploadDocumentRequest:
+      type: object
+      required:
+      - reference
+      - description
+      - document_type
+      - file
+      properties:
+        description:
+          type: string
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        file:
+          type: string
+          format: binary
+        reference:
+          type: string
+          format: string
+          maxLength: 35
+    ListDocumentsResponse:
+      type: object
+      required:
+      - documents
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentSummary'
+  securitySchemes:
+    OAuth2:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

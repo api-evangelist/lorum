@@ -1,0 +1,1497 @@
+openapi: 3.1.0
+info:
+  title: Fuse Accounts Transactions API
+  description: 'Lorum (Fuse) clearing, settlement and treasury API: multi-currency accounts, payments, exchanges, transfers, customers/KYC, documents, batch payments and sandbox simulation. Harvested from the provider''s public ReadMe reference (per-operation OpenAPI definitions).'
+  contact:
+    name: Lorum
+    url: https://docs.lorum.com
+  license:
+    name: Proprietary license
+  version: 0.1.0
+servers:
+- url: https://api.fuse.me
+  description: Production
+- url: https://api-sandbox.fuse.me
+  description: Sandbox
+security:
+- OAuth2: []
+tags:
+- name: Transactions
+paths:
+  /v1/transactions/batches/{batch_id}:
+    get:
+      tags:
+      - Transactions
+      summary: Get a single batch
+      description: Get a single batch
+      operationId: get_batch
+      parameters:
+      - name: batch_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Request to get batch completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+  /v1/transactions/{transaction_id}/documents:
+    get:
+      tags:
+      - Transactions
+      summary: Get linked documents for a transaction
+      description: Get linked documents for a transaction
+      operationId: get_documents_linked_to_transaction
+      parameters:
+      - name: transaction_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successfully retrieved linked documents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DocumentSummary'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+      - Transactions
+      summary: Link a document to a transaction
+      description: Link a document to a transaction
+      operationId: link_document_to_transaction
+      parameters:
+      - name: transaction_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LinkDocumentRequest'
+        required: true
+      responses:
+        '200':
+          description: Document successfully linked to transaction
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/transactions/{transaction_id}:
+    get:
+      tags:
+      - Transactions
+      summary: Get a transaction
+      description: Get a transaction
+      operationId: get_transaction
+      parameters:
+      - name: transaction_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successfully retrieved a transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+  /v1/transactions/{transaction_id}/confirmation-letter:
+    get:
+      tags:
+      - Transactions
+      summary: Get transaction confirmation letter
+      description: 'Get transaction confirmation letter
+
+        This endpoint is used to get a transaction confirmation letter for outbound transactions.
+
+        Confirmation letters are only available for transactions in a `submitted` or `executed` state.'
+      operationId: get_transaction_confirmation_letter
+      parameters:
+      - name: transaction_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Transaction
+          headers:
+            content-disposition:
+              schema:
+                type: string
+              description: Filename
+            content-type:
+              schema:
+                type: string
+              description: Document type
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /v1/transactions/batches:
+    get:
+      tags:
+      - Transactions
+      summary: List batches
+      description: List batches
+      operationId: list_batches
+      parameters:
+      - name: cursor
+        in: query
+        description: Optional cursor for pagination. Base64-encoded value of ListBatchesPageParams.
+        required: false
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        description: Optional number of items to return per page. Default is typically used if not specified.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      - name: file_name
+        in: query
+        description: Optional filter to return only batches that match the entire or part of the file name.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Request to list batches completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListBatchesResponse'
+  /v1/accounts/{account_id}/transactions:
+    get:
+      tags:
+      - Transactions
+      summary: List transactions for an account
+      description: List transactions for an account
+      operationId: list_customer_transactions
+      parameters:
+      - name: transaction_state
+        in: query
+        description: Filter transactions by state
+        required: false
+        schema:
+          $ref: '#/components/schemas/TransactionState'
+      - name: from
+        in: query
+        description: ISO 8601 combined date and time with time zone, that specifies the lower limit of the time window you want to fetch transactions for.
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: to
+        in: query
+        description: ISO 8601 combined date and time with time zone, that specifies the upper limit of the time window you want to fetch transactions for.
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: cursor
+        in: query
+        description: Cursor to the next page in the result set. If set all the other fields will be ignored.
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+          format: string
+      - name: page_size
+        in: query
+        description: Number of resource to return. Max 2000
+        required: false
+        schema:
+          type: integer
+          format: integer
+          minimum: 0
+      - name: account_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successfully retrieved transactions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListTransactionsPagedResponse'
+  /v1/transactions/batches/files:
+    post:
+      tags:
+      - Transactions
+      summary: Upload payment batch file.
+      description: Upload payment batch file.
+      operationId: post_batch_file
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        description: Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadBatchFileRequest'
+        required: true
+      responses:
+        '201':
+          description: Batch file has successfully been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadBatchFileResponse'
+        '400':
+          description: Unable to upload batch file due to bad data
+  /v1/transactions:
+    get:
+      tags:
+      - Transactions
+      summary: Get all transactions across accounts
+      description: Get all transactions across accounts
+      operationId: public_list_all_transactions
+      parameters:
+      - name: batch_id
+        in: query
+        description: Filter transactions by batch ID
+        required: false
+        schema:
+          type: string
+          format: uuid
+      - name: transaction_state
+        in: query
+        description: Filter transactions by state
+        required: false
+        schema:
+          $ref: '#/components/schemas/TransactionState'
+      - name: payment_type
+        in: query
+        description: Filter transactions payment type
+        required: false
+        schema:
+          $ref: '#/components/schemas/PaymentTypeQuery'
+      - name: customer_account_id
+        in: query
+        description: Filter transactions by customer account ID
+        required: false
+        schema:
+          type: string
+          format: uuid
+      - name: from
+        in: query
+        description: ISO 8601 combined date and time with time zone, that specifies the lower limit of the time window you want to fetch transactions for.
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: to
+        in: query
+        description: ISO 8601 combined date and time with time zone, that specifies the upper limit of the time window you want to fetch transactions for.
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: reference
+        in: query
+        description: Filter transactions that match the part of the reference
+        required: false
+        schema:
+          type: string
+          format: string
+      - name: external_id
+        in: query
+        description: Filter transactions that match the external ID
+        required: false
+        schema:
+          type: string
+          format: string
+      - name: account_name
+        in: query
+        description: Filter transactions by account display name (substring match)
+        required: false
+        schema:
+          type: string
+          format: string
+      - name: cursor
+        in: query
+        description: Cursor to the next page in the result set. If set all the other fields will be ignored.
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+          format: string
+      - name: page_size
+        in: query
+        description: Number of resource to return. Max 2000
+        required: false
+        schema:
+          type: integer
+          format: integer
+          minimum: 0
+      responses:
+        '200':
+          description: Successfully retrieved transactions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListTransactionsPagedResponse'
+components:
+  schemas:
+    UploadBatchFileResponse:
+      type: object
+      description: Response to uploading a batch file.
+      required:
+      - batch_id
+      properties:
+        batch_id:
+          type: string
+          format: uuid
+    UploadBatchFileRequest:
+      type: object
+      description: 'Request to upload a payments batch file.
+
+        Note: `file` can contain up to 1000 payments.'
+      required:
+      - batch_type
+      - file_name
+      - file
+      properties:
+        batch_type:
+          $ref: '#/components/schemas/BatchType'
+          description: The type of batch being created.
+        file:
+          type: string
+          format: binary
+          description: CSV file contents.
+        file_name:
+          type: string
+          description: The file name of the batch being uploaded.
+    PaymentScheme:
+      type: string
+      enum:
+      - uae_fts
+      - uae_ipp
+      - swift
+      - fedwire
+      - ach
+      - sepa
+      - sepa_instant
+      - faster_payments
+    PaymentTypeQuery:
+      type: string
+      enum:
+      - Local
+      - InternalTransfer
+      - FXTransfer
+      - LocalReturnPayment
+      - Fee
+    FxTransferTransactionState:
+      type: string
+      description: Internal transfer state
+      enum:
+      - Created
+      - Submitted
+      - Executed
+      - Failed
+      - Settled
+    Address:
+      type: object
+      required:
+      - line_1
+      - country_code
+      properties:
+        country_code:
+          type: string
+          format: string
+          maxLength: 2
+          minLength: 2
+        line_1:
+          type: string
+          format: string
+          maxLength: 50
+        line_2:
+          type:
+          - string
+          - 'null'
+          format: string
+          description: '***optional*** for `AED` payments but ***mandatory*** for `USD` payments'
+          maxLength: 50
+        line_3:
+          type:
+          - string
+          - 'null'
+          format: string
+          maxLength: 50
+        line_4:
+          type:
+          - string
+          - 'null'
+          format: string
+          maxLength: 50
+    TransactionState:
+      type: string
+      description: Transaction State.
+      enum:
+      - Created
+      - Submitted
+      - Executed
+      - Failed
+      - Settled
+    Batch:
+      type: object
+      required:
+      - batch_id
+      - file_name
+      - record_count
+      - status
+      - created_at
+      - total_instructed_amount
+      - records
+      properties:
+        batch_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        file_name:
+          type: string
+        record_count:
+          type: integer
+          format: int32
+          minimum: 0
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocalPaymentRecord'
+        status:
+          $ref: '#/components/schemas/BatchStatus'
+        total_instructed_amount:
+          type: integer
+          format: int64
+          minimum: 0
+    PurposeCode:
+      type: string
+      description: Enum representing different payment purposes.
+      enum:
+      - charity
+      - commercial_investment
+      - corporate_card
+      - credit_card
+      - dividend
+      - family
+      - financial_services
+      - goods_sold
+      - goods_bought
+      - government
+      - insurance
+      - intergroup_transfer
+      - intra_group_dividends
+      - information_technology
+      - leasing
+      - loan_charges
+      - merchant_settlement
+      - mobile_wallet
+      - non_resident_transfer_between_accounts
+      - none
+      - pension
+      - personal_expenses
+      - prepaid_cards
+      - professional
+      - rental
+      - resident_transfer_between_accounts
+      - salaries
+      - tax
+      - telecommunications
+      - travel
+      - utility_bill
+    LocalPayment:
+      type: object
+      description: Payment
+      required:
+      - id
+      - account_id
+      - remitter
+      - currency
+      - external_reference
+      - state
+      - direction
+      - instructed_amount
+      - amount_with_fee
+      - fee_amount
+      - beneficiary
+      - created_at
+      - purpose
+      properties:
+        account_id:
+          type: string
+          format: uuid
+          description: The account that the transaction applies to.
+        amount_with_fee:
+          type: integer
+          format: int64
+          description: The transaction amount including the fee char.
+          minimum: 0
+        authorised_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: When the transaction passed transaction monitoring checks.
+        batch:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/transaction.Batch'
+            description: 'If the payment was created from a batch file submission,
+
+              this will contain references to the batch id and the payments
+
+              sequence number within that batch.'
+        beneficiary:
+          $ref: '#/components/schemas/BeneficiaryDetails'
+          description: 'When `direction` is `Inbound` it contains the account details of the remitter.
+
+            When `direction` is `Outbound` it contains the account details of the beneficiary.'
+        beneficiary_extra:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/BeneficiaryExtraDetails'
+            description: 'When `direction` is `Outbound` it contains additional account details of the beneficiary.
+
+              When `direction` is `Inbound` it is not set.'
+        created_at:
+          type: string
+          format: date-time
+          description: When the transaction was created.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: The transaction was made in this currency.
+        direction:
+          $ref: '#/components/schemas/Direction'
+          description: Whether this transaction credited or debited funds in the account.
+        executed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: When the transaction was cleared by the bank.
+        external_id:
+          type:
+          - string
+          - 'null'
+          description: The external ID set when creating the transaction.
+        external_reference:
+          type: string
+          description: Transaction reference.
+        failed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: When the transaction was failed.
+        failure_reason:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PaymentFailure'
+            description: Why the transaction was rejected.
+        fee_amount:
+          type: integer
+          format: int64
+          description: The fee amount charged for the payment.
+          minimum: 0
+        fee_source:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/FeeSourceRef'
+            description: 'Where the fee was taken from.
+
+              When `fee_amount` is 0, this field is not set.'
+        id:
+          type: string
+          format: uuid
+          description: Transaction id.
+        instructed_amount:
+          type: integer
+          format: int64
+          description: The transaction amount.
+          minimum: 0
+        purpose:
+          $ref: '#/components/schemas/PurposeCode'
+          description: The purpose of the payment (Outbound only).
+        remitter:
+          $ref: '#/components/schemas/RemitterDetails'
+          description: The account that the transaction applies to.
+        scheme:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PaymentScheme'
+            description: 'The payment scheme the payment was sent over.
+
+              Only present if this is known.'
+        state:
+          $ref: '#/components/schemas/TransactionState'
+          description: The state of the transaction.
+        submitted_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: When the transaction was submitted to the bank.
+    Cursor_String:
+      type: object
+      required:
+      - size
+      properties:
+        next:
+          type:
+          - string
+          - 'null'
+        size:
+          type: integer
+          minimum: 0
+    FxTransfer:
+      type: object
+      required:
+      - id
+      - account_id
+      - external_reference
+      - state
+      - rate
+      - direction
+      - instructed_amount
+      - currency
+      - counterpart_amount
+      - counterpart_currency
+      - counterpart_account_id
+      - created_at
+      properties:
+        account_id:
+          type: string
+          format: uuid
+          description: The account that the transfer applies to.
+        counterpart_account_id:
+          type: string
+          format: uuid
+          description: 'When `direction` is `Inbound` it is the ID of the account that was debited
+
+            When `direction` is ''Outbound'' it is the ID of the account that was credited'
+        counterpart_amount:
+          type: integer
+          format: int64
+          description: 'When `direction` is `Inbound` it is the counterpart transaction amount that was debited from the counterpart account.
+
+            When `direction` is `Outbound` it is the counterpart transaction amount that was credited from the counterpart account.'
+          minimum: 0
+        counterpart_currency:
+          $ref: '#/components/schemas/Currency'
+          description: 'When `direction` is `Inbound` it is the currency of the counterpart transaction from counterpart account.
+
+            When `direction` is `Outbound` it is the currency of the counterpart transaction into the counterpart account.'
+        created_at:
+          type: string
+          format: date-time
+          description: When the transaction was created.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: 'When `direction` is `Inbound` it is the currency for the amount credited into the account.
+
+            When `direction` is `Outbound` it is the currency for the amount that was debited from the account.'
+        direction:
+          $ref: '#/components/schemas/Direction'
+          description: Whether this transaction credits or debits the account.
+        executed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: When the transaction was cleared by the bank.
+        external_reference:
+          type: string
+          description: User-friendly transaction reference.
+        failed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: When the transaction was failed.
+        failure_reason:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PaymentFailure'
+            description: Why the transaction was rejected.
+        id:
+          type: string
+          format: uuid
+          description: Id of the transaction.
+        instructed_amount:
+          type: integer
+          format: int64
+          description: 'When `direction` is `Inbound` it is the amount that was credited into the account.
+
+            When `direction` is `Outbound` it is the amount that was debited from the account.'
+          minimum: 0
+        rate:
+          type: number
+          format: float
+          description: The exchange rate used for the transaction.
+        state:
+          $ref: '#/components/schemas/FxTransferTransactionState'
+          description: Current state of the transaction.
+        submitted_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: When the transaction was submitted to the bank.
+    RemitterDetails:
+      type: object
+      description: Account details of the payment remitter.
+      required:
+      - name
+      - identifier
+      properties:
+        identifier:
+          $ref: '#/components/schemas/AccountDetailsIdentifier'
+          description: External account identifier of the remitter account.
+        name:
+          type: string
+          format: string
+          description: Name of the remitter account.
+          maxLength: 140
+    FeeTargetRef:
+      oneOf:
+      - type: object
+        required:
+        - reference
+        - type
+        properties:
+          reference:
+            type: string
+            format: uuid
+          type:
+            type: string
+            enum:
+            - Transaction
+    Direction:
+      type: string
+      description: Transaction direction.
+      enum:
+      - Inbound
+      - Outbound
+    BeneficiaryDetails:
+      type: object
+      description: Account details of the payment beneficiary.
+      required:
+      - name
+      - identifier
+      properties:
+        identifier:
+          $ref: '#/components/schemas/AccountDetailsIdentifier'
+          description: External account identifier of the beneficiary account.
+        name:
+          type: string
+          format: string
+          description: Name of the beneficiary account.
+          maxLength: 140
+    DocumentType:
+      type: string
+      description: Types of documents that can be uploaded for customers and transactions.
+      enum:
+      - passport
+      - visa
+      - national_id
+      - trade_licence
+      - commercial_licence
+      - identity_verification_biometrics
+      - incorporation_cert
+      - incumbency_cert
+      - memorandum_articles
+      - bank_statement
+      - photo
+      - proof_of_address
+      - regulatory_license
+      - articles_of_association
+      - source_of_funds
+      - aml_cft_sanctions_ind_audit
+      - aml_cft_sanctions_policy
+      - compliance_officer_resume
+      - financial_statements
+      - share_certificate
+      - corporate_resolution
+      - wolfsberg_gcbddq
+      - edd_concentration_form
+      - other
+    BeneficiaryExtraDetails:
+      type: object
+      description: Additional details of the beneficiary. It will be not set for inbound payments.
+      properties:
+        address:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Address'
+            description: Address of the beneficiary.
+        bic_code:
+          type:
+          - string
+          - 'null'
+          format: string
+          description: Bank identifier code (BIC) of the beneficiary.
+    ScanDetails:
+      type: object
+      required:
+      - sort_code
+      - account_number
+      properties:
+        account_number:
+          type: string
+          format: string
+          maxLength: 8
+        sort_code:
+          type: string
+          format: string
+          maxLength: 6
+    InternalTransferTransactionState:
+      type: string
+      description: Internal transfer state
+      enum:
+      - Created
+      - Booked
+      - Failed
+      - Settled
+    BeneficiaryType:
+      type: string
+      enum:
+      - individual
+      - business
+    Currency:
+      type: string
+      enum:
+      - AED
+      - USD
+      - JOD
+      - EGP
+      - SAR
+      - GBP
+      - EUR
+      - HKD
+      - CNH
+      - SGD
+    FeeDebit:
+      type: object
+      required:
+      - id
+      - fee_target
+      - amount
+      - account_id
+      - timestamp
+      - currency
+      properties:
+        account_id:
+          type: string
+          format: uuid
+        amount:
+          type: integer
+          format: int64
+          minimum: 0
+        currency:
+          $ref: '#/components/schemas/Currency'
+        fee_target:
+          $ref: '#/components/schemas/FeeTargetRef'
+        id:
+          type: string
+          format: uuid
+        timestamp:
+          type: string
+          format: date-time
+    Transaction:
+      oneOf:
+      - allOf:
+        - $ref: '#/components/schemas/LocalPayment'
+          description: Payment.
+        - type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              enum:
+              - local_payment
+        description: Payment.
+      - allOf:
+        - $ref: '#/components/schemas/LocalReturnPayment'
+          description: Payment that has been returned.
+        - type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              enum:
+              - local_return_payment
+        description: Payment that has been returned.
+      - allOf:
+        - $ref: '#/components/schemas/InternalTransfer'
+          description: Internal transfer - between two accounts.
+        - type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              enum:
+              - internal_transfer
+        description: Internal transfer - between two accounts.
+      - allOf:
+        - $ref: '#/components/schemas/FxTransfer'
+          description: Exchange transfer - between two accounts held in different currencies.
+        - type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              enum:
+              - f_x_transfer
+        description: Exchange transfer - between two accounts held in different currencies.
+      - allOf:
+        - $ref: '#/components/schemas/FeeDebit'
+          description: Fee debit
+        - type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              enum:
+              - fee_debit
+        description: Fee debit
+      description: Transaction Container.
+    transaction.Batch:
+      type: object
+      required:
+      - batch_id
+      - batch_sequence_no
+      properties:
+        batch_id:
+          type: string
+          format: uuid
+          description: Which batch the payment was created from.
+        batch_sequence_no:
+          type: integer
+          format: int32
+          description: The sequence number of the payment within that batch.
+          minimum: 0
+    ErrorResponse:
+      type: object
+      description: 'User-facing error type.
+
+
+        This is the general error structure returned by all api routes.'
+      required:
+      - error
+      - message
+      - code
+      properties:
+        code:
+          type: string
+          description: Specific error code.
+        error:
+          type: string
+          description: Soon to be deprecated.
+        message:
+          type: string
+          description: Renaming of `error`. Human-readable description of the error.
+    InternalTransfer:
+      type: object
+      description: Internal Transfer
+      required:
+      - id
+      - account_id
+      - currency
+      - external_reference
+      - state
+      - direction
+      - instructed_amount
+      - counterpart_account_id
+      - created_at
+      properties:
+        account_id:
+          type: string
+          format: uuid
+          description: The account that the transfer applies to.
+        counterpart_account_id:
+          type: string
+          format: uuid
+          description: 'When `direction` is `Inbound` it contains the account id of the remitter.
+
+            When `direction` is `Outbound` it contains the account id of the beneficiary.'
+        created_at:
+          type: string
+          format: date-time
+          description: When the transaction was created.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: Which currency the funds were transferred in.
+        direction:
+          $ref: '#/components/schemas/Direction'
+          description: Whether this transaction credits or debits the account.
+        external_id:
+          type:
+          - string
+          - 'null'
+          description: The external ID set when the internal transfer was created.
+          maxLength: 36
+        external_reference:
+          type: string
+          description: User-friendly transfer reference.
+        failed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: When the transaction failed.
+        failure_reason:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PaymentFailure'
+            description: The reason the transaction failed.
+        id:
+          type: string
+          format: uuid
+          description: Id of the transfer.
+        instructed_amount:
+          type: integer
+          format: int64
+          description: The transfer amount.
+          minimum: 0
+        settled_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: When the transaction settled.
+        state:
+          $ref: '#/components/schemas/InternalTransferTransactionState'
+          description: Current state of the transfer.
+    BatchStatus:
+      type: string
+      enum:
+      - Created
+      - Processed
+    FeeSourceRef:
+      oneOf:
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - included_in_payment
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - primary_account
+    AccountDetailsIdentifier:
+      oneOf:
+      - type: object
+        title: IBAN
+        required:
+        - iban
+        properties:
+          iban:
+            type: string
+            format: string
+      - type: object
+        title: Wire
+        required:
+        - wire
+        properties:
+          wire:
+            $ref: '#/components/schemas/WireBankDetails'
+      - type: object
+        title: SCAN
+        required:
+        - scan
+        properties:
+          scan:
+            $ref: '#/components/schemas/ScanDetails'
+    ListBatchesResponse:
+      type: object
+      required:
+      - pages
+      - batches
+      properties:
+        batches:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchSummary'
+        pages:
+          $ref: '#/components/schemas/Cursor_String'
+    LocalReturnPayment:
+      type: object
+      description: Return Payment
+      required:
+      - id
+      - account_id
+      - remitter
+      - currency
+      - external_reference
+      - state
+      - direction
+      - instructed_amount
+      - beneficiary
+      - created_at
+      - reason
+      - returned_id
+      properties:
+        account_id:
+          type: string
+          format: uuid
+          description: The account that the transaction applies to.
+        beneficiary:
+          $ref: '#/components/schemas/BeneficiaryDetails'
+          description: 'When `direction` is `Inbound` it contains the account details of the remitter.
+
+            When `direction` is `Outbound` it contains the account details of the beneficiary.'
+        created_at:
+          type: string
+          format: date-time
+          description: When the transaction was created.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: The transaction was made in this currency.
+        direction:
+          $ref: '#/components/schemas/Direction'
+          description: Whether this transaction credited or debited funds in the account.
+        external_reference:
+          type: string
+          description: Transaction reference.
+        id:
+          type: string
+          format: uuid
+          description: Transaction id.
+        instructed_amount:
+          type: integer
+          format: int64
+          description: The transaction amount.
+          minimum: 0
+        reason:
+          type: string
+          format: string
+          description: The reason why the payment has been returned.
+          maxLength: 140
+        remitter:
+          $ref: '#/components/schemas/RemitterDetails'
+          description: The account that the transaction applies to.
+        returned_id:
+          type: string
+          format: uuid
+          description: The id of the outbound payment that has been returned.
+        state:
+          $ref: '#/components/schemas/TransactionState'
+          description: The state of the transaction.
+    DocumentSummary:
+      type: object
+      required:
+      - id
+      - document_type
+      - reference
+      properties:
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        id:
+          type: string
+          format: uuid
+        reference:
+          type: string
+          format: string
+          maxLength: 35
+    BatchType:
+      type: string
+      description: The type of batch being uploaded.
+      enum:
+      - LocalPayment
+    ListTransactionsPagedResponse:
+      type: object
+      required:
+      - pages
+      - results
+      properties:
+        pages:
+          $ref: '#/components/schemas/Cursor_String'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+    LinkDocumentRequest:
+      type: object
+      required:
+      - document_id
+      properties:
+        document_id:
+          type: string
+          format: uuid
+    LocalPaymentRecord:
+      type: object
+      required:
+      - sequence_no
+      - source_account_id
+      - instructed_amount
+      - beneficiary_name
+      - beneficiary_bic
+      - beneficiary_address_line1
+      - external_reference
+      - purpose
+      properties:
+        beneficiary_account_number:
+          type:
+          - string
+          - 'null'
+          maxLength: 27
+        beneficiary_address_country:
+          type:
+          - string
+          - 'null'
+        beneficiary_address_line1:
+          type: string
+          format: string
+          maxLength: 50
+        beneficiary_address_line2:
+          type:
+          - string
+          - 'null'
+          format: string
+          maxLength: 50
+        beneficiary_address_line3:
+          type:
+          - string
+          - 'null'
+          format: string
+          maxLength: 50
+        beneficiary_address_line4:
+          type:
+          - string
+          - 'null'
+          format: string
+          maxLength: 50
+        beneficiary_bank_branch:
+          type:
+          - string
+          - 'null'
+        beneficiary_bic:
+          type: string
+          format: string
+          minLength: 8
+        beneficiary_date_of_birth:
+          type:
+          - string
+          - 'null'
+        beneficiary_email:
+          type:
+          - string
+          - 'null'
+        beneficiary_iban:
+          type:
+          - string
+          - 'null'
+        beneficiary_id_number:
+          type:
+          - string
+          - 'null'
+        beneficiary_id_type:
+          type:
+          - string
+          - 'null'
+        beneficiary_name:
+          type: string
+          format: string
+          maxLength: 140
+        beneficiary_nationality:
+          type:
+          - string
+          - 'null'
+        beneficiary_phone:
+          type:
+          - string
+          - 'null'
+        beneficiary_sort_code:
+          type:
+          - string
+          - 'null'
+          maxLength: 6
+        beneficiary_type:
+          $ref: '#/components/schemas/BeneficiaryType'
+        beneficiary_wire_routing_number:
+          type:
+          - string
+          - 'null'
+          maxLength: 12
+        external_reference:
+          type: string
+          minLength: 100
+        instructed_amount:
+          type: integer
+          format: int64
+          minimum: 0
+        purpose:
+          $ref: '#/components/schemas/PurposeCode'
+        sequence_no:
+          type: integer
+          format: int32
+          minimum: 0
+        source_account_id:
+          type: string
+          format: uuid
+    WireBankDetails:
+      type: object
+      required:
+      - account_number
+      - routing_number
+      properties:
+        account_number:
+          type: string
+          format: string
+          maxLength: 27
+        routing_number:
+          type: string
+          format: string
+          maxLength: 12
+    BatchSummary:
+      type: object
+      required:
+      - batch_id
+      - file_name
+      - total_instructed_amount
+      - record_count
+      - status
+      - created_at
+      properties:
+        batch_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        file_name:
+          type: string
+        record_count:
+          type: integer
+          format: int32
+          minimum: 0
+        status:
+          $ref: '#/components/schemas/BatchStatus'
+        total_instructed_amount:
+          type: integer
+          format: int64
+          minimum: 0
+    PaymentFailure:
+      oneOf:
+      - type: object
+        description: Error returned by the bank.
+        required:
+        - bank_error
+        properties:
+          bank_error:
+            type: string
+            description: Error returned by the bank.
+      - type: string
+        description: Account did not have sufficient funds.
+        enum:
+        - insufficient_funds
+      - type: string
+        enum:
+        - internal_accounts_differ
+      - type: object
+        required:
+        - system_error
+        properties:
+          system_error:
+            type: string
+      - type: object
+        required:
+        - compliance_error
+        properties:
+          compliance_error:
+            type: string
+      - type: string
+        enum:
+        - account_frozen
+  securitySchemes:
+    OAuth2:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

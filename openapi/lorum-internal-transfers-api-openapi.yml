@@ -1,0 +1,106 @@
+openapi: 3.1.0
+info:
+  title: Fuse Accounts Internal Transfers API
+  description: 'Lorum (Fuse) clearing, settlement and treasury API: multi-currency accounts, payments, exchanges, transfers, customers/KYC, documents, batch payments and sandbox simulation. Harvested from the provider''s public ReadMe reference (per-operation OpenAPI definitions).'
+  contact:
+    name: Lorum
+    url: https://docs.lorum.com
+  license:
+    name: Proprietary license
+  version: 0.1.0
+servers:
+- url: https://api.fuse.me
+  description: Production
+- url: https://api-sandbox.fuse.me
+  description: Sandbox
+security:
+- OAuth2: []
+tags:
+- name: Internal Transfers
+paths:
+  /v1/internal-transfers:
+    post:
+      tags:
+      - Internal Transfers
+      summary: Move funds between two accounts with the same currency
+      description: Move funds between two accounts with the same currency
+      operationId: create_internal_transfer
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        description: Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInternalTransferRequest'
+        required: true
+      responses:
+        '201':
+          description: Internal transfer has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateInternalTransferResponse'
+        '400':
+          description: Unable to complete request with data provided
+        '409':
+          description: Idempotency-Key concurrency conflict
+        '422':
+          description: Idempotency-Key reuse for a different request
+components:
+  schemas:
+    CreateInternalTransferRequest:
+      type: object
+      description: Parameters for doing an internal transfer.
+      required:
+      - from_account_id
+      - to_account_id
+      - amount
+      - external_reference
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: Transfer amount.
+          minimum: 0
+        external_id:
+          type:
+          - string
+          - 'null'
+          format: string
+          description: 'External ID set by the customer. The external ID will be available
+
+            on all resources related to the transaction if set when creating
+
+            the transaction.'
+          maxLength: 36
+        external_reference:
+          type: string
+          description: External reference as set by the client.
+          maxLength: 100
+        from_account_id:
+          type: string
+          format: uuid
+          description: The ID of the Fuse account where the funds will be paid from.
+        to_account_id:
+          type: string
+          format: uuid
+          description: The ID of the Fuse account where the funds will be paid to.
+    CreateInternalTransferResponse:
+      type: object
+      required:
+      - transaction_id
+      properties:
+        transaction_id:
+          type: string
+          format: uuid
+  securitySchemes:
+    OAuth2:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

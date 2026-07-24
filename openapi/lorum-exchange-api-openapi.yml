@@ -1,0 +1,187 @@
+openapi: 3.1.0
+info:
+  title: Fuse Accounts Exchange API
+  description: 'Lorum (Fuse) clearing, settlement and treasury API: multi-currency accounts, payments, exchanges, transfers, customers/KYC, documents, batch payments and sandbox simulation. Harvested from the provider''s public ReadMe reference (per-operation OpenAPI definitions).'
+  contact:
+    name: Lorum
+    url: https://docs.lorum.com
+  license:
+    name: Proprietary license
+  version: 0.1.0
+servers:
+- url: https://api.fuse.me
+  description: Production
+- url: https://api-sandbox.fuse.me
+  description: Sandbox
+security:
+- OAuth2: []
+tags:
+- name: Exchange
+paths:
+  /v1/exchange:
+    post:
+      tags:
+      - Exchange
+      summary: Create a currency exchange between two accounts holding different currencies
+      description: Create a currency exchange between two accounts holding different currencies
+      operationId: create_exchange
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        description: Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateExchangeRequest'
+        required: true
+      responses:
+        '201':
+          description: Customer payment has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateExchangeResponse'
+        '400':
+          description: Unable to complete request with data provided
+        '404':
+          description: Account not found
+        '409':
+          description: Idempotency-Key concurrency conflict
+        '422':
+          description: Idempotency-Key reuse for a different request
+  /v1/exchange/quote:
+    get:
+      tags:
+      - Exchange
+      summary: Get a quote for an exchange between two currencies
+      description: Get a quote for an exchange between two currencies
+      operationId: get_exchange_quote
+      parameters:
+      - name: from_amount
+        in: query
+        description: The amount to convert from
+        required: false
+        schema:
+          type: integer
+          format: integer
+          minimum: 0
+      - name: from_account
+        in: query
+        description: The account the funds will be debited from
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: to_amount
+        in: query
+        description: The amount to convert to
+        required: false
+        schema:
+          type: integer
+          format: integer
+          minimum: 0
+      - name: to_account
+        in: query
+        description: The account the funds will be credited to
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successfully retrieved exchange rate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetExchangeRateResponse'
+        '400':
+          description: Fuse does not support currency exchange between {from_currency} and {to_currency}.
+        '404':
+          description: Unable to obtain an exchange rate from {from_currency} to {to_currency}. Please contact support.
+        '500':
+          description: Exchange rates haven't been configured yet. Please contact support.
+components:
+  schemas:
+    ExchangeAccountDetails:
+      type: object
+      required:
+      - account_id
+      properties:
+        account_id:
+          type: string
+          format: uuid
+        amount:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          minimum: 0
+    CreateExchangeResponse:
+      type: object
+      required:
+      - transaction_id
+      properties:
+        transaction_id:
+          type: string
+          format: uuid
+    GetExchangeRateResponse:
+      type: object
+      required:
+      - exchange_rate
+      - from_amount
+      - from_currency
+      - to_amount
+      - to_currency
+      properties:
+        exchange_rate:
+          type: number
+          format: float
+        from_amount:
+          type: integer
+          format: int64
+          minimum: 0
+        from_currency:
+          $ref: '#/components/schemas/Currency'
+        to_amount:
+          type: integer
+          format: int64
+          minimum: 0
+        to_currency:
+          $ref: '#/components/schemas/Currency'
+    Currency:
+      type: string
+      enum:
+      - AED
+      - USD
+      - JOD
+      - EGP
+      - SAR
+      - GBP
+      - EUR
+      - HKD
+      - CNH
+      - SGD
+    CreateExchangeRequest:
+      type: object
+      required:
+      - external_reference
+      - from
+      - to
+      properties:
+        external_reference:
+          type: string
+          maxLength: 100
+        from:
+          $ref: '#/components/schemas/ExchangeAccountDetails'
+        to:
+          $ref: '#/components/schemas/ExchangeAccountDetails'
+  securitySchemes:
+    OAuth2:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

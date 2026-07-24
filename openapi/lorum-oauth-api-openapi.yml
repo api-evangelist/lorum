@@ -1,0 +1,98 @@
+openapi: 3.1.0
+info:
+  title: Fuse Accounts Oauth API
+  description: 'Lorum (Fuse) clearing, settlement and treasury API: multi-currency accounts, payments, exchanges, transfers, customers/KYC, documents, batch payments and sandbox simulation. Harvested from the provider''s public ReadMe reference (per-operation OpenAPI definitions).'
+  contact:
+    name: Lorum
+    url: https://docs.lorum.com
+  license:
+    name: Proprietary license
+  version: 0.1.0
+servers:
+- url: https://api.fuse.me
+  description: Production
+- url: https://api-sandbox.fuse.me
+  description: Sandbox
+security:
+- OAuth2: []
+tags:
+- name: Oauth
+paths:
+  /oauth/token:
+    post:
+      summary: Get a bearer token
+      description: This API is designed to issue a bearer token for a valid user. The API will accept a request containing the user's credentials and return a response containing a bearer token.
+      operationId: getting-a-bearer-token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - client_id
+              - client_secret
+              - audience
+              - grant_type
+              properties:
+                client_id:
+                  type: string
+                  description: Client ID provided when signing up to the Fuse sandbox
+                client_secret:
+                  type: string
+                  description: Client secret provided when signing up to the Fuse sandbox
+                audience:
+                  type: string
+                  default: https://api.fuse.me
+                grant_type:
+                  type: string
+                  default: client_credentials
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"access_token\": \"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImYxMXhWYV9hUHM1cFFEZVNWdzZLYyJ9.eyJpc3MiOiJodHRwczovL2Z1c2ViYW5rZGV2LnVrLmF1dGgwLmNvbS8iLCJzdWIiOiJ0R2w3OWFlYkhOSEV1V2R5bWVtUmJQbXU3UkxnMVVrckBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9hcGkuZnVzZWJhbmsuaW8iLCJpYXQiOjE2Nzg1NTA3MTcsImV4cCI6MTY3ODYzNzExNywiYXpwIjoidEdsNzlhZWJITkhFdVdkeW1lbVJiUG11N1JMZzFVa3IiLCJzY29wZSI6InRlc3Rfc2NvcGUgcmVhZDp0ZXN0IiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.e3H87kiwczZeRHgPtw5q7vFL9z9jx1QqRgQu4bSjGjdZf20-lw_k6LkJcPuhFnxtssLDDCwXtmspFsPwU89WFvkklY-rZ99lP5PK-mMUEgnF1irKyv1WhC5hPGLhM9grsEMlfEr83KAL8HNno0RQHa_GID2jfNcnwrLafik2cm_vHn9z14gJOBt5pdk0HBYtAQem-_rbJOI3pAyJrX46N-AwVMkj3E1ReXcpMBgIvfhasQGtOL7UXDJh_sJDKBGJPmhc5ElWtqqzT23zc-AJpgE32FmzjIi6YofPKYLdQ83J90chYtZbDv95Wk6ELbaeIpFaokKILN399RArb8EshQ\",\n  \"scope\": \"test_scope read:test\",\n  \"expires_in\": 86400,\n  \"token_type\": \"Bearer\"\n}"
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImYxMXhWYV9hUHM1cFFEZVNWdzZLYyJ9.eyJpc3MiOiJodHRwczovL2Z1c2ViYW5rZGV2LnVrLmF1dGgwLmNvbS8iLCJzdWIiOiJ0R2w3OWFlYkhOSEV1V2R5bWVtUmJQbXU3UkxnMVVrckBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9hcGkuZnVzZWJhbmsuaW8iLCJpYXQiOjE2Nzg1NTA3MTcsImV4cCI6MTY3ODYzNzExNywiYXpwIjoidEdsNzlhZWJITkhFdVdkeW1lbVJiUG11N1JMZzFVa3IiLCJzY29wZSI6InRlc3Rfc2NvcGUgcmVhZDp0ZXN0IiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.e3H87kiwczZeRHgPtw5q7vFL9z9jx1QqRgQu4bSjGjdZf20-lw_k6LkJcPuhFnxtssLDDCwXtmspFsPwU89WFvkklY-rZ99lP5PK-mMUEgnF1irKyv1WhC5hPGLhM9grsEMlfEr83KAL8HNno0RQHa_GID2jfNcnwrLafik2cm_vHn9z14gJOBt5pdk0HBYtAQem-_rbJOI3pAyJrX46N-AwVMkj3E1ReXcpMBgIvfhasQGtOL7UXDJh_sJDKBGJPmhc5ElWtqqzT23zc-AJpgE32FmzjIi6YofPKYLdQ83J90chYtZbDv95Wk6ELbaeIpFaokKILN399RArb8EshQ
+                  scope:
+                    type: string
+                    example: test_scope read:test
+                  expires_in:
+                    type: integer
+                    example: 86400
+                    default: 0
+                  token_type:
+                    type: string
+                    example: Bearer
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      servers:
+      - url: https://auth.fuse.me
+        description: Production auth
+      - url: https://auth-sandbox.fuse.me
+        description: Sandbox auth
+      security:
+      - {}
+      tags:
+      - Oauth
+components:
+  securitySchemes:
+    OAuth2:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

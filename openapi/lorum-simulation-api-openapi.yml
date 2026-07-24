@@ -1,0 +1,233 @@
+openapi: 3.1.0
+info:
+  title: Fuse Accounts Simulation API
+  description: 'Lorum (Fuse) clearing, settlement and treasury API: multi-currency accounts, payments, exchanges, transfers, customers/KYC, documents, batch payments and sandbox simulation. Harvested from the provider''s public ReadMe reference (per-operation OpenAPI definitions).'
+  contact:
+    name: Lorum
+    url: https://docs.lorum.com
+  license:
+    name: Proprietary license
+  version: 0.1.0
+servers:
+- url: https://api.fuse.me
+  description: Production
+- url: https://api-sandbox.fuse.me
+  description: Sandbox
+security:
+- OAuth2: []
+tags:
+- name: Simulation
+paths:
+  /v1/simulate/execute-payment:
+    post:
+      tags:
+      - Simulation
+      summary: Simulate executed status for an outbound payment
+      description: Simulate executed status for an outbound payment
+      operationId: simulate_execute_payment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulateExecutePaymentRequest'
+        required: true
+      responses:
+        '200':
+          description: Request to execute payment has completed
+  /v1/simulate/fail-payment:
+    post:
+      tags:
+      - Simulation
+      summary: Simulate failed status for an outbound payment
+      description: Simulate failed status for an outbound payment
+      operationId: simulate_fail_payment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulateFailPaymentRequest'
+        required: true
+      responses:
+        '200':
+          description: Request to fail payment has completed
+  /v1/simulate/inbound-payment:
+    post:
+      tags:
+      - Simulation
+      summary: Simulate inbound payment
+      description: Simulate inbound payment
+      operationId: simulate_inbound_payment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulateInboundRequest'
+        required: true
+      responses:
+        '200':
+          description: Simulated Inbound payment created
+  /v1/simulate/return-payment:
+    post:
+      tags:
+      - Simulation
+      summary: Simulate a return payment.
+      description: Simulate a return payment.
+      operationId: simulate_return_payment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulateReturnedPaymentRequest'
+        required: true
+      responses:
+        '200':
+          description: Request to create a returned payment has completed
+components:
+  schemas:
+    SimulateInboundRequest:
+      type: object
+      description: Parameters to simulate an inbound payment.
+      required:
+      - amount
+      - beneficiary_account_id
+      - reference
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: Payment amount.
+          minimum: 0
+        beneficiary_account_id:
+          type: string
+          format: uuid
+          description: 'The id of the account that should receive the funds.
+
+            Can both be an internal account and an account.'
+        external_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: External id.
+        reference:
+          type: string
+          description: Payment reference.
+        remitter:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/AccountDetailsIdentifier'
+            description: 'The account details of the remitter.
+
+              This will override any value sent in remitter_iban.'
+        remitter_iban:
+          type:
+          - string
+          - 'null'
+          format: string
+          description: 'The IBAN of the account that is sending the funds.
+
+            DEPRECATED - will be removed'
+          minLength: 19
+        remitter_name:
+          type:
+          - string
+          - 'null'
+          format: string
+          description: 'Optional remitter name.
+
+            If not provided, topup will be used as the default value.'
+          maxLength: 140
+          minLength: 1
+    AccountDetailsIdentifier:
+      oneOf:
+      - type: object
+        title: IBAN
+        required:
+        - iban
+        properties:
+          iban:
+            type: string
+            format: string
+      - type: object
+        title: Wire
+        required:
+        - wire
+        properties:
+          wire:
+            $ref: '#/components/schemas/WireBankDetails'
+      - type: object
+        title: SCAN
+        required:
+        - scan
+        properties:
+          scan:
+            $ref: '#/components/schemas/ScanDetails'
+    ScanDetails:
+      type: object
+      required:
+      - sort_code
+      - account_number
+      properties:
+        account_number:
+          type: string
+          format: string
+          maxLength: 8
+        sort_code:
+          type: string
+          format: string
+          maxLength: 6
+    SimulateReturnedPaymentRequest:
+      type: object
+      description: Parameters to simulate executing a payment.
+      required:
+      - outbound_transaction_id
+      properties:
+        outbound_transaction_id:
+          type: string
+          format: uuid
+          description: 'The id of the outbound payment to be returned.
+
+            Must be in an executed state.'
+    WireBankDetails:
+      type: object
+      required:
+      - account_number
+      - routing_number
+      properties:
+        account_number:
+          type: string
+          format: string
+          maxLength: 27
+        routing_number:
+          type: string
+          format: string
+          maxLength: 12
+    SimulateExecutePaymentRequest:
+      type: object
+      description: Parameters to simulate executing a payment.
+      required:
+      - transaction_id
+      properties:
+        transaction_id:
+          type: string
+          format: uuid
+          description: The id of the payment that should transition into executed.
+    SimulateFailPaymentRequest:
+      type: object
+      description: Parameters for failing a payment.
+      required:
+      - transaction_id
+      - failure_reason
+      properties:
+        failure_reason:
+          type: string
+          description: State a reason for the payment failure.
+        transaction_id:
+          type: string
+          format: uuid
+          description: The id of the transaction to fail.
+  securitySchemes:
+    OAuth2:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

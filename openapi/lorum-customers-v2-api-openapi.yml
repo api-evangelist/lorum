@@ -1,0 +1,158 @@
+openapi: 3.1.0
+info:
+  title: Fuse Accounts Customers V2 API
+  description: 'Lorum (Fuse) clearing, settlement and treasury API: multi-currency accounts, payments, exchanges, transfers, customers/KYC, documents, batch payments and sandbox simulation. Harvested from the provider''s public ReadMe reference (per-operation OpenAPI definitions).'
+  contact:
+    name: Lorum
+    url: https://docs.lorum.com
+  license:
+    name: Proprietary license
+  version: 0.1.0
+servers:
+- url: https://api.fuse.me
+  description: Production
+- url: https://api-sandbox.fuse.me
+  description: Sandbox
+security:
+- OAuth2: []
+tags:
+- name: Customers V2
+paths:
+  /v2/customers/businesses/{business_id}/shareholders:
+    post:
+      tags:
+      - Customers V2
+      summary: Add a shareholder to a business
+      description: Add a shareholder to a business
+      operationId: add_shareholder_v2
+      parameters:
+      - name: business_id
+        in: path
+        description: Id of the business customer
+        required: true
+        schema:
+          type: string
+          format: Uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddShareholderRequestV2'
+        required: true
+      responses:
+        '204':
+          description: Business has been created successfully
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      tags:
+      - Customers V2
+      summary: List shareholders for a business
+      description: List shareholders for a business
+      operationId: list_shareholders_v2
+      parameters:
+      - name: business_id
+        in: path
+        description: Id of the business
+        required: true
+        schema:
+          type: string
+          format: Uuid
+      responses:
+        '200':
+          description: List of shareholders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShareholderSummaryV2'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    AddShareholderRequestV2:
+      type: object
+      required:
+      - ownership_percentage
+      properties:
+        customer_id:
+          type:
+          - string
+          - 'null'
+          format: Uuid
+          description: '`customer_id` of the shareholder.'
+        ownership_percentage:
+          type: integer
+          format: int32
+          minimum: 0
+    ErrorResponse:
+      type: object
+      description: 'User-facing error type.
+
+
+        This is the general error structure returned by all api routes.'
+      required:
+      - error
+      - message
+      - code
+      properties:
+        code:
+          type: string
+          description: Specific error code.
+        error:
+          type: string
+          description: Soon to be deprecated.
+        message:
+          type: string
+          description: Renaming of `error`. Human-readable description of the error.
+    ShareholderSummaryV2:
+      type: object
+      required:
+      - customer_id
+      - holding_percent
+      properties:
+        customer_id:
+          type: string
+          format: Uuid
+        holding_percent:
+          type: integer
+          format: int32
+          minimum: 0
+  securitySchemes:
+    OAuth2:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
