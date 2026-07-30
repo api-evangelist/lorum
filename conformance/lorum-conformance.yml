@@ -1,0 +1,33 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/lorum-openapi-original.json
+notes: >-
+  Cross-cutting standards the Lorum (Fuse) API conforms to, derived from the
+  harvested OpenAPI and the provider docs. No published compliance program
+  (SOC 2 / ISO 27001 / PCI DSS) or trust center was found at capture time, so
+  no `Compliance` pointer is emitted.
+standards:
+- id: oauth2-client-credentials
+  conforms: true
+  evidence: OAuth 2.0 client-credentials grant against Auth0; JWT bearer tokens.
+- id: openid-connect-discovery
+  conforms: true
+  evidence: auth.fuse.me publishes /.well-known/openid-configuration (OIDC discovery).
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: auth.fuse.me publishes /.well-known/oauth-authorization-server.
+- id: idempotency-keys
+  conforms: true
+  evidence: Idempotency-Key (UUIDv4) header required on money-movement POST/DELETE ops.
+- id: webhooks-event-notifications
+  conforms: true
+  evidence: documented webhook catalogue with per-category events and retry policy.
+- id: iso4217-currencies
+  conforms: true
+  evidence: currency codes constrained to ISO 4217 (AED, USD, GBP, EUR, SAR, ...).
+- id: openapi-3.1
+  conforms: true
+  evidence: reference published as OpenAPI 3.1.0 per-operation definitions.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors use plain HTTP status codes, not application/problem+json.

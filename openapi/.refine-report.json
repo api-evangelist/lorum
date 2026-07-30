@@ -1,0 +1,32 @@
+{
+  "provider": "lorum",
+  "sources": [
+    "lorum-accounts-api-openapi.yml",
+    "lorum-customers-api-openapi.yml",
+    "lorum-customers-v2-api-openapi.yml",
+    "lorum-documents-api-openapi.yml",
+    "lorum-exchange-api-openapi.yml",
+    "lorum-internal-transfers-api-openapi.yml",
+    "lorum-oauth-api-openapi.yml",
+    "lorum-payments-api-openapi.yml",
+    "lorum-simulation-api-openapi.yml",
+    "lorum-transactions-api-openapi.yml"
+  ],
+  "outputs": [
+    "lorum-accounts-api-openapi.yml",
+    "lorum-customers-api-openapi.yml",
+    "lorum-customers-v2-api-openapi.yml",
+    "lorum-documents-api-openapi.yml",
+    "lorum-exchange-api-openapi.yml",
+    "lorum-internal-transfers-api-openapi.yml",
+    "lorum-oauth-api-openapi.yml",
+    "lorum-payments-api-openapi.yml",
+    "lorum-simulation-api-openapi.yml",
+    "lorum-transactions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

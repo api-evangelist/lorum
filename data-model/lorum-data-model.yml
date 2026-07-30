@@ -1,0 +1,84 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/lorum-openapi-original.json
+notes: >-
+  Entity-relationship graph derived from the harvested Lorum (Fuse) OpenAPI
+  schemas and their id-reference fields (customer_id, account_id,
+  transaction_id, document_id, batch_id, from/to/source/counterpart account
+  ids). Lorum's core domain: customers (businesses + individuals) are onboarded
+  and KYC'd, hold multi-currency accounts, and move money via local payments,
+  internal transfers, and FX exchanges, each producing transactions.
+entities:
+- name: Customer
+  kind: business | individual
+  schemas: [Customer, CustomerSummary, GetCustomerResponse, AddBusinessRequest, AddIndividualRequest]
+  id_field: customer_id
+- name: Shareholder
+  schemas: [Shareholder, ShareholderSummary, ShareholderSummaryV2, AddShareholderRequest]
+- name: Account
+  schemas: [Account, CreateAccountRequest, PatchAccountRequest, AccountHistory]
+  id_field: account_id
+  types: [primary, payment (deprecated), virtual]
+- name: Transaction
+  schemas: [Transaction, TransactionState, ListTransactionsPagedResponse]
+  id_field: transaction_id
+- name: LocalPayment
+  schemas: [LocalPayment, LocalPaymentRecord, CreateCustomerPaymentRequest, LocalReturnPayment]
+- name: InternalTransfer
+  schemas: [InternalTransfer, CreateInternalTransferRequest]
+- name: Exchange
+  schemas: [FxTransfer, CreateExchangeRequest, GetExchangeRateResponse]
+- name: Batch
+  schemas: [Batch, BatchSummary, ListBatchesResponse]
+  id_field: batch_id
+- name: Document
+  schemas: [Document, DocumentSummary, LinkDocumentRequest]
+  id_field: document_id
+relationships:
+- from: Account
+  to: Customer
+  type: belongs_to
+  via: customer_id
+- from: Customer
+  to: Account
+  type: has_many
+  via: customer_id
+- from: Customer
+  to: Shareholder
+  type: has_many
+  note: businesses have shareholders
+- from: Transaction
+  to: Account
+  type: belongs_to
+  via: account_id
+- from: Account
+  to: Transaction
+  type: has_many
+- from: LocalPayment
+  to: Account
+  type: belongs_to
+  via: account_id
+  note: outbound payment debits a source account
+- from: InternalTransfer
+  to: Account
+  type: references
+  via: [source_account_id, counterpart_account_id]
+  note: same-currency move between two accounts
+- from: Exchange
+  to: Account
+  type: references
+  via: [from_account_id, to_account_id]
+  note: cross-currency move between two accounts holding different currencies
+- from: Batch
+  to: LocalPayment
+  type: has_many
+  note: bulk payment file expands into individual payments
+- from: Document
+  to: Customer
+  type: belongs_to
+  via: customer_id
+  note: KYC/onboarding documents linked to a customer
+- from: Document
+  to: Transaction
+  type: many_to_many
+  note: documents can be linked to transactions

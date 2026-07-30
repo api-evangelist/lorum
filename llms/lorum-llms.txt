@@ -1,0 +1,74 @@
+# Lorum Documentation Documentation
+
+> Documentation for Lorum Documentation
+
+## Guides
+- [Getting Started with Lorum](https://docs.lorum.com/docs/getting-started.md): Everything you need to get started with Lorum - access the portal, set up API credentials, invite team members, and find your sandbox and production endpoints.
+- [Authenticating to the API](https://docs.lorum.com/docs/authenticating-to-the-api.md): How to authenticate to the Lorum API and manage token lifecycle correctly.
+- [Understanding idempotency](https://docs.lorum.com/docs/idempotency-for-postdelete-api-requests.md): The Idempotency-Key header prevents duplicate payments or transfers when a request is retried.
+- [Batch Payments: How It Works in Lorum](https://docs.lorum.com/docs/batch-payments-how-it-works-in-lorum.md): How bulk payment file uploads work in Lorum and where to go to process them via the portal or API.
+- [Batch Payments - Portal](https://docs.lorum.com/docs/batch-payments-portal.md): How to submit and manage bulk payments in the Lorum portal, including uploading a CSV file and a full column reference for the batch payment template.
+- [Batch Payment CSV Reference](https://docs.lorum.com/docs/batch-payments.md): Full column reference for the Lorum batch payment CSV template, including required fields per currency and formatting rules.
+- [Maker-Checker Feature](https://docs.lorum.com/docs/maker-checker-feature.md): The four-eyes process ensuring no payments are approved straight away.
+- [Simulating Scheme Actions](https://docs.lorum.com/docs/simulating-scheme-actions-on-sandbox.md): Overview of the simulate functions available in the Lorum sandbox for testing payment flows end-to-end.
+- [Simulating Scheme Actions - Portal](https://docs.lorum.com/docs/simulating-scheme-actions-on-the-portal.md): How to simulate inbound payments, payment execution, and payment failures in the Lorum sandbox portal.
+- [Batch Payments - API](https://docs.lorum.com/docs/batch-payments-api.md): How to submit and manage bulk payments via the Lorum API, including the upload endpoint, CSV file format, and batch status reference.
+- [Simulating Scheme Actions via API](https://docs.lorum.com/docs/simulating-scheme-actions-via-api.md): How to simulate inbound payments, payment execution, and payment failures via the Lorum sandbox API.
+- [Getting started with payouts](https://docs.lorum.com/docs/getting-started-with-payouts.md): Initiate payouts effortlessly with our straightforward setup for seamless payment processing.
+- [Getting started with virtual accounts](https://docs.lorum.com/docs/getting-started-with-virtual-ibans.md): Create accounts linked to virtual IBANs
+- [AED onboarding guide](https://docs.lorum.com/docs/aed-onboarding-guide.md): This guide provides step-by-step instructions for onboarding customers to create and use AED accounts through the Lorum platform.
+- [USD onboarding guide](https://docs.lorum.com/docs/usd-onboarding-guide.md): This guide provides step-by-step instructions for onboarding customers to create and use USD accounts through the Lorum platform.
+- [EUR & GBP onboarding Guide](https://docs.lorum.com/docs/eur-gbp-onboarding-guide.md): This guide provides step-by-step instructions for onboarding customers to create and use EUR and GBP accounts through the Lorum platform.
+- [Transaction fees](https://docs.lorum.com/docs/transaction-fees.md): How Lorum collects transaction fees, including configuration options and how fee debits appear in transaction data.
+- [Common Types & Definitions](https://docs.lorum.com/docs/common-types-definitions.md): This page documents shared types used across Lorum APIs and webhook events.
+- [AED account & payment data validation](https://docs.lorum.com/docs/aed-account-transaction-data-validation.md)
+- [Webhooks](https://docs.lorum.com/docs/webhooks-1.md): Receive real-time event notifications for payments, transfers, account changes, and customer onboarding. Covers setup, webhook structure, retries, and IP allowlisting.
+- [Webhook Catalogue](https://docs.lorum.com/docs/webhook-catalogue.md): A full reference of all webhook events emitted by Lorum, organised by category.
+- [Integration Checklist](https://docs.lorum.com/docs/integration-checklist.md): Before we can grant production API access, you'll need to complete the following tests to verify that your integration has been implemented correctly and behaves as expected.
+
+## API Reference
+- [Get a bearer token](https://docs.lorum.com/reference/getting-a-bearer-token.md): This API is designed to issue a bearer token for a valid user. The API will accept a request containing the user's credentials and return a response containing a bearer token.
+- [List all accounts for organisation](https://docs.lorum.com/reference/list_all_customer_accounts.md): List all accounts for organisation
+- [Get an account](https://docs.lorum.com/reference/get_customer_account.md): Get an account
+- [Update account data](https://docs.lorum.com/reference/patch_customer_account.md): Update account data
+- [Get account confirmation letter.](https://docs.lorum.com/reference/get_account_confirmation_letter.md): Get account confirmation letter.
+- [Get an account's balance history](https://docs.lorum.com/reference/get_account_history.md): Get an account's balance history
+- [List a customer's accounts](https://docs.lorum.com/reference/list_customer_accounts.md): List a customer's accounts
+- [Create account](https://docs.lorum.com/reference/create_customer_account.md): Create account
+- [Create outbound payment for a customer](https://docs.lorum.com/reference/create_customer_payment.md): Create outbound payment for a customer
+- [Estimate the fee for an outbound payment](https://docs.lorum.com/reference/customer_payment_fee_estimate.md): Estimate the fee for an outbound payment
+- [List transactions for an account](https://docs.lorum.com/reference/list_customer_transactions.md): List transactions for an account
+- [Get all transactions across accounts](https://docs.lorum.com/reference/public_list_all_transactions.md): Get all transactions across accounts
+- [List batches](https://docs.lorum.com/reference/list_batches.md): List batches
+- [Upload payment batch file.](https://docs.lorum.com/reference/post_batch_file.md): Upload payment batch file.
+- [Get a single batch](https://docs.lorum.com/reference/get_batch.md): Get a single batch
+- [Get a transaction](https://docs.lorum.com/reference/get_transaction.md): Get a transaction
+- [Get transaction confirmation letter](https://docs.lorum.com/reference/get_transaction_confirmation_letter.md): Get transaction confirmation letter This endpoint is used to get a transaction confirmation letter for outbound transactions. Confirmation letters are only available for transactions in a `submitted` or `executed` state.
+- [Get linked documents for a transaction](https://docs.lorum.com/reference/get_documents_linked_to_transaction.md): Get linked documents for a transaction
+- [Link a document to a transaction](https://docs.lorum.com/reference/link_document_to_transaction.md): Link a document to a transaction
+- [List customers](https://docs.lorum.com/reference/list_customers.md): List customers
+- [Add business](https://docs.lorum.com/reference/add_business.md): Add business
+- [Get a shareholder](https://docs.lorum.com/reference/get_shareholder.md): Get a shareholder
+- [Update a shareholder](https://docs.lorum.com/reference/update_shareholder.md): Update a shareholder
+- [List shareholders for a business](https://docs.lorum.com/reference/list_shareholders.md): List shareholders for a business
+- [Add a shareholder to a business](https://docs.lorum.com/reference/add_shareholder.md): Add a shareholder to a business
+- [Add individual](https://docs.lorum.com/reference/add_individual.md): Add individual
+- [Get customer](https://docs.lorum.com/reference/get_customer.md): Get customer
+- [Update customer](https://docs.lorum.com/reference/update_customer.md): Update customer
+- [Submit a document](https://docs.lorum.com/reference/link_document.md): Submit a document
+- [Archive the customer so it is no longer available for use in the system.](https://docs.lorum.com/reference/archive_customer.md): Archive the customer so it is no longer available for use in the system. customer linked to an open account can not be archived.
+- [Get Customer Onboarding Status for a specific currency](https://docs.lorum.com/reference/get_customer_onboarding.md): Get Customer Onboarding Status for a specific currency
+- [Onboard a customer for a specific currency](https://docs.lorum.com/reference/onboard_customer.md): Onboard a customer for a specific currency
+- [Unlink a document from a customer.](https://docs.lorum.com/reference/unlink_document.md): Unlink a document from a customer. A document belonging to a USD onboarded customer cannot be unlinked from the customer.
+- [List documents](https://docs.lorum.com/reference/list_documents.md): List documents
+- [Upload Document](https://docs.lorum.com/reference/upload_document.md): Upload Document
+- [Get document](https://docs.lorum.com/reference/get_document.md): Get document
+- [Create a currency exchange between two accounts holding different currencies](https://docs.lorum.com/reference/create_exchange.md): Create a currency exchange between two accounts holding different currencies
+- [Get a quote for an exchange between two currencies](https://docs.lorum.com/reference/get_exchange_quote.md): Get a quote for an exchange between two currencies
+- [Move funds between two accounts with the same currency](https://docs.lorum.com/reference/create_internal_transfer.md): Move funds between two accounts with the same currency
+- [Simulate executed status for an outbound payment](https://docs.lorum.com/reference/simulate_execute_payment.md): Simulate executed status for an outbound payment
+- [Simulate failed status for an outbound payment](https://docs.lorum.com/reference/simulate_fail_payment.md): Simulate failed status for an outbound payment
+- [Simulate inbound payment](https://docs.lorum.com/reference/simulate_inbound_payment.md): Simulate inbound payment
+- [Simulate a return payment.](https://docs.lorum.com/reference/simulate_return_payment.md): Simulate a return payment.
+- [Add a shareholder to a business](https://docs.lorum.com/reference/add_shareholder_v2.md): Add a shareholder to a business
+- [List shareholders for a business](https://docs.lorum.com/reference/list_shareholders_v2.md): List shareholders for a business

@@ -1,0 +1,38 @@
+generated: '2026-07-20'
+method: searched
+notes: >-
+  Probed the /.well-known/ discovery surface on every Lorum/Fuse host. The
+  Auth0-backed authorization server at auth.fuse.me publishes a full OIDC
+  discovery document and an RFC 8414 OAuth authorization-server metadata
+  document. The API, docs, and marketing hosts publish no /.well-known/
+  documents; app.lorum.com returns soft-200 SPA HTML for every path (not a real
+  well-known document) and is recorded as such.
+hosts:
+- host: https://auth.fuse.me
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: lorum-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+- host: https://api.fuse.me
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+- host: https://www.lorum.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+- host: https://docs.lorum.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+- host: https://app.lorum.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    note: soft-200 SPA HTML, not a real security.txt

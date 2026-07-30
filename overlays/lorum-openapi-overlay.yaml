@@ -1,0 +1,29 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Lorum (Fuse) API
+  version: 1.0.0
+extends: openapi/lorum-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: lorum
+    x-apievangelist-category: fintech-clearing-settlement
+    x-apievangelist-artifacts:
+      authentication: authentication/lorum-authentication.yml
+      conventions: conventions/lorum-conventions.yml
+      errors: errors/lorum-problem-types.yml
+      lifecycle: lifecycle/lorum-lifecycle.yml
+      sandbox: sandbox/lorum-sandbox.yml
+      webhooks: asyncapi/lorum-webhooks-asyncapi.yml
+      data_model: data-model/lorum-data-model.yml
+- target: $.info
+  update:
+    x-idempotency:
+      header: Idempotency-Key
+      value_format: UUIDv4
+      docs: https://docs.lorum.com/docs/idempotency-for-postdelete-api-requests
+- target: $.servers
+  update:
+    x-apievangelist-note: >-
+      Production api.fuse.me / sandbox api-sandbox.fuse.me; the OAuth2 token
+      endpoint lives on the separate auth.fuse.me (Auth0) host.

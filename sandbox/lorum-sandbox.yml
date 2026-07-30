@@ -1,0 +1,43 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.lorum.com/docs/simulating-scheme-actions-on-sandbox
+summary: >-
+  Lorum ships a fully separate sandbox environment with its own auth server,
+  API host, and portal. Because Lorum clears real payment schemes, the sandbox
+  exposes "simulate scheme action" endpoints that stand in for the payment
+  scheme in production - letting an integrator drive inbound settlement,
+  outbound execution, failure, and return end-to-end without waiting for real
+  scheme processing. There are no test card numbers (this is a clearing /
+  account-to-account API, not card acquiring); the test surface is the
+  simulation endpoints plus sandbox-only credentials.
+environments:
+  sandbox:
+    api: https://api-sandbox.fuse.me
+    auth: https://auth-sandbox.fuse.me/oauth/token
+    portal: https://sandbox.lorum.com
+  production:
+    api: https://api.fuse.me
+    auth: https://auth.fuse.me/oauth/token
+    portal: https://app.lorum.com
+credentials:
+  model: separate client_id / client_secret issued per environment in the portal
+  location: Portal > Settings > Client Credentials
+simulation_endpoints:
+- name: Simulate inbound payment
+  operation: simulate_inbound_payment
+  description: Simulate a payment settling into an account
+- name: Simulate execute outbound payment
+  operation: simulate_execute_payment
+  description: Simulate a submitted outbound payment being executed by the scheme
+- name: Simulate fail outbound payment
+  operation: simulate_fail_payment
+  description: Simulate a submitted outbound payment failing
+- name: Simulate return payment
+  operation: simulate_return_payment
+  description: Simulate an executed outbound payment being returned by the beneficiary's bank
+availability: simulate functions are sandbox-only
+docs:
+- https://docs.lorum.com/docs/simulating-scheme-actions-on-sandbox
+- https://docs.lorum.com/docs/simulating-scheme-actions-via-api
+- https://docs.lorum.com/docs/simulating-scheme-actions-on-the-portal
+- https://docs.lorum.com/docs/integration-checklist

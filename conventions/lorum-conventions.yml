@@ -1,0 +1,70 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/lorum-openapi-original.json
+docs: https://docs.lorum.com/docs/getting-started
+summary: >-
+  Cross-cutting request/response semantics for the Lorum (Fuse) API, captured
+  from the provider docs and the harvested OpenAPI. Lorum is a clearing and
+  settlement API: money-movement endpoints require an Idempotency-Key, auth is
+  OAuth2 bearer, and asynchronous outcomes (payment execution, settlement) are
+  delivered via webhooks rather than in the synchronous response.
+authentication:
+  style: oauth2-client-credentials-bearer-jwt
+  header: 'Authorization: Bearer <access_token>'
+  token_lifetime: 3h (cache and reuse; do not mint per call)
+  docs: https://docs.lorum.com/docs/authenticating-to-the-api
+  ref: authentication/lorum-authentication.yml
+idempotency:
+  supported: true
+  mechanism: header
+  header: Idempotency-Key
+  value_format: UUIDv4
+  required_on: POST/DELETE money-movement operations (mandatory for certification)
+  retention: replays the original result for a previously-seen key
+  conflicts:
+    '400': Idempotency-Key missing or not a valid UUIDv4
+    '409': same key in flight, original request not yet completed
+    '422': same key reused with a different request payload
+  docs: https://docs.lorum.com/docs/idempotency-for-postdelete-api-requests
+  operations_with_key:
+  - create_customer_account
+  - create_customer_payment
+  - create_exchange
+  - create_internal_transfer
+  - onboard_customer
+  - post_batch_file
+error_envelope:
+  format: http-status
+  problem_json: false
+  ref: errors/lorum-problem-types.yml
+  note: >-
+    Errors are signalled via HTTP status codes (400/401/404/409/422/500);
+    responses are not RFC 9457 application/problem+json.
+webhooks:
+  supported: true
+  delivery: push to a single configured URL, per-category opt-in
+  dedup_field: event_id
+  timestamp_header: X-Fuse-Timestamp
+  retries: exponential backoff for up to 12 hours on non-success
+  ref: asyncapi/lorum-webhooks-asyncapi.yml
+  docs: https://docs.lorum.com/docs/webhooks-1
+versioning:
+  scheme: uri-path
+  current: v1
+  ref: lifecycle/lorum-lifecycle.yml
+money_representation:
+  amounts: integer minor units (e.g. 100 = 1.00)
+  currency: ISO 4217 code; supported AED, USD, JOD, EGP, SAR, GBP, EUR, HKD, CNH, SGD
+pagination:
+  documented: true
+  derived_from: openapi
+  note: >-
+    List operations return paged envelopes (ListAccountsPagedResponse,
+    ListTransactionsPagedResponse); the paging parameters are defined per
+    operation in the OpenAPI rather than a single prose convention page.
+rate_limits:
+  documented: false
+maker_checker:
+  supported: true
+  note: optional four-eyes approval flow; payments are not approved straight away
+  docs: https://docs.lorum.com/docs/maker-checker-feature

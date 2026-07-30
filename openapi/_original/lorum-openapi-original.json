@@ -1,0 +1,6563 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Fuse API",
+    "description": "Lorum (Fuse) clearing, settlement and treasury API: multi-currency accounts, payments, exchanges, transfers, customers/KYC, documents, batch payments and sandbox simulation. Harvested from the provider's public ReadMe reference (per-operation OpenAPI definitions).",
+    "contact": {
+      "name": "Lorum",
+      "url": "https://docs.lorum.com"
+    },
+    "license": {
+      "name": "Proprietary license"
+    },
+    "version": "0.1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.fuse.me",
+      "description": "Production"
+    },
+    {
+      "url": "https://api-sandbox.fuse.me",
+      "description": "Sandbox"
+    }
+  ],
+  "paths": {
+    "/v1/customers/businesses": {
+      "post": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Add business",
+        "description": "Add business",
+        "operationId": "add_business",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "description": "Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+            "required": false,
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddBusinessRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Business has been created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddCustomerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/customers/individuals": {
+      "post": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Add individual",
+        "description": "Add individual",
+        "operationId": "add_individual",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "description": "Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+            "required": false,
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddIndividualRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Individual has been created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddCustomerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/customers/businesses/{customer_id}/shareholders": {
+      "post": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Add a shareholder to a business",
+        "description": "Add a shareholder to a business",
+        "operationId": "add_shareholder",
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "path",
+            "description": "Id of the customer",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "Uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddShareholderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Business has been created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddShareholderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      },
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "List shareholders for a business",
+        "description": "List shareholders for a business",
+        "operationId": "list_shareholders",
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "path",
+            "description": "Id of the customer",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of shareholders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShareholderSummary"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/v2/customers/businesses/{business_id}/shareholders": {
+      "post": {
+        "tags": [
+          "Customers V2"
+        ],
+        "summary": "Add a shareholder to a business",
+        "description": "Add a shareholder to a business",
+        "operationId": "add_shareholder_v2",
+        "parameters": [
+          {
+            "name": "business_id",
+            "in": "path",
+            "description": "Id of the business customer",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "Uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddShareholderRequestV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Business has been created successfully"
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Customers V2"
+        ],
+        "summary": "List shareholders for a business",
+        "description": "List shareholders for a business",
+        "operationId": "list_shareholders_v2",
+        "parameters": [
+          {
+            "name": "business_id",
+            "in": "path",
+            "description": "Id of the business",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of shareholders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShareholderSummaryV2"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/customers/{customer_id}/archive": {
+      "patch": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Archive the customer so it is no longer available for use in the system.",
+        "description": "Archive the customer so it is no longer available for use in the system.\ncustomer linked to an open account can not be archived.",
+        "operationId": "archive_customer",
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Customer has been updated successfully"
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/customers/{customer_id}/accounts": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Create account",
+        "description": "Create account",
+        "operationId": "create_customer_account",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "description": "Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "customer_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAccountRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "The request to create an account has been accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateAccountResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unable to complete request with data provided"
+          },
+          "404": {
+            "description": "Customer not found"
+          },
+          "409": {
+            "description": "Idempotency-Key concurrency conflict"
+          },
+          "422": {
+            "description": "Idempotency-Key reuse for a different request"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "List a customer's accounts",
+        "description": "List a customer's accounts",
+        "operationId": "list_customer_accounts",
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "Cursor to the next page in the result set. If set all the other fields will be ignored.",
+            "required": false,
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "string"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of resource to return. Max 2000",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "customer_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved a customers accounts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListAccountsPagedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/accounts/{account_id}/payments": {
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Create outbound payment for a customer",
+        "description": "Create outbound payment for a customer",
+        "operationId": "create_customer_payment",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "description": "Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerPaymentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Customer payment has been accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePaymentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unable to complete request with data provided"
+          },
+          "404": {
+            "description": "Account not found"
+          },
+          "409": {
+            "description": "Idempotency-Key concurrency conflict"
+          },
+          "422": {
+            "description": "Idempotency-Key reuse for a different request"
+          }
+        }
+      }
+    },
+    "/v1/exchange": {
+      "post": {
+        "tags": [
+          "Exchange"
+        ],
+        "summary": "Create a currency exchange between two accounts holding different currencies",
+        "description": "Create a currency exchange between two accounts holding different currencies",
+        "operationId": "create_exchange",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "description": "Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateExchangeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Customer payment has been created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateExchangeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unable to complete request with data provided"
+          },
+          "404": {
+            "description": "Account not found"
+          },
+          "409": {
+            "description": "Idempotency-Key concurrency conflict"
+          },
+          "422": {
+            "description": "Idempotency-Key reuse for a different request"
+          }
+        }
+      }
+    },
+    "/v1/internal-transfers": {
+      "post": {
+        "tags": [
+          "Internal Transfers"
+        ],
+        "summary": "Move funds between two accounts with the same currency",
+        "description": "Move funds between two accounts with the same currency",
+        "operationId": "create_internal_transfer",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "description": "Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInternalTransferRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Internal transfer has been created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateInternalTransferResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unable to complete request with data provided"
+          },
+          "409": {
+            "description": "Idempotency-Key concurrency conflict"
+          },
+          "422": {
+            "description": "Idempotency-Key reuse for a different request"
+          }
+        }
+      }
+    },
+    "/v1/accounts/{account_id}/payments/estimate-fee/{amount}": {
+      "get": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Estimate the fee for an outbound payment",
+        "description": "Estimate the fee for an outbound payment",
+        "operationId": "customer_payment_fee_estimate",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "description": "The account id where the intended payment will be made from.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "amount",
+            "in": "path",
+            "description": "The amount of the payment.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request to estimate fee has been successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstimateFeeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unable to complete request with data provided"
+          },
+          "404": {
+            "description": "Account not found"
+          }
+        }
+      }
+    },
+    "/v1/accounts/{account_id}/confirmation-letter": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Get account confirmation letter.",
+        "description": "Get account confirmation letter.",
+        "operationId": "get_account_confirmation_letter",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account Confirmation Letter",
+            "headers": {
+              "content-disposition": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Filename"
+              },
+              "content-type": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Document type"
+              }
+            },
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/accounts/{account_id}/history": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Get an account's balance history",
+        "description": "Get an account's balance history",
+        "operationId": "get_account_history",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "AccountHistory",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountHistory"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/transactions/batches/{batch_id}": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Get a single batch",
+        "description": "Get a single batch",
+        "operationId": "get_batch",
+        "parameters": [
+          {
+            "name": "batch_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request to get batch completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Batch"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/customers/{customer_id}": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Get customer",
+        "description": "Get customer",
+        "operationId": "get_customer",
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "path",
+            "description": "Id of the customer",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved contents of directory",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCustomerResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Update customer",
+        "description": "Update customer",
+        "operationId": "update_customer",
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Customer has been updated successfully"
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/accounts/{account_id}": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Get an account",
+        "description": "Get an account",
+        "operationId": "get_customer_account",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Update account data",
+        "description": "Update account data",
+        "operationId": "patch_customer_account",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchAccountRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Request to update account has been accepted"
+          }
+        }
+      }
+    },
+    "/v1/customers/{customer_id}/onboarding/{currency}": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Get Customer Onboarding Status for a specific currency",
+        "description": "Get Customer Onboarding Status for a specific currency",
+        "operationId": "get_customer_onboarding",
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "currency",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/OnboardingCurrency"
+            },
+            "example": "usd"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved customer onboarding status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Onboarding"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Onboard a customer for a specific currency",
+        "description": "Onboard a customer for a specific currency",
+        "operationId": "onboard_customer",
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "currency",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/OnboardingCurrency"
+            },
+            "example": "usd"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Customer successfully onboarded"
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/documents/{document_id}": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Get document",
+        "description": "Get document",
+        "operationId": "get_document",
+        "parameters": [
+          {
+            "name": "document_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved contents of directory",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Document"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/transactions/{transaction_id}/documents": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Get linked documents for a transaction",
+        "description": "Get linked documents for a transaction",
+        "operationId": "get_documents_linked_to_transaction",
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved linked documents",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentSummary"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Link a document to a transaction",
+        "description": "Link a document to a transaction",
+        "operationId": "link_document_to_transaction",
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LinkDocumentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Document successfully linked to transaction"
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/exchange/quote": {
+      "get": {
+        "tags": [
+          "Exchange"
+        ],
+        "summary": "Get a quote for an exchange between two currencies",
+        "description": "Get a quote for an exchange between two currencies",
+        "operationId": "get_exchange_quote",
+        "parameters": [
+          {
+            "name": "from_amount",
+            "in": "query",
+            "description": "The amount to convert from",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "from_account",
+            "in": "query",
+            "description": "The account the funds will be debited from",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "to_amount",
+            "in": "query",
+            "description": "The amount to convert to",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "to_account",
+            "in": "query",
+            "description": "The account the funds will be credited to",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved exchange rate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetExchangeRateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fuse does not support currency exchange between {from_currency} and {to_currency}."
+          },
+          "404": {
+            "description": "Unable to obtain an exchange rate from {from_currency} to {to_currency}. Please contact support."
+          },
+          "500": {
+            "description": "Exchange rates haven't been configured yet. Please contact support."
+          }
+        }
+      }
+    },
+    "/v1/customers/businesses/shareholders/{shareholder_id}": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Get a shareholder",
+        "description": "Get a shareholder",
+        "operationId": "get_shareholder",
+        "parameters": [
+          {
+            "name": "shareholder_id",
+            "in": "path",
+            "description": "Id of the customer",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the shareholder",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetShareholderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      },
+      "patch": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Update a shareholder",
+        "description": "Update a shareholder",
+        "operationId": "update_shareholder",
+        "parameters": [
+          {
+            "name": "shareholder_id",
+            "in": "path",
+            "description": "Id of the shareholder",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "Uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateShareholderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Shareholder has been updated successfully"
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/v1/transactions/{transaction_id}": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Get a transaction",
+        "description": "Get a transaction",
+        "operationId": "get_transaction",
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved a transaction",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transaction"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/transactions/{transaction_id}/confirmation-letter": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Get transaction confirmation letter",
+        "description": "Get transaction confirmation letter\nThis endpoint is used to get a transaction confirmation letter for outbound transactions.\nConfirmation letters are only available for transactions in a `submitted` or `executed` state.",
+        "operationId": "get_transaction_confirmation_letter",
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction",
+            "headers": {
+              "content-disposition": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Filename"
+              },
+              "content-type": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Document type"
+              }
+            },
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/customers/{customer_id}/documents": {
+      "post": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Submit a document",
+        "description": "Submit a document",
+        "operationId": "link_document",
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LinkDocumentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Document successfully linked to customer"
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/accounts": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "List all accounts for organisation",
+        "description": "List all accounts for organisation",
+        "operationId": "list_all_customer_accounts",
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "Cursor to the next page in the result set. If set all the other fields will be ignored.",
+            "required": false,
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "string"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of resource to return. Max 2000",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "external_id",
+            "in": "query",
+            "description": "Filter accounts that match the external ID",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved a customers accounts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListAccountsPagedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/transactions/batches": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "List batches",
+        "description": "List batches",
+        "operationId": "list_batches",
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "Optional cursor for pagination. Base64-encoded value of ListBatchesPageParams.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Optional number of items to return per page. Default is typically used if not specified.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "file_name",
+            "in": "query",
+            "description": "Optional filter to return only batches that match the entire or part of the file name.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request to list batches completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListBatchesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/accounts/{account_id}/transactions": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "List transactions for an account",
+        "description": "List transactions for an account",
+        "operationId": "list_customer_transactions",
+        "parameters": [
+          {
+            "name": "transaction_state",
+            "in": "query",
+            "description": "Filter transactions by state",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/TransactionState"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "ISO 8601 combined date and time with time zone, that specifies the lower limit of the time window you want to fetch transactions for.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "ISO 8601 combined date and time with time zone, that specifies the upper limit of the time window you want to fetch transactions for.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "Cursor to the next page in the result set. If set all the other fields will be ignored.",
+            "required": false,
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "string"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of resource to return. Max 2000",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved transactions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListTransactionsPagedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/customers": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "List customers",
+        "description": "List customers",
+        "operationId": "list_customers",
+        "parameters": [
+          {
+            "name": "reference",
+            "in": "query",
+            "description": "Filter customers by reference ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "customer_type",
+            "in": "query",
+            "description": "Filter customers by their type",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/CustomerTypeFilter"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "Base64 encoded pagination cursor for fetching subsequent pages",
+            "required": false,
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of customers to return per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of customers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListCustomersResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/documents": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "List documents",
+        "description": "List documents",
+        "operationId": "list_documents",
+        "parameters": [
+          {
+            "name": "reference",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          {
+            "name": "document_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/DocumentType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved contents of directory",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListDocumentsResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Upload Document",
+        "description": "Upload Document",
+        "operationId": "upload_document",
+        "requestBody": {
+          "description": "Document",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadDocumentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully uploaded file",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadDocumentResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/transactions/batches/files": {
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Upload payment batch file.",
+        "description": "Upload payment batch file.",
+        "operationId": "post_batch_file",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "description": "Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadBatchFileRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Batch file has successfully been created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadBatchFileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unable to upload batch file due to bad data"
+          }
+        }
+      }
+    },
+    "/v1/transactions": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Get all transactions across accounts",
+        "description": "Get all transactions across accounts",
+        "operationId": "public_list_all_transactions",
+        "parameters": [
+          {
+            "name": "batch_id",
+            "in": "query",
+            "description": "Filter transactions by batch ID",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "transaction_state",
+            "in": "query",
+            "description": "Filter transactions by state",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/TransactionState"
+            }
+          },
+          {
+            "name": "payment_type",
+            "in": "query",
+            "description": "Filter transactions payment type",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/PaymentTypeQuery"
+            }
+          },
+          {
+            "name": "customer_account_id",
+            "in": "query",
+            "description": "Filter transactions by customer account ID",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "ISO 8601 combined date and time with time zone, that specifies the lower limit of the time window you want to fetch transactions for.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "ISO 8601 combined date and time with time zone, that specifies the upper limit of the time window you want to fetch transactions for.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "reference",
+            "in": "query",
+            "description": "Filter transactions that match the part of the reference",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          {
+            "name": "external_id",
+            "in": "query",
+            "description": "Filter transactions that match the external ID",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          {
+            "name": "account_name",
+            "in": "query",
+            "description": "Filter transactions by account display name (substring match)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "Cursor to the next page in the result set. If set all the other fields will be ignored.",
+            "required": false,
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "string"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of resource to return. Max 2000",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved transactions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListTransactionsPagedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/simulate/execute-payment": {
+      "post": {
+        "tags": [
+          "Simulation"
+        ],
+        "summary": "Simulate executed status for an outbound payment",
+        "description": "Simulate executed status for an outbound payment",
+        "operationId": "simulate_execute_payment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimulateExecutePaymentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Request to execute payment has completed"
+          }
+        }
+      }
+    },
+    "/v1/simulate/fail-payment": {
+      "post": {
+        "tags": [
+          "Simulation"
+        ],
+        "summary": "Simulate failed status for an outbound payment",
+        "description": "Simulate failed status for an outbound payment",
+        "operationId": "simulate_fail_payment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimulateFailPaymentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Request to fail payment has completed"
+          }
+        }
+      }
+    },
+    "/v1/simulate/inbound-payment": {
+      "post": {
+        "tags": [
+          "Simulation"
+        ],
+        "summary": "Simulate inbound payment",
+        "description": "Simulate inbound payment",
+        "operationId": "simulate_inbound_payment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimulateInboundRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Simulated Inbound payment created"
+          }
+        }
+      }
+    },
+    "/v1/simulate/return-payment": {
+      "post": {
+        "tags": [
+          "Simulation"
+        ],
+        "summary": "Simulate a return payment.",
+        "description": "Simulate a return payment.",
+        "operationId": "simulate_return_payment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimulateReturnedPaymentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Request to create a returned payment has completed"
+          }
+        }
+      }
+    },
+    "/v1/customers/{customer_id}/documents/{document_id}": {
+      "delete": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Unlink a document from a customer.",
+        "description": "Unlink a document from a customer.\nA document belonging to a USD onboarded customer cannot be unlinked from the customer.",
+        "operationId": "unlink_document",
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "document_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Document successfully unlinked from customer"
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/token": {
+      "post": {
+        "summary": "Get a bearer token",
+        "description": "This API is designed to issue a bearer token for a valid user. The API will accept a request containing the user's credentials and return a response containing a bearer token.",
+        "operationId": "getting-a-bearer-token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "client_id",
+                  "client_secret",
+                  "audience",
+                  "grant_type"
+                ],
+                "properties": {
+                  "client_id": {
+                    "type": "string",
+                    "description": "Client ID provided when signing up to the Fuse sandbox"
+                  },
+                  "client_secret": {
+                    "type": "string",
+                    "description": "Client secret provided when signing up to the Fuse sandbox"
+                  },
+                  "audience": {
+                    "type": "string",
+                    "default": "https://api.fuse.me"
+                  },
+                  "grant_type": {
+                    "type": "string",
+                    "default": "client_credentials"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n  \"access_token\": \"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImYxMXhWYV9hUHM1cFFEZVNWdzZLYyJ9.eyJpc3MiOiJodHRwczovL2Z1c2ViYW5rZGV2LnVrLmF1dGgwLmNvbS8iLCJzdWIiOiJ0R2w3OWFlYkhOSEV1V2R5bWVtUmJQbXU3UkxnMVVrckBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9hcGkuZnVzZWJhbmsuaW8iLCJpYXQiOjE2Nzg1NTA3MTcsImV4cCI6MTY3ODYzNzExNywiYXpwIjoidEdsNzlhZWJITkhFdVdkeW1lbVJiUG11N1JMZzFVa3IiLCJzY29wZSI6InRlc3Rfc2NvcGUgcmVhZDp0ZXN0IiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.e3H87kiwczZeRHgPtw5q7vFL9z9jx1QqRgQu4bSjGjdZf20-lw_k6LkJcPuhFnxtssLDDCwXtmspFsPwU89WFvkklY-rZ99lP5PK-mMUEgnF1irKyv1WhC5hPGLhM9grsEMlfEr83KAL8HNno0RQHa_GID2jfNcnwrLafik2cm_vHn9z14gJOBt5pdk0HBYtAQem-_rbJOI3pAyJrX46N-AwVMkj3E1ReXcpMBgIvfhasQGtOL7UXDJh_sJDKBGJPmhc5ElWtqqzT23zc-AJpgE32FmzjIi6YofPKYLdQ83J90chYtZbDv95Wk6ELbaeIpFaokKILN399RArb8EshQ\",\n  \"scope\": \"test_scope read:test\",\n  \"expires_in\": 86400,\n  \"token_type\": \"Bearer\"\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImYxMXhWYV9hUHM1cFFEZVNWdzZLYyJ9.eyJpc3MiOiJodHRwczovL2Z1c2ViYW5rZGV2LnVrLmF1dGgwLmNvbS8iLCJzdWIiOiJ0R2w3OWFlYkhOSEV1V2R5bWVtUmJQbXU3UkxnMVVrckBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9hcGkuZnVzZWJhbmsuaW8iLCJpYXQiOjE2Nzg1NTA3MTcsImV4cCI6MTY3ODYzNzExNywiYXpwIjoidEdsNzlhZWJITkhFdVdkeW1lbVJiUG11N1JMZzFVa3IiLCJzY29wZSI6InRlc3Rfc2NvcGUgcmVhZDp0ZXN0IiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.e3H87kiwczZeRHgPtw5q7vFL9z9jx1QqRgQu4bSjGjdZf20-lw_k6LkJcPuhFnxtssLDDCwXtmspFsPwU89WFvkklY-rZ99lP5PK-mMUEgnF1irKyv1WhC5hPGLhM9grsEMlfEr83KAL8HNno0RQHa_GID2jfNcnwrLafik2cm_vHn9z14gJOBt5pdk0HBYtAQem-_rbJOI3pAyJrX46N-AwVMkj3E1ReXcpMBgIvfhasQGtOL7UXDJh_sJDKBGJPmhc5ElWtqqzT23zc-AJpgE32FmzjIi6YofPKYLdQ83J90chYtZbDv95Wk6ELbaeIpFaokKILN399RArb8EshQ"
+                    },
+                    "scope": {
+                      "type": "string",
+                      "example": "test_scope read:test"
+                    },
+                    "expires_in": {
+                      "type": "integer",
+                      "example": 86400,
+                      "default": 0
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "example": "Bearer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "servers": [
+          {
+            "url": "https://auth.fuse.me",
+            "description": "Production auth"
+          },
+          {
+            "url": "https://auth-sandbox.fuse.me",
+            "description": "Sandbox auth"
+          }
+        ],
+        "security": [
+          {}
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddBusinessRequest": {
+        "type": "object",
+        "required": [
+          "display_name",
+          "reference",
+          "address",
+          "business_name",
+          "registration_number",
+          "country_of_issuance"
+        ],
+        "properties": {
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "business_name": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 140
+          },
+          "country_of_issuance": {
+            "type": "string",
+            "format": "string"
+          },
+          "currency_extra": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/BusinessCurrencyExtra"
+            }
+          },
+          "display_name": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 140
+          },
+          "issuance_authority": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "maxLength": 140
+          },
+          "linked_documents": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Document ids for the companies trading licenses.",
+            "deprecated": true
+          },
+          "reference": {
+            "type": "string",
+            "format": "string",
+            "description": "External ID used for correlating the resource with an external system. If specified during transaction creation,\nthis ID will be associated with and visible on all resources related to the customer.",
+            "maxLength": 36
+          },
+          "registration_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "registration_number": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 140
+          },
+          "regulatory_licenses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RegulatoryLicenseType"
+            },
+            "description": "Select one or more license types that the customer holds. If the customer\ndoes not hold any licenses then None should be selected."
+          },
+          "relationship_type": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CustomerRelationshipType",
+                "description": "The relationship type of the customer to the organisation."
+              }
+            ],
+            "default": "direct"
+          }
+        }
+      },
+      "AddCustomerResponse": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "Uuid"
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "required": [
+          "line_1",
+          "country_code"
+        ],
+        "properties": {
+          "country_code": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 2,
+            "minLength": 2
+          },
+          "line_1": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 50
+          },
+          "line_2": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "description": "***optional*** for `AED` payments but ***mandatory*** for `USD` payments",
+            "maxLength": 50
+          },
+          "line_3": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "maxLength": 50
+          },
+          "line_4": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "maxLength": 50
+          }
+        }
+      },
+      "AedLicenseIssuer": {
+        "type": "string",
+        "enum": [
+          "mainland",
+          "freezone",
+          "international"
+        ]
+      },
+      "BusinessCurrencyExtra": {
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "Usd",
+            "required": [
+              "tax_number",
+              "industry_code",
+              "currency"
+            ],
+            "properties": {
+              "currency": {
+                "type": "string",
+                "enum": [
+                  "usd"
+                ]
+              },
+              "industry_code": {
+                "type": "string",
+                "format": "string",
+                "description": "US industry code as defined by the North American Industry Classification System (NAICS) system.\nSee https://reference.fuse.me/naics.html for supported list of codes.",
+                "maxLength": 6,
+                "minLength": 6
+              },
+              "ip_address": {
+                "type": "string",
+                "format": "string",
+                "description": "Optional IP address to use as a Proof of Address. Can be in IPv4 or IPv6 format.",
+                "maxLength": 45,
+                "minLength": 2
+              },
+              "tax_number": {
+                "type": "string",
+                "format": "string",
+                "description": "Valid business tax number.",
+                "maxLength": 100,
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "type": "object",
+            "title": "Aed",
+            "required": [
+              "license_issuer",
+              "currency"
+            ],
+            "properties": {
+              "currency": {
+                "type": "string",
+                "enum": [
+                  "aed"
+                ]
+              },
+              "license_issuer": {
+                "$ref": "#/components/schemas/AedLicenseIssuer",
+                "description": "License issuer type. Use Mainland for businesses registered with the UAE mainland authority,\nor Freezone for businesses registered in a UAE free zone."
+              },
+              "trade_license_expiry": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date"
+              }
+            }
+          }
+        ],
+        "description": "Represents the currency specific data for a business."
+      },
+      "CustomerRelationshipType": {
+        "oneOf": [
+          {
+            "type": "string",
+            "description": "The customer is a direct customer of the organisation.\nThe customer is contracted with the organisation.",
+            "enum": [
+              "direct"
+            ]
+          },
+          {
+            "type": "object",
+            "description": "The customer is a sub-customer of the organisation.\nThe customer is contracted with a direct customer of the organisation.",
+            "required": [
+              "indirect"
+            ],
+            "properties": {
+              "indirect": {
+                "type": "object",
+                "description": "The customer is a sub-customer of the organisation.\nThe customer is contracted with a direct customer of the organisation.",
+                "required": [
+                  "parent_customer_id"
+                ],
+                "properties": {
+                  "parent_customer_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "description": "Represents the relationship between a customer and the organisation."
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "description": "User-facing error type.\n\nThis is the general error structure returned by all api routes.",
+        "required": [
+          "error",
+          "message",
+          "code"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Specific error code."
+          },
+          "error": {
+            "type": "string",
+            "description": "Soon to be deprecated."
+          },
+          "message": {
+            "type": "string",
+            "description": "Renaming of `error`. Human-readable description of the error."
+          }
+        }
+      },
+      "RegulatoryLicenseType": {
+        "type": "string",
+        "enum": [
+          "banking",
+          "card_acquiring",
+          "card_issuer",
+          "crypto_asset",
+          "electronic_money",
+          "forex",
+          "payments",
+          "none",
+          "other",
+          "trading"
+        ]
+      },
+      "AddIndividualRequest": {
+        "type": "object",
+        "required": [
+          "display_name",
+          "reference",
+          "address",
+          "first_name",
+          "last_name",
+          "date_of_birth",
+          "gender",
+          "nationality"
+        ],
+        "properties": {
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "currency_extra": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/IndividualCurrencyExtra"
+            }
+          },
+          "date_of_birth": {
+            "type": "string",
+            "format": "date"
+          },
+          "display_name": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 140
+          },
+          "first_name": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 45
+          },
+          "gender": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Gender"
+              }
+            ]
+          },
+          "identification": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/IndividualIdentification",
+                "description": "Identification document of the individual."
+              }
+            ]
+          },
+          "last_name": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 45
+          },
+          "middle_name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "maxLength": 45
+          },
+          "nationality": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 2,
+            "minLength": 2
+          },
+          "reference": {
+            "type": "string",
+            "format": "string",
+            "description": "Reference set by the customer. Max 36 characters.",
+            "maxLength": 36
+          },
+          "relationship_type": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CustomerRelationshipType",
+                "description": "The relationship type of the customer to the organisation."
+              }
+            ],
+            "default": "direct"
+          }
+        }
+      },
+      "Gender": {
+        "type": "string",
+        "enum": [
+          "male",
+          "female",
+          "undefined"
+        ]
+      },
+      "IndividualCurrencyExtra": {
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "Usd",
+            "required": [
+              "id_number",
+              "country_of_issuance",
+              "country_of_birth",
+              "occupation_code",
+              "currency"
+            ],
+            "properties": {
+              "country_of_birth": {
+                "type": "string",
+                "format": "string",
+                "description": "Country of birth. it should be ISO3166-1 Alpha2 country code",
+                "maxLength": 2,
+                "minLength": 2
+              },
+              "country_of_issuance": {
+                "type": "string",
+                "format": "string",
+                "description": "Country where id was issues. it should be ISO3166-1 Alpha2 country code",
+                "maxLength": 2,
+                "minLength": 2
+              },
+              "currency": {
+                "type": "string",
+                "enum": [
+                  "usd"
+                ]
+              },
+              "id_number": {
+                "type": "string",
+                "format": "string",
+                "description": "Valid person id number (Passport or national id).",
+                "maxLength": 100,
+                "minLength": 1
+              },
+              "ip_address": {
+                "type": "string",
+                "format": "string",
+                "description": "Optional IP address to use as a Proof of Address. Can be in IPv4 or IPv6 format.",
+                "maxLength": 45,
+                "minLength": 2
+              },
+              "occupation_code": {
+                "type": "string",
+                "format": "string",
+                "description": "US occupation code as defined by the Standard Occupational Classification (SOC) system.\nSee https://reference.fuse.me/soc.html for supported list of codes.",
+                "maxLength": 6,
+                "minLength": 6
+              }
+            }
+          }
+        ],
+        "description": "Represents the currency specific data for an individual."
+      },
+      "IndividualIdentification": {
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "Passport",
+            "required": [
+              "number",
+              "expiry_date",
+              "country_of_issuance",
+              "type"
+            ],
+            "properties": {
+              "country_of_issuance": {
+                "type": "string",
+                "format": "string",
+                "description": "Country of issuance (i.e: US, AE)",
+                "maxLength": 2,
+                "minLength": 2
+              },
+              "expiry_date": {
+                "type": "string",
+                "format": "date",
+                "description": "Expiry date of the passport."
+              },
+              "number": {
+                "type": "string",
+                "format": "string",
+                "description": "Passport number.",
+                "maxLength": 100,
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "passport"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "title": "NationalId",
+            "required": [
+              "number",
+              "expiry_date",
+              "country_of_issuance",
+              "type"
+            ],
+            "properties": {
+              "country_of_issuance": {
+                "type": "string",
+                "format": "string",
+                "description": "Country of issuance. (i.e: US, AE)",
+                "maxLength": 2,
+                "minLength": 2
+              },
+              "expiry_date": {
+                "type": "string",
+                "format": "date",
+                "description": "Expiry date of the ID."
+              },
+              "number": {
+                "type": "string",
+                "format": "string",
+                "description": "National ID number.",
+                "maxLength": 100,
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "national_id"
+                ]
+              }
+            }
+          }
+        ],
+        "description": "Individual Identification\n\nIdentification document of an individual."
+      },
+      "AddShareholder": {
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "Shareholder",
+            "required": [
+              "shareholder"
+            ],
+            "properties": {
+              "shareholder": {
+                "type": "object",
+                "required": [
+                  "first_name",
+                  "last_name",
+                  "dob",
+                  "pob",
+                  "id_type",
+                  "id_number"
+                ],
+                "properties": {
+                  "dob": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "first_name": {
+                    "type": "string",
+                    "format": "string",
+                    "maxLength": 45
+                  },
+                  "id_number": {
+                    "type": "string",
+                    "format": "string",
+                    "maxLength": 50
+                  },
+                  "id_type": {
+                    "$ref": "#/components/schemas/WatchlistIdType"
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "format": "string",
+                    "maxLength": 45
+                  },
+                  "middle_name": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "string",
+                    "maxLength": 45
+                  },
+                  "pob": {
+                    "type": "string",
+                    "format": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "title": "BusinessShareholder",
+            "required": [
+              "business_shareholder"
+            ],
+            "properties": {
+              "business_shareholder": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "registration_number"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "format": "string",
+                    "maxLength": 140
+                  },
+                  "registration_number": {
+                    "type": "string",
+                    "format": "string",
+                    "maxLength": 140
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "AddShareholderRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AddShareholder"
+          },
+          {
+            "type": "object",
+            "required": [
+              "holding_percentage"
+            ],
+            "properties": {
+              "holding_percentage": {
+                "type": "integer",
+                "format": "int32",
+                "minimum": 0
+              },
+              "shareholder_of": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "Uuid"
+              }
+            }
+          }
+        ],
+        "description": "Company 1\n  |--> Shareholder 1 (Business)\n  |    |--> Shareholder 3 (Individual)\n  |--> Shareholder 2 (Business)\n  |    |--> Shareholder 4 (Business)\n            |--> Shareholder 5 (Individual)\n\n"
+      },
+      "AddShareholderResponse": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "Uuid"
+          }
+        }
+      },
+      "WatchlistIdType": {
+        "type": "string",
+        "enum": [
+          "passport",
+          "national_id"
+        ]
+      },
+      "AddShareholderRequestV2": {
+        "type": "object",
+        "required": [
+          "ownership_percentage"
+        ],
+        "properties": {
+          "customer_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "Uuid",
+            "description": "`customer_id` of the shareholder."
+          },
+          "ownership_percentage": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          }
+        }
+      },
+      "CreateAccountRequest": {
+        "type": "object",
+        "required": [
+          "account_name",
+          "external_id",
+          "currency",
+          "account_type"
+        ],
+        "properties": {
+          "account_name": {
+            "type": "string",
+            "format": "string",
+            "description": "Friendly label set by the client",
+            "maxLength": 140
+          },
+          "account_type": {
+            "$ref": "#/components/schemas/CreateAccountType",
+            "description": "The account type of the account.\nNote: 'payment' is deprecated and not supported for new accounts. Use 'virtual' instead."
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency",
+            "description": "The desired currency for the account."
+          },
+          "external_id": {
+            "type": "string",
+            "format": "string",
+            "description": "Id to be set by the client",
+            "maxLength": 36
+          }
+        }
+      },
+      "CreateAccountResponse": {
+        "type": "object",
+        "required": [
+          "account_id"
+        ],
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "CreateAccountType": {
+        "type": "string",
+        "description": "The type of account to be created.\nNote: 'Payment' is deprecated and not supported for new accounts.\nAccount type will always be 'Virtual'.",
+        "enum": [
+          "payment",
+          "virtual"
+        ]
+      },
+      "Currency": {
+        "type": "string",
+        "enum": [
+          "AED",
+          "USD",
+          "JOD",
+          "EGP",
+          "SAR",
+          "GBP",
+          "EUR",
+          "HKD",
+          "CNH",
+          "SGD"
+        ]
+      },
+      "AccountDetailsIdentifier": {
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "IBAN",
+            "required": [
+              "iban"
+            ],
+            "properties": {
+              "iban": {
+                "type": "string",
+                "format": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "title": "Wire",
+            "required": [
+              "wire"
+            ],
+            "properties": {
+              "wire": {
+                "$ref": "#/components/schemas/WireBankDetails"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "title": "SCAN",
+            "required": [
+              "scan"
+            ],
+            "properties": {
+              "scan": {
+                "$ref": "#/components/schemas/ScanDetails"
+              }
+            }
+          }
+        ]
+      },
+      "BeneficiaryBank": {
+        "type": "object",
+        "description": "Bank details of payment beneficiary bank.",
+        "properties": {
+          "branch": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "description": "The branch of the bank where the beneficiary account is held.",
+            "maxLength": 50
+          },
+          "code": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The BIC code of the bank where the beneficiary account is held.\nOptional for AED payments. Mandatory for USD payments.",
+            "minLength": 8
+          },
+          "intermediary_bank": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/IntermediaryBank",
+                "description": "The intermediary bank details."
+              }
+            ]
+          }
+        }
+      },
+      "BicCode": {
+        "type": "string",
+        "description": "BIC Code to identify a bank."
+      },
+      "CounterpartType": {
+        "type": "string",
+        "enum": [
+          "individual",
+          "business"
+        ]
+      },
+      "CreateCustomerPaymentRequest": {
+        "type": "object",
+        "description": "Parameters required to create a payment.",
+        "required": [
+          "amount",
+          "beneficiary",
+          "external_reference",
+          "purpose"
+        ],
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Payment amount.",
+            "minimum": 0
+          },
+          "beneficiary": {
+            "$ref": "#/components/schemas/PaymentDetails",
+            "description": "External account identifier of the beneficiary."
+          },
+          "external_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "description": "External ID set by the customer. The external ID will be available\non all resources related to the transaction if set when creating\nthe transaction.",
+            "maxLength": 36
+          },
+          "external_reference": {
+            "type": "string",
+            "description": "Payment reference for the payment.",
+            "maxLength": 100
+          },
+          "purpose": {
+            "$ref": "#/components/schemas/PurposeCode",
+            "description": "Reason for the transaction."
+          }
+        }
+      },
+      "CreatePaymentResponse": {
+        "type": "object",
+        "required": [
+          "transaction_id"
+        ],
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Id of the created payment."
+          }
+        }
+      },
+      "Identification": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/uae_id"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "uae_id"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/passport"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "passport"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "description": "The identification field is **not** required. When provided, then all UAE_ID fields or PASSPORT fields are required."
+      },
+      "IntermediaryBank": {
+        "type": "object",
+        "required": [
+          "code"
+        ],
+        "properties": {
+          "account_number": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "maxLength": 25
+          },
+          "code": {
+            "$ref": "#/components/schemas/BicCode"
+          }
+        }
+      },
+      "PaymentDetails": {
+        "type": "object",
+        "description": "Account details of the payment beneficiary.",
+        "required": [
+          "account_holder_name",
+          "account_identifier",
+          "address",
+          "type"
+        ],
+        "properties": {
+          "account_holder_name": {
+            "type": "string",
+            "format": "string",
+            "description": "Name of the beneficiary account.\n\n**Note:** When the `beneficiary_type` is `individual`, the name may not contain any digits.\n**Note:** When the payment currency is `USD`, max length 35 characters.",
+            "maxLength": 140
+          },
+          "account_identifier": {
+            "$ref": "#/components/schemas/AccountDetailsIdentifier",
+            "description": "External account identifier of the beneficiary account."
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address",
+            "description": "Address of the beneficiary account.\n\n**Note:** When the payment currency is `USD`, the following field restrictions apply:\n- **Line 1:** Required, maximum length 35 characters.\n- **Line 2:** Required, maximum length 35 characters.\n- **Line 3:** Optional, maximum length 20 characters (city or postcode/zipcode recommended).)"
+          },
+          "bank": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/BeneficiaryBank",
+                "description": "The bank details where the beneficiary account is held."
+              }
+            ]
+          },
+          "date_of_birth": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "email": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "description": "The beneficiary's email address."
+          },
+          "identification": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Identification"
+              }
+            ]
+          },
+          "nationality": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string"
+          },
+          "phone": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "description": "The beneficiary's phone number."
+          },
+          "type": {
+            "$ref": "#/components/schemas/CounterpartType"
+          }
+        },
+        "example": {}
+      },
+      "PurposeCode": {
+        "type": "string",
+        "description": "Enum representing different payment purposes.",
+        "enum": [
+          "charity",
+          "commercial_investment",
+          "corporate_card",
+          "credit_card",
+          "dividend",
+          "family",
+          "financial_services",
+          "goods_sold",
+          "goods_bought",
+          "government",
+          "insurance",
+          "intergroup_transfer",
+          "intra_group_dividends",
+          "information_technology",
+          "leasing",
+          "loan_charges",
+          "merchant_settlement",
+          "mobile_wallet",
+          "non_resident_transfer_between_accounts",
+          "none",
+          "pension",
+          "personal_expenses",
+          "prepaid_cards",
+          "professional",
+          "rental",
+          "resident_transfer_between_accounts",
+          "salaries",
+          "tax",
+          "telecommunications",
+          "travel",
+          "utility_bill"
+        ]
+      },
+      "ScanDetails": {
+        "type": "object",
+        "required": [
+          "sort_code",
+          "account_number"
+        ],
+        "properties": {
+          "account_number": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 8
+          },
+          "sort_code": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 6
+          }
+        }
+      },
+      "WireBankDetails": {
+        "type": "object",
+        "required": [
+          "account_number",
+          "routing_number"
+        ],
+        "properties": {
+          "account_number": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 27
+          },
+          "routing_number": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 12
+          }
+        }
+      },
+      "passport": {
+        "type": "object",
+        "required": [
+          "number",
+          "country_of_issue"
+        ],
+        "properties": {
+          "country_of_issue": {
+            "type": "string",
+            "format": "string"
+          },
+          "number": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 50
+          }
+        }
+      },
+      "uae_id": {
+        "type": "object",
+        "required": [
+          "number"
+        ],
+        "properties": {
+          "number": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 50
+          }
+        }
+      },
+      "CreateExchangeRequest": {
+        "type": "object",
+        "required": [
+          "external_reference",
+          "from",
+          "to"
+        ],
+        "properties": {
+          "external_reference": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "from": {
+            "$ref": "#/components/schemas/ExchangeAccountDetails"
+          },
+          "to": {
+            "$ref": "#/components/schemas/ExchangeAccountDetails"
+          }
+        }
+      },
+      "CreateExchangeResponse": {
+        "type": "object",
+        "required": [
+          "transaction_id"
+        ],
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "ExchangeAccountDetails": {
+        "type": "object",
+        "required": [
+          "account_id"
+        ],
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "amount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64",
+            "minimum": 0
+          }
+        }
+      },
+      "CreateInternalTransferRequest": {
+        "type": "object",
+        "description": "Parameters for doing an internal transfer.",
+        "required": [
+          "from_account_id",
+          "to_account_id",
+          "amount",
+          "external_reference"
+        ],
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Transfer amount.",
+            "minimum": 0
+          },
+          "external_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "description": "External ID set by the customer. The external ID will be available\non all resources related to the transaction if set when creating\nthe transaction.",
+            "maxLength": 36
+          },
+          "external_reference": {
+            "type": "string",
+            "description": "External reference as set by the client.",
+            "maxLength": 100
+          },
+          "from_account_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The ID of the Fuse account where the funds will be paid from."
+          },
+          "to_account_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The ID of the Fuse account where the funds will be paid to."
+          }
+        }
+      },
+      "CreateInternalTransferResponse": {
+        "type": "object",
+        "required": [
+          "transaction_id"
+        ],
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "EstimateFeeResponse": {
+        "type": "object",
+        "required": [
+          "account_id",
+          "instructed_amount",
+          "fee_amount",
+          "amount_with_fee",
+          "currency",
+          "estimated_at"
+        ],
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "amount_with_fee": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "estimated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fee_amount": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          },
+          "instructed_amount": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          }
+        }
+      },
+      "AccountHistory": {
+        "type": "object",
+        "description": "Balance history for an account.",
+        "required": [
+          "id",
+          "history"
+        ],
+        "properties": {
+          "history": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/History"
+            },
+            "description": "List of daily summaries."
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Account id."
+          }
+        }
+      },
+      "History": {
+        "type": "object",
+        "required": [
+          "date",
+          "closing_balance"
+        ],
+        "properties": {
+          "closing_balance": {
+            "type": "integer",
+            "format": "int64",
+            "description": "End of day balance.",
+            "minimum": 0
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Summary date."
+          }
+        }
+      },
+      "Batch": {
+        "type": "object",
+        "required": [
+          "batch_id",
+          "file_name",
+          "record_count",
+          "status",
+          "created_at",
+          "total_instructed_amount",
+          "records"
+        ],
+        "properties": {
+          "batch_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "file_name": {
+            "type": "string"
+          },
+          "record_count": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LocalPaymentRecord"
+            }
+          },
+          "status": {
+            "$ref": "#/components/schemas/BatchStatus"
+          },
+          "total_instructed_amount": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          }
+        }
+      },
+      "BatchStatus": {
+        "type": "string",
+        "enum": [
+          "Created",
+          "Processed"
+        ]
+      },
+      "BeneficiaryType": {
+        "type": "string",
+        "enum": [
+          "individual",
+          "business"
+        ]
+      },
+      "LocalPaymentRecord": {
+        "type": "object",
+        "required": [
+          "sequence_no",
+          "source_account_id",
+          "instructed_amount",
+          "beneficiary_name",
+          "beneficiary_bic",
+          "beneficiary_address_line1",
+          "external_reference",
+          "purpose"
+        ],
+        "properties": {
+          "beneficiary_account_number": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 27
+          },
+          "beneficiary_address_country": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "beneficiary_address_line1": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 50
+          },
+          "beneficiary_address_line2": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "maxLength": 50
+          },
+          "beneficiary_address_line3": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "maxLength": 50
+          },
+          "beneficiary_address_line4": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "maxLength": 50
+          },
+          "beneficiary_bank_branch": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "beneficiary_bic": {
+            "type": "string",
+            "format": "string",
+            "minLength": 8
+          },
+          "beneficiary_date_of_birth": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "beneficiary_email": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "beneficiary_iban": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "beneficiary_id_number": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "beneficiary_id_type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "beneficiary_name": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 140
+          },
+          "beneficiary_nationality": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "beneficiary_phone": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "beneficiary_sort_code": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 6
+          },
+          "beneficiary_type": {
+            "$ref": "#/components/schemas/BeneficiaryType"
+          },
+          "beneficiary_wire_routing_number": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 12
+          },
+          "external_reference": {
+            "type": "string",
+            "minLength": 100
+          },
+          "instructed_amount": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          },
+          "purpose": {
+            "$ref": "#/components/schemas/PurposeCode"
+          },
+          "sequence_no": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "source_account_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "ApprovalStatus": {
+        "type": "string",
+        "enum": [
+          "auto_approved",
+          "pending",
+          "approved",
+          "rejected"
+        ]
+      },
+      "Customer": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CustomerExtraAPI"
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "reference",
+              "display_name",
+              "address",
+              "documents",
+              "approval_status",
+              "relationship_type"
+            ],
+            "properties": {
+              "address": {
+                "$ref": "#/components/schemas/Address"
+              },
+              "approval_status": {
+                "$ref": "#/components/schemas/ApprovalStatus"
+              },
+              "display_name": {
+                "type": "string"
+              },
+              "documents": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DocumentSummary"
+                }
+              },
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "reference": {
+                "type": "string",
+                "maxLength": 36
+              },
+              "rejection_reason": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "#/components/schemas/RejectionReason"
+                  }
+                ]
+              },
+              "relationship_type": {
+                "$ref": "#/components/schemas/CustomerRelationshipType"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerExtraAPI": {
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "Individual",
+            "required": [
+              "individual"
+            ],
+            "properties": {
+              "individual": {
+                "type": "object",
+                "required": [
+                  "first_name",
+                  "last_name",
+                  "date_of_birth",
+                  "gender",
+                  "nationality",
+                  "currency_extra"
+                ],
+                "properties": {
+                  "currency_extra": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/IndividualCurrencyExtra"
+                    }
+                  },
+                  "date_of_birth": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "gender": {
+                    "$ref": "#/components/schemas/Gender"
+                  },
+                  "identification": {
+                    "oneOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "$ref": "#/components/schemas/IndividualIdentification"
+                      }
+                    ]
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "middle_name": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "nationality": {
+                    "type": "string",
+                    "format": "string",
+                    "maxLength": 2,
+                    "minLength": 2
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "title": "Business",
+            "required": [
+              "business"
+            ],
+            "properties": {
+              "business": {
+                "type": "object",
+                "required": [
+                  "business_name",
+                  "registration_number",
+                  "country_of_issuance",
+                  "regulatory_licenses",
+                  "currency_extra"
+                ],
+                "properties": {
+                  "business_name": {
+                    "type": "string"
+                  },
+                  "country_of_issuance": {
+                    "type": "string",
+                    "format": "string",
+                    "maxLength": 2,
+                    "minLength": 2
+                  },
+                  "currency_extra": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/BusinessCurrencyExtra"
+                    }
+                  },
+                  "issuance_authority": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "registration_date": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "date"
+                  },
+                  "registration_number": {
+                    "type": "string"
+                  },
+                  "regulatory_licenses": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/RegulatoryLicenseType"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "DocumentSummary": {
+        "type": "object",
+        "required": [
+          "id",
+          "document_type",
+          "reference"
+        ],
+        "properties": {
+          "document_type": {
+            "$ref": "#/components/schemas/DocumentType"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reference": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 35
+          }
+        }
+      },
+      "DocumentType": {
+        "type": "string",
+        "description": "Types of documents that can be uploaded for customers and transactions.",
+        "enum": [
+          "passport",
+          "visa",
+          "national_id",
+          "trade_licence",
+          "commercial_licence",
+          "identity_verification_biometrics",
+          "incorporation_cert",
+          "incumbency_cert",
+          "memorandum_articles",
+          "bank_statement",
+          "photo",
+          "proof_of_address",
+          "regulatory_license",
+          "articles_of_association",
+          "source_of_funds",
+          "aml_cft_sanctions_ind_audit",
+          "aml_cft_sanctions_policy",
+          "compliance_officer_resume",
+          "financial_statements",
+          "share_certificate",
+          "corporate_resolution",
+          "wolfsberg_gcbddq",
+          "edd_concentration_form",
+          "other"
+        ]
+      },
+      "GetCustomerResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Customer"
+          }
+        ]
+      },
+      "RejectionReason": {
+        "type": "string",
+        "enum": [
+          "prohibited",
+          "sanction",
+          "pep",
+          "financial_crimes",
+          "other"
+        ]
+      },
+      "Account": {
+        "type": "object",
+        "description": "Account.",
+        "required": [
+          "id",
+          "account_name",
+          "account_owner",
+          "status",
+          "current_balance",
+          "available_balance",
+          "addressable_details",
+          "currency",
+          "account_type"
+        ],
+        "properties": {
+          "account_name": {
+            "type": "string",
+            "format": "string",
+            "description": "User-friendly account name.",
+            "maxLength": 140
+          },
+          "account_owner": {
+            "type": "string",
+            "format": "string",
+            "description": "Name of the account holder. This is the name that\nwill show up on any bank statement.",
+            "maxLength": 140
+          },
+          "account_type": {
+            "$ref": "#/components/schemas/AccountType"
+          },
+          "addressable_details": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AddressableDetails"
+            },
+            "description": "A list of addressable account identifiers associated with this account.\nThese identifiers can be used to receive money into the account.\nPlease note that this can contain multiple details addressable over\na different payment schemes."
+          },
+          "available_balance": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Sum of the immediate available funds in the account.\nThis includes transactions that have not yet been cleared.",
+            "minimum": 0
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency",
+            "description": "What currency the account holds funds in."
+          },
+          "current_balance": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Sum of all the money in the account.",
+            "minimum": 0
+          },
+          "customer_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "default_details": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/AccountDetailsIdentifier",
+                "description": "The account's externally addressable detail.\nIt is used as details when sending money into the account,\nand will show up un the account statements."
+              }
+            ]
+          },
+          "external_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "User-provided account id."
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Account id."
+          },
+          "status": {
+            "$ref": "#/components/schemas/AccountStatus",
+            "description": "Which state the account is in: Open, Closed, Frozen."
+          }
+        }
+      },
+      "AccountStatus": {
+        "type": "string",
+        "enum": [
+          "open",
+          "frozen",
+          "closed"
+        ]
+      },
+      "AccountType": {
+        "type": "string",
+        "enum": [
+          "primary",
+          "payment",
+          "virtual"
+        ]
+      },
+      "AddressableDetails": {
+        "type": "object",
+        "description": "Account details with supported payment schemes.",
+        "required": [
+          "account_details",
+          "payment_schemes"
+        ],
+        "properties": {
+          "account_details": {
+            "$ref": "#/components/schemas/AccountDetailsIdentifier"
+          },
+          "payment_schemes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentScheme"
+            },
+            "description": "List of payment schemes that this account details are addressable over."
+          }
+        }
+      },
+      "PaymentScheme": {
+        "type": "string",
+        "enum": [
+          "uae_fts",
+          "uae_ipp",
+          "swift",
+          "fedwire",
+          "ach",
+          "sepa",
+          "sepa_instant",
+          "faster_payments"
+        ]
+      },
+      "ErrorCode": {
+        "type": "string",
+        "enum": [
+          "missing_document",
+          "missing_currency_data",
+          "no_shareholders",
+          "insufficient_majority_owership",
+          "shareholder_not_onboarded",
+          "business_registration_date_missing",
+          "invalid_business_registration_date",
+          "business_registration_number_missing",
+          "business_trade_license_expiry_missing",
+          "expired_trade_license",
+          "expired_identification_document",
+          "individual_missing_proof_of_address_document",
+          "business_missing_proof_of_address_document",
+          "invalid_documents",
+          "invalid_customer_name",
+          "invalid_shareholder_name",
+          "invalid_customer_address"
+        ]
+      },
+      "Onboarding": {
+        "type": "object",
+        "required": [
+          "currency",
+          "customer_id",
+          "status"
+        ],
+        "properties": {
+          "currency": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "customer_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/OnboardingStatus"
+          }
+        }
+      },
+      "OnboardingCurrency": {
+        "type": "string",
+        "enum": [
+          "usd",
+          "eur",
+          "gbp",
+          "aed"
+        ]
+      },
+      "OnboardingError": {
+        "type": "object",
+        "required": [
+          "msg",
+          "code"
+        ],
+        "properties": {
+          "code": {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          "msg": {
+            "type": "string"
+          }
+        }
+      },
+      "OnboardingStatus": {
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "pending"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "completed"
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "failed"
+            ],
+            "properties": {
+              "failed": {
+                "$ref": "#/components/schemas/OnboardingError"
+              }
+            }
+          }
+        ]
+      },
+      "Document": {
+        "type": "object",
+        "required": [
+          "id",
+          "reference",
+          "document_type",
+          "checksum",
+          "url"
+        ],
+        "properties": {
+          "checksum": {
+            "type": "string"
+          },
+          "document_type": {
+            "$ref": "#/components/schemas/DocumentType"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reference": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 35
+          },
+          "size_bytes": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32",
+            "minimum": 0
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "GetExchangeRateResponse": {
+        "type": "object",
+        "required": [
+          "exchange_rate",
+          "from_amount",
+          "from_currency",
+          "to_amount",
+          "to_currency"
+        ],
+        "properties": {
+          "exchange_rate": {
+            "type": "number",
+            "format": "float"
+          },
+          "from_amount": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          },
+          "from_currency": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "to_amount": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          },
+          "to_currency": {
+            "$ref": "#/components/schemas/Currency"
+          }
+        }
+      },
+      "GetShareholderResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Shareholder"
+          },
+          {
+            "type": "object",
+            "required": [
+              "shareholder_type",
+              "holding_percent"
+            ],
+            "properties": {
+              "holding_percent": {
+                "type": "integer",
+                "format": "int32",
+                "minimum": 0
+              },
+              "shareholder_of": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "Uuid"
+              },
+              "shareholder_type": {
+                "$ref": "#/components/schemas/ShareholderType"
+              }
+            }
+          }
+        ]
+      },
+      "Shareholder": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "shareholder"
+            ],
+            "properties": {
+              "shareholder": {
+                "type": "object",
+                "required": [
+                  "first_name",
+                  "last_name",
+                  "dob",
+                  "pob",
+                  "id_type",
+                  "id_number"
+                ],
+                "properties": {
+                  "dob": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "id_number": {
+                    "type": "string"
+                  },
+                  "id_type": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "middle_name": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "pob": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "business_shareholder"
+            ],
+            "properties": {
+              "business_shareholder": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "registration_number"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "registration_number": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "ShareholderType": {
+        "type": "string",
+        "enum": [
+          "shareholder",
+          "business_shareholder"
+        ]
+      },
+      "BeneficiaryDetails": {
+        "type": "object",
+        "description": "Account details of the payment beneficiary.",
+        "required": [
+          "name",
+          "identifier"
+        ],
+        "properties": {
+          "identifier": {
+            "$ref": "#/components/schemas/AccountDetailsIdentifier",
+            "description": "External account identifier of the beneficiary account."
+          },
+          "name": {
+            "type": "string",
+            "format": "string",
+            "description": "Name of the beneficiary account.",
+            "maxLength": 140
+          }
+        }
+      },
+      "BeneficiaryExtraDetails": {
+        "type": "object",
+        "description": "Additional details of the beneficiary. It will be not set for inbound payments.",
+        "properties": {
+          "address": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Address",
+                "description": "Address of the beneficiary."
+              }
+            ]
+          },
+          "bic_code": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "description": "Bank identifier code (BIC) of the beneficiary."
+          }
+        }
+      },
+      "Direction": {
+        "type": "string",
+        "description": "Transaction direction.",
+        "enum": [
+          "Inbound",
+          "Outbound"
+        ]
+      },
+      "FeeDebit": {
+        "type": "object",
+        "required": [
+          "id",
+          "fee_target",
+          "amount",
+          "account_id",
+          "timestamp",
+          "currency"
+        ],
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "amount": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "fee_target": {
+            "$ref": "#/components/schemas/FeeTargetRef"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FeeSourceRef": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "included_in_payment"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "primary_account"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "FeeTargetRef": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "reference",
+              "type"
+            ],
+            "properties": {
+              "reference": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "Transaction"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "FxTransfer": {
+        "type": "object",
+        "required": [
+          "id",
+          "account_id",
+          "external_reference",
+          "state",
+          "rate",
+          "direction",
+          "instructed_amount",
+          "currency",
+          "counterpart_amount",
+          "counterpart_currency",
+          "counterpart_account_id",
+          "created_at"
+        ],
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The account that the transfer applies to."
+          },
+          "counterpart_account_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "When `direction` is `Inbound` it is the ID of the account that was debited\nWhen `direction` is 'Outbound' it is the ID of the account that was credited"
+          },
+          "counterpart_amount": {
+            "type": "integer",
+            "format": "int64",
+            "description": "When `direction` is `Inbound` it is the counterpart transaction amount that was debited from the counterpart account.\nWhen `direction` is `Outbound` it is the counterpart transaction amount that was credited from the counterpart account.",
+            "minimum": 0
+          },
+          "counterpart_currency": {
+            "$ref": "#/components/schemas/Currency",
+            "description": "When `direction` is `Inbound` it is the currency of the counterpart transaction from counterpart account.\nWhen `direction` is `Outbound` it is the currency of the counterpart transaction into the counterpart account."
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the transaction was created."
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency",
+            "description": "When `direction` is `Inbound` it is the currency for the amount credited into the account.\nWhen `direction` is `Outbound` it is the currency for the amount that was debited from the account."
+          },
+          "direction": {
+            "$ref": "#/components/schemas/Direction",
+            "description": "Whether this transaction credits or debits the account."
+          },
+          "executed_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "When the transaction was cleared by the bank."
+          },
+          "external_reference": {
+            "type": "string",
+            "description": "User-friendly transaction reference."
+          },
+          "failed_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "When the transaction was failed."
+          },
+          "failure_reason": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PaymentFailure",
+                "description": "Why the transaction was rejected."
+              }
+            ]
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Id of the transaction."
+          },
+          "instructed_amount": {
+            "type": "integer",
+            "format": "int64",
+            "description": "When `direction` is `Inbound` it is the amount that was credited into the account.\nWhen `direction` is `Outbound` it is the amount that was debited from the account.",
+            "minimum": 0
+          },
+          "rate": {
+            "type": "number",
+            "format": "float",
+            "description": "The exchange rate used for the transaction."
+          },
+          "state": {
+            "$ref": "#/components/schemas/FxTransferTransactionState",
+            "description": "Current state of the transaction."
+          },
+          "submitted_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "When the transaction was submitted to the bank."
+          }
+        }
+      },
+      "FxTransferTransactionState": {
+        "type": "string",
+        "description": "Internal transfer state",
+        "enum": [
+          "Created",
+          "Submitted",
+          "Executed",
+          "Failed",
+          "Settled"
+        ]
+      },
+      "InternalTransfer": {
+        "type": "object",
+        "description": "Internal Transfer",
+        "required": [
+          "id",
+          "account_id",
+          "currency",
+          "external_reference",
+          "state",
+          "direction",
+          "instructed_amount",
+          "counterpart_account_id",
+          "created_at"
+        ],
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The account that the transfer applies to."
+          },
+          "counterpart_account_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "When `direction` is `Inbound` it contains the account id of the remitter.\nWhen `direction` is `Outbound` it contains the account id of the beneficiary."
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the transaction was created."
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency",
+            "description": "Which currency the funds were transferred in."
+          },
+          "direction": {
+            "$ref": "#/components/schemas/Direction",
+            "description": "Whether this transaction credits or debits the account."
+          },
+          "external_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The external ID set when the internal transfer was created.",
+            "maxLength": 36
+          },
+          "external_reference": {
+            "type": "string",
+            "description": "User-friendly transfer reference."
+          },
+          "failed_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "When the transaction failed."
+          },
+          "failure_reason": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PaymentFailure",
+                "description": "The reason the transaction failed."
+              }
+            ]
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Id of the transfer."
+          },
+          "instructed_amount": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The transfer amount.",
+            "minimum": 0
+          },
+          "settled_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "When the transaction settled."
+          },
+          "state": {
+            "$ref": "#/components/schemas/InternalTransferTransactionState",
+            "description": "Current state of the transfer."
+          }
+        }
+      },
+      "InternalTransferTransactionState": {
+        "type": "string",
+        "description": "Internal transfer state",
+        "enum": [
+          "Created",
+          "Booked",
+          "Failed",
+          "Settled"
+        ]
+      },
+      "LocalPayment": {
+        "type": "object",
+        "description": "Payment",
+        "required": [
+          "id",
+          "account_id",
+          "remitter",
+          "currency",
+          "external_reference",
+          "state",
+          "direction",
+          "instructed_amount",
+          "amount_with_fee",
+          "fee_amount",
+          "beneficiary",
+          "created_at",
+          "purpose"
+        ],
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The account that the transaction applies to."
+          },
+          "amount_with_fee": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The transaction amount including the fee char.",
+            "minimum": 0
+          },
+          "authorised_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "When the transaction passed transaction monitoring checks."
+          },
+          "batch": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/transaction.Batch",
+                "description": "If the payment was created from a batch file submission,\nthis will contain references to the batch id and the payments\nsequence number within that batch."
+              }
+            ]
+          },
+          "beneficiary": {
+            "$ref": "#/components/schemas/BeneficiaryDetails",
+            "description": "When `direction` is `Inbound` it contains the account details of the remitter.\nWhen `direction` is `Outbound` it contains the account details of the beneficiary."
+          },
+          "beneficiary_extra": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/BeneficiaryExtraDetails",
+                "description": "When `direction` is `Outbound` it contains additional account details of the beneficiary.\nWhen `direction` is `Inbound` it is not set."
+              }
+            ]
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the transaction was created."
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency",
+            "description": "The transaction was made in this currency."
+          },
+          "direction": {
+            "$ref": "#/components/schemas/Direction",
+            "description": "Whether this transaction credited or debited funds in the account."
+          },
+          "executed_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "When the transaction was cleared by the bank."
+          },
+          "external_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The external ID set when creating the transaction."
+          },
+          "external_reference": {
+            "type": "string",
+            "description": "Transaction reference."
+          },
+          "failed_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "When the transaction was failed."
+          },
+          "failure_reason": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PaymentFailure",
+                "description": "Why the transaction was rejected."
+              }
+            ]
+          },
+          "fee_amount": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The fee amount charged for the payment.",
+            "minimum": 0
+          },
+          "fee_source": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/FeeSourceRef",
+                "description": "Where the fee was taken from.\nWhen `fee_amount` is 0, this field is not set."
+              }
+            ]
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Transaction id."
+          },
+          "instructed_amount": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The transaction amount.",
+            "minimum": 0
+          },
+          "purpose": {
+            "$ref": "#/components/schemas/PurposeCode",
+            "description": "The purpose of the payment (Outbound only)."
+          },
+          "remitter": {
+            "$ref": "#/components/schemas/RemitterDetails",
+            "description": "The account that the transaction applies to."
+          },
+          "scheme": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PaymentScheme",
+                "description": "The payment scheme the payment was sent over.\nOnly present if this is known."
+              }
+            ]
+          },
+          "state": {
+            "$ref": "#/components/schemas/TransactionState",
+            "description": "The state of the transaction."
+          },
+          "submitted_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "When the transaction was submitted to the bank."
+          }
+        }
+      },
+      "LocalReturnPayment": {
+        "type": "object",
+        "description": "Return Payment",
+        "required": [
+          "id",
+          "account_id",
+          "remitter",
+          "currency",
+          "external_reference",
+          "state",
+          "direction",
+          "instructed_amount",
+          "beneficiary",
+          "created_at",
+          "reason",
+          "returned_id"
+        ],
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The account that the transaction applies to."
+          },
+          "beneficiary": {
+            "$ref": "#/components/schemas/BeneficiaryDetails",
+            "description": "When `direction` is `Inbound` it contains the account details of the remitter.\nWhen `direction` is `Outbound` it contains the account details of the beneficiary."
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the transaction was created."
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency",
+            "description": "The transaction was made in this currency."
+          },
+          "direction": {
+            "$ref": "#/components/schemas/Direction",
+            "description": "Whether this transaction credited or debited funds in the account."
+          },
+          "external_reference": {
+            "type": "string",
+            "description": "Transaction reference."
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Transaction id."
+          },
+          "instructed_amount": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The transaction amount.",
+            "minimum": 0
+          },
+          "reason": {
+            "type": "string",
+            "format": "string",
+            "description": "The reason why the payment has been returned.",
+            "maxLength": 140
+          },
+          "remitter": {
+            "$ref": "#/components/schemas/RemitterDetails",
+            "description": "The account that the transaction applies to."
+          },
+          "returned_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The id of the outbound payment that has been returned."
+          },
+          "state": {
+            "$ref": "#/components/schemas/TransactionState",
+            "description": "The state of the transaction."
+          }
+        }
+      },
+      "PaymentFailure": {
+        "oneOf": [
+          {
+            "type": "object",
+            "description": "Error returned by the bank.",
+            "required": [
+              "bank_error"
+            ],
+            "properties": {
+              "bank_error": {
+                "type": "string",
+                "description": "Error returned by the bank."
+              }
+            }
+          },
+          {
+            "type": "string",
+            "description": "Account did not have sufficient funds.",
+            "enum": [
+              "insufficient_funds"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "internal_accounts_differ"
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "system_error"
+            ],
+            "properties": {
+              "system_error": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "compliance_error"
+            ],
+            "properties": {
+              "compliance_error": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "account_frozen"
+            ]
+          }
+        ]
+      },
+      "RemitterDetails": {
+        "type": "object",
+        "description": "Account details of the payment remitter.",
+        "required": [
+          "name",
+          "identifier"
+        ],
+        "properties": {
+          "identifier": {
+            "$ref": "#/components/schemas/AccountDetailsIdentifier",
+            "description": "External account identifier of the remitter account."
+          },
+          "name": {
+            "type": "string",
+            "format": "string",
+            "description": "Name of the remitter account.",
+            "maxLength": 140
+          }
+        }
+      },
+      "Transaction": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LocalPayment",
+                "description": "Payment."
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "local_payment"
+                    ]
+                  }
+                }
+              }
+            ],
+            "description": "Payment."
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LocalReturnPayment",
+                "description": "Payment that has been returned."
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "local_return_payment"
+                    ]
+                  }
+                }
+              }
+            ],
+            "description": "Payment that has been returned."
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InternalTransfer",
+                "description": "Internal transfer - between two accounts."
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "internal_transfer"
+                    ]
+                  }
+                }
+              }
+            ],
+            "description": "Internal transfer - between two accounts."
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FxTransfer",
+                "description": "Exchange transfer - between two accounts held in different currencies."
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "f_x_transfer"
+                    ]
+                  }
+                }
+              }
+            ],
+            "description": "Exchange transfer - between two accounts held in different currencies."
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FeeDebit",
+                "description": "Fee debit"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "fee_debit"
+                    ]
+                  }
+                }
+              }
+            ],
+            "description": "Fee debit"
+          }
+        ],
+        "description": "Transaction Container."
+      },
+      "TransactionState": {
+        "type": "string",
+        "description": "Transaction State.",
+        "enum": [
+          "Created",
+          "Submitted",
+          "Executed",
+          "Failed",
+          "Settled"
+        ]
+      },
+      "transaction.Batch": {
+        "type": "object",
+        "required": [
+          "batch_id",
+          "batch_sequence_no"
+        ],
+        "properties": {
+          "batch_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Which batch the payment was created from."
+          },
+          "batch_sequence_no": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The sequence number of the payment within that batch.",
+            "minimum": 0
+          }
+        }
+      },
+      "LinkDocumentRequest": {
+        "type": "object",
+        "required": [
+          "document_id"
+        ],
+        "properties": {
+          "document_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "Cursor_String": {
+        "type": "object",
+        "required": [
+          "size"
+        ],
+        "properties": {
+          "next": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "ListAccountsPagedResponse": {
+        "type": "object",
+        "required": [
+          "pages",
+          "results"
+        ],
+        "properties": {
+          "pages": {
+            "$ref": "#/components/schemas/Cursor_String"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Account"
+            }
+          }
+        }
+      },
+      "BatchSummary": {
+        "type": "object",
+        "required": [
+          "batch_id",
+          "file_name",
+          "total_instructed_amount",
+          "record_count",
+          "status",
+          "created_at"
+        ],
+        "properties": {
+          "batch_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "file_name": {
+            "type": "string"
+          },
+          "record_count": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "status": {
+            "$ref": "#/components/schemas/BatchStatus"
+          },
+          "total_instructed_amount": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          }
+        }
+      },
+      "ListBatchesResponse": {
+        "type": "object",
+        "required": [
+          "pages",
+          "batches"
+        ],
+        "properties": {
+          "batches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BatchSummary"
+            }
+          },
+          "pages": {
+            "$ref": "#/components/schemas/Cursor_String"
+          }
+        }
+      },
+      "ListTransactionsPagedResponse": {
+        "type": "object",
+        "required": [
+          "pages",
+          "results"
+        ],
+        "properties": {
+          "pages": {
+            "$ref": "#/components/schemas/Cursor_String"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            }
+          }
+        }
+      },
+      "CustomerSummary": {
+        "type": "object",
+        "required": [
+          "id",
+          "reference",
+          "customer_type",
+          "display_name",
+          "created_at",
+          "approval_status"
+        ],
+        "properties": {
+          "approval_status": {
+            "$ref": "#/components/schemas/ApprovalStatus"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "customer_type": {
+            "$ref": "#/components/schemas/CustomerTypeFilter"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reference": {
+            "type": "string",
+            "maxLength": 36
+          }
+        }
+      },
+      "CustomerTypeFilter": {
+        "type": "string",
+        "enum": [
+          "individual",
+          "business"
+        ]
+      },
+      "ListCustomersResponse": {
+        "type": "object",
+        "required": [
+          "pages",
+          "customers"
+        ],
+        "properties": {
+          "customers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerSummary"
+            }
+          },
+          "pages": {
+            "$ref": "#/components/schemas/Cursor_String"
+          }
+        }
+      },
+      "ListDocumentsResponse": {
+        "type": "object",
+        "required": [
+          "documents"
+        ],
+        "properties": {
+          "documents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentSummary"
+            }
+          }
+        }
+      },
+      "ShareholderSummary": {
+        "type": "object",
+        "required": [
+          "id",
+          "shareholder_type",
+          "holding_percent",
+          "display_name"
+        ],
+        "properties": {
+          "display_name": {
+            "type": "string"
+          },
+          "holding_percent": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "id": {
+            "type": "string",
+            "format": "Uuid"
+          },
+          "shareholder_of": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "Uuid"
+          },
+          "shareholder_type": {
+            "$ref": "#/components/schemas/ShareholderType"
+          }
+        }
+      },
+      "ShareholderSummaryV2": {
+        "type": "object",
+        "required": [
+          "customer_id",
+          "holding_percent"
+        ],
+        "properties": {
+          "customer_id": {
+            "type": "string",
+            "format": "Uuid"
+          },
+          "holding_percent": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          }
+        }
+      },
+      "PatchAccountRequest": {
+        "type": "object",
+        "properties": {
+          "account_name": {
+            "type": "string",
+            "format": "string",
+            "description": "Friendly label set by the client",
+            "maxLength": 140
+          },
+          "external_id": {
+            "type": "string",
+            "format": "string",
+            "description": "External account identifier",
+            "maxLength": 36
+          }
+        },
+        "minProperties": 1
+      },
+      "BatchType": {
+        "type": "string",
+        "description": "The type of batch being uploaded.",
+        "enum": [
+          "LocalPayment"
+        ]
+      },
+      "UploadBatchFileRequest": {
+        "type": "object",
+        "description": "Request to upload a payments batch file.\nNote: `file` can contain up to 1000 payments.",
+        "required": [
+          "batch_type",
+          "file_name",
+          "file"
+        ],
+        "properties": {
+          "batch_type": {
+            "$ref": "#/components/schemas/BatchType",
+            "description": "The type of batch being created."
+          },
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "CSV file contents."
+          },
+          "file_name": {
+            "type": "string",
+            "description": "The file name of the batch being uploaded."
+          }
+        }
+      },
+      "UploadBatchFileResponse": {
+        "type": "object",
+        "description": "Response to uploading a batch file.",
+        "required": [
+          "batch_id"
+        ],
+        "properties": {
+          "batch_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "PaymentTypeQuery": {
+        "type": "string",
+        "enum": [
+          "Local",
+          "InternalTransfer",
+          "FXTransfer",
+          "LocalReturnPayment",
+          "Fee"
+        ]
+      },
+      "SimulateExecutePaymentRequest": {
+        "type": "object",
+        "description": "Parameters to simulate executing a payment.",
+        "required": [
+          "transaction_id"
+        ],
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The id of the payment that should transition into executed."
+          }
+        }
+      },
+      "SimulateFailPaymentRequest": {
+        "type": "object",
+        "description": "Parameters for failing a payment.",
+        "required": [
+          "transaction_id",
+          "failure_reason"
+        ],
+        "properties": {
+          "failure_reason": {
+            "type": "string",
+            "description": "State a reason for the payment failure."
+          },
+          "transaction_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The id of the transaction to fail."
+          }
+        }
+      },
+      "SimulateInboundRequest": {
+        "type": "object",
+        "description": "Parameters to simulate an inbound payment.",
+        "required": [
+          "amount",
+          "beneficiary_account_id",
+          "reference"
+        ],
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Payment amount.",
+            "minimum": 0
+          },
+          "beneficiary_account_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The id of the account that should receive the funds.\nCan both be an internal account and an account."
+          },
+          "external_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "External id."
+          },
+          "reference": {
+            "type": "string",
+            "description": "Payment reference."
+          },
+          "remitter": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/AccountDetailsIdentifier",
+                "description": "The account details of the remitter.\nThis will override any value sent in remitter_iban."
+              }
+            ]
+          },
+          "remitter_iban": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "description": "The IBAN of the account that is sending the funds.\nDEPRECATED - will be removed",
+            "minLength": 19
+          },
+          "remitter_name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "description": "Optional remitter name.\nIf not provided, topup will be used as the default value.",
+            "maxLength": 140,
+            "minLength": 1
+          }
+        }
+      },
+      "SimulateReturnedPaymentRequest": {
+        "type": "object",
+        "description": "Parameters to simulate executing a payment.",
+        "required": [
+          "outbound_transaction_id"
+        ],
+        "properties": {
+          "outbound_transaction_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The id of the outbound payment to be returned.\nMust be in an executed state."
+          }
+        }
+      },
+      "UpdateAddress": {
+        "type": "object",
+        "properties": {
+          "country_code": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "maxLength": 2,
+            "minLength": 2
+          },
+          "line_1": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "maxLength": 50
+          },
+          "line_2": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "maxLength": 50
+          },
+          "line_3": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "maxLength": 50
+          },
+          "line_4": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "string",
+            "maxLength": 50
+          }
+        }
+      },
+      "UpdateCustomerExtraAPI": {
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "Individual",
+            "required": [
+              "individual"
+            ],
+            "properties": {
+              "individual": {
+                "type": "object",
+                "properties": {
+                  "currency_extra": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "$ref": "#/components/schemas/IndividualCurrencyExtra"
+                    }
+                  },
+                  "date_of_birth": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "date"
+                  },
+                  "first_name": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "string",
+                    "maxLength": 45
+                  },
+                  "gender": {
+                    "oneOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "$ref": "#/components/schemas/Gender"
+                      }
+                    ]
+                  },
+                  "identification": {
+                    "oneOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "$ref": "#/components/schemas/IndividualIdentification"
+                      }
+                    ]
+                  },
+                  "last_name": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "string",
+                    "maxLength": 45
+                  },
+                  "middle_name": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "string",
+                    "maxLength": 45
+                  },
+                  "nationality": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "string",
+                    "maxLength": 2,
+                    "minLength": 2
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "title": "Business",
+            "required": [
+              "business"
+            ],
+            "properties": {
+              "business": {
+                "type": "object",
+                "properties": {
+                  "business_name": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "string",
+                    "maxLength": 140
+                  },
+                  "country_of_issuance": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "string"
+                  },
+                  "currency_extra": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "$ref": "#/components/schemas/BusinessCurrencyExtra"
+                    }
+                  },
+                  "issuance_authority": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "string",
+                    "maxLength": 140
+                  },
+                  "linked_documents": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "deprecated": true
+                  },
+                  "registration_date": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "date"
+                  },
+                  "registration_number": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "string",
+                    "maxLength": 140
+                  },
+                  "regulatory_licenses": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "$ref": "#/components/schemas/RegulatoryLicenseType"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "UpdateCustomerRequest": {
+        "allOf": [
+          {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/UpdateCustomerExtraAPI"
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "address": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "#/components/schemas/UpdateAddress"
+                  }
+                ]
+              },
+              "display_name": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "string",
+                "maxLength": 140
+              },
+              "reference": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "string",
+                "maxLength": 36
+              }
+            }
+          }
+        ]
+      },
+      "UpdateShareholder": {
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "Shareholder",
+            "required": [
+              "shareholder"
+            ],
+            "properties": {
+              "shareholder": {
+                "type": "object",
+                "required": [
+                  "dob"
+                ],
+                "properties": {
+                  "dob": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "first_name": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "string",
+                    "maxLength": 45
+                  },
+                  "id_number": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "string",
+                    "maxLength": 50
+                  },
+                  "id_type": {
+                    "oneOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "$ref": "#/components/schemas/WatchlistIdType"
+                      }
+                    ]
+                  },
+                  "last_name": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "string",
+                    "maxLength": 45
+                  },
+                  "middle_name": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "string",
+                    "maxLength": 45
+                  },
+                  "pob": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "title": "BusinessShareholder",
+            "required": [
+              "business_shareholder"
+            ],
+            "properties": {
+              "business_shareholder": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "string",
+                    "maxLength": 140
+                  },
+                  "registration_number": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "string",
+                    "maxLength": 140
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "UpdateShareholderRequest": {
+        "allOf": [
+          {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/UpdateShareholder"
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "holding_percentage": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "format": "int32",
+                "minimum": 0
+              },
+              "shareholder_of": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "Uuid"
+              }
+            }
+          }
+        ]
+      },
+      "UploadDocumentRequest": {
+        "type": "object",
+        "required": [
+          "reference",
+          "description",
+          "document_type",
+          "file"
+        ],
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "document_type": {
+            "$ref": "#/components/schemas/DocumentType"
+          },
+          "file": {
+            "type": "string",
+            "format": "binary"
+          },
+          "reference": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 35
+          }
+        }
+      },
+      "UploadDocumentResponse": {
+        "type": "object",
+        "required": [
+          "document_id"
+        ],
+        "properties": {
+          "document_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "OAuth2": []
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/lorum-openapi-original.json
+docs: https://docs.lorum.com/docs/idempotency-for-postdelete-api-requests
+format: http-status
+notes: >-
+  Derived from the 4xx/5xx responses across the harvested Lorum (Fuse) OpenAPI,
+  enriched with the published idempotency error table. Lorum signals errors via
+  HTTP status codes; responses are not RFC 9457 application/problem+json. The
+  idempotency remediation column is taken verbatim from the provider docs.
+problems:
+- status: 400
+  title: Bad request
+  meaning: >-
+    Request could not be completed with the data provided - invalid payload,
+    unsupported currency pair, bad batch file, or a missing/invalid
+    Idempotency-Key (must be a valid UUIDv4).
+  remediation: Correct the request payload / provide a valid UUIDv4 Idempotency-Key.
+  seen_on: [create_customer_account, create_customer_payment, create_exchange, post_batch_file]
+- status: 401
+  title: Authentication error
+  meaning: Missing, expired, or invalid bearer token.
+  remediation: Obtain a fresh OAuth2 client-credentials bearer token and retry.
+- status: 404
+  title: Not found
+  meaning: >-
+    Referenced resource does not exist (account, customer, transaction) or no
+    exchange rate is available for the requested currency pair.
+  remediation: Verify the resource id / currency pair; contact support for missing rates.
+- status: 409
+  title: Conflict
+  meaning: >-
+    Idempotency-Key concurrency conflict - a request with the same key has
+    started but not yet completed.
+  remediation: Wait for the original request to complete, then retry with the same key.
+- status: 422
+  title: Unprocessable entity
+  meaning: The same Idempotency-Key was reused with a different request payload.
+  remediation: Generate a new Idempotency-Key and try again.
+- status: 500
+  title: Internal server error
+  meaning: >-
+    Unexpected server error; also returned when exchange rates have not been
+    configured yet.
+  remediation: Retry later; contact support if it persists.

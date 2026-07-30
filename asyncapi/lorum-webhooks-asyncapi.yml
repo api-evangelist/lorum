@@ -1,0 +1,707 @@
+asyncapi: 3.0.0
+info:
+  title: Lorum (Fuse) Webhooks
+  version: 1.0.0
+  description: Real-time webhook events emitted by Lorum for payments, transfers, currency exchanges,
+    account changes, and customer onboarding. Generated from the provider's published webhook catalogue
+    (docs.lorum.com/docs/webhook-catalogue). Events are pushed to a single configured URL; categories
+    are opt-in; retries use exponential backoff for up to 12 hours; deduplicate on event_id.
+  x-generated: '2026-07-20'
+  x-method: generated
+  x-source: https://docs.lorum.com/docs/webhook-catalogue
+channels:
+  webhooks:
+    address: '{configuredWebhookUrl}'
+    title: Organisation webhook endpoint
+    description: A single URL configured in the Lorum portal (Settings > App) that receives all enabled
+      webhook categories.
+    messages:
+      account_opened:
+        $ref: '#/components/messages/account_opened'
+      account_updated:
+        $ref: '#/components/messages/account_updated'
+      outbound_local_payment_created:
+        $ref: '#/components/messages/outbound_local_payment_created'
+      outbound_local_payment_submitted:
+        $ref: '#/components/messages/outbound_local_payment_submitted'
+      outbound_local_payment_executed:
+        $ref: '#/components/messages/outbound_local_payment_executed'
+      outbound_local_payment_failed:
+        $ref: '#/components/messages/outbound_local_payment_failed'
+      outbound_local_payment_returned:
+        $ref: '#/components/messages/outbound_local_payment_returned'
+      inbound_local_payment_settled:
+        $ref: '#/components/messages/inbound_local_payment_settled'
+      fee_debited:
+        $ref: '#/components/messages/fee_debited'
+      internal_transfer_created:
+        $ref: '#/components/messages/internal_transfer_created'
+      inbound_internal_transfer_settled:
+        $ref: '#/components/messages/inbound_internal_transfer_settled'
+      internal_transfer_settled:
+        $ref: '#/components/messages/internal_transfer_settled'
+      internal_transfer_failed:
+        $ref: '#/components/messages/internal_transfer_failed'
+      outbound_exchange_transfer_created:
+        $ref: '#/components/messages/outbound_exchange_transfer_created'
+      outbound_exchange_transfer_submitted:
+        $ref: '#/components/messages/outbound_exchange_transfer_submitted'
+      outbound_exchange_transfer_executed:
+        $ref: '#/components/messages/outbound_exchange_transfer_executed'
+      inbound_exchange_transfer_settled:
+        $ref: '#/components/messages/inbound_exchange_transfer_settled'
+      outbound_exchange_transfer_failed:
+        $ref: '#/components/messages/outbound_exchange_transfer_failed'
+      onboarding_completed:
+        $ref: '#/components/messages/onboarding_completed'
+      onboarding_failed:
+        $ref: '#/components/messages/onboarding_failed'
+operations:
+  receiveWebhook:
+    action: receive
+    channel:
+      $ref: '#/channels/webhooks'
+    summary: Receive Lorum webhook events.
+    messages:
+    - $ref: '#/components/messages/account_opened'
+    - $ref: '#/components/messages/account_updated'
+    - $ref: '#/components/messages/outbound_local_payment_created'
+    - $ref: '#/components/messages/outbound_local_payment_submitted'
+    - $ref: '#/components/messages/outbound_local_payment_executed'
+    - $ref: '#/components/messages/outbound_local_payment_failed'
+    - $ref: '#/components/messages/outbound_local_payment_returned'
+    - $ref: '#/components/messages/inbound_local_payment_settled'
+    - $ref: '#/components/messages/fee_debited'
+    - $ref: '#/components/messages/internal_transfer_created'
+    - $ref: '#/components/messages/inbound_internal_transfer_settled'
+    - $ref: '#/components/messages/internal_transfer_settled'
+    - $ref: '#/components/messages/internal_transfer_failed'
+    - $ref: '#/components/messages/outbound_exchange_transfer_created'
+    - $ref: '#/components/messages/outbound_exchange_transfer_submitted'
+    - $ref: '#/components/messages/outbound_exchange_transfer_executed'
+    - $ref: '#/components/messages/inbound_exchange_transfer_settled'
+    - $ref: '#/components/messages/outbound_exchange_transfer_failed'
+    - $ref: '#/components/messages/onboarding_completed'
+    - $ref: '#/components/messages/onboarding_failed'
+components:
+  messages:
+    account_opened:
+      name: account_opened
+      title: Account Opened
+      summary: 'Lorum ''account_opened'' webhook event (category: account).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - account_opened
+        properties:
+          type:
+            type: string
+            const: account_opened
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          account_opened:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    account_updated:
+      name: account_updated
+      title: Account Updated
+      summary: 'Lorum ''account_updated'' webhook event (category: account).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - account_updated
+        properties:
+          type:
+            type: string
+            const: account_updated
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          account_updated:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    outbound_local_payment_created:
+      name: outbound_local_payment_created
+      title: Outbound Local Payment Created
+      summary: 'Lorum ''outbound_local_payment_created'' webhook event (category: payment).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - outbound_local_payment_created
+        properties:
+          type:
+            type: string
+            const: outbound_local_payment_created
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          outbound_local_payment_created:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    outbound_local_payment_submitted:
+      name: outbound_local_payment_submitted
+      title: Outbound Local Payment Submitted
+      summary: 'Lorum ''outbound_local_payment_submitted'' webhook event (category: payment).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - outbound_local_payment_submitted
+        properties:
+          type:
+            type: string
+            const: outbound_local_payment_submitted
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          outbound_local_payment_submitted:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    outbound_local_payment_executed:
+      name: outbound_local_payment_executed
+      title: Outbound Local Payment Executed
+      summary: 'Lorum ''outbound_local_payment_executed'' webhook event (category: payment).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - outbound_local_payment_executed
+        properties:
+          type:
+            type: string
+            const: outbound_local_payment_executed
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          outbound_local_payment_executed:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    outbound_local_payment_failed:
+      name: outbound_local_payment_failed
+      title: Outbound Local Payment Failed
+      summary: 'Lorum ''outbound_local_payment_failed'' webhook event (category: payment).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - outbound_local_payment_failed
+        properties:
+          type:
+            type: string
+            const: outbound_local_payment_failed
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          outbound_local_payment_failed:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    outbound_local_payment_returned:
+      name: outbound_local_payment_returned
+      title: Outbound Local Payment Returned
+      summary: 'Lorum ''outbound_local_payment_returned'' webhook event (category: payment).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - outbound_local_payment_returned
+        properties:
+          type:
+            type: string
+            const: outbound_local_payment_returned
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          outbound_local_payment_returned:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    inbound_local_payment_settled:
+      name: inbound_local_payment_settled
+      title: Inbound Local Payment Settled
+      summary: 'Lorum ''inbound_local_payment_settled'' webhook event (category: payment).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - inbound_local_payment_settled
+        properties:
+          type:
+            type: string
+            const: inbound_local_payment_settled
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          inbound_local_payment_settled:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    fee_debited:
+      name: fee_debited
+      title: Fee Debited
+      summary: 'Lorum ''fee_debited'' webhook event (category: payment).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - fee_debited
+        properties:
+          type:
+            type: string
+            const: fee_debited
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          fee_debited:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    internal_transfer_created:
+      name: internal_transfer_created
+      title: Internal Transfer Created
+      summary: 'Lorum ''internal_transfer_created'' webhook event (category: transfer).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - internal_transfer_created
+        properties:
+          type:
+            type: string
+            const: internal_transfer_created
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          internal_transfer_created:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    inbound_internal_transfer_settled:
+      name: inbound_internal_transfer_settled
+      title: Inbound Internal Transfer Settled
+      summary: 'Lorum ''inbound_internal_transfer_settled'' webhook event (category: transfer).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - inbound_internal_transfer_settled
+        properties:
+          type:
+            type: string
+            const: inbound_internal_transfer_settled
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          inbound_internal_transfer_settled:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    internal_transfer_settled:
+      name: internal_transfer_settled
+      title: Internal Transfer Settled
+      summary: 'Lorum ''internal_transfer_settled'' webhook event (category: transfer).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - internal_transfer_settled
+        properties:
+          type:
+            type: string
+            const: internal_transfer_settled
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          internal_transfer_settled:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    internal_transfer_failed:
+      name: internal_transfer_failed
+      title: Internal Transfer Failed
+      summary: 'Lorum ''internal_transfer_failed'' webhook event (category: transfer).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - internal_transfer_failed
+        properties:
+          type:
+            type: string
+            const: internal_transfer_failed
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          internal_transfer_failed:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    outbound_exchange_transfer_created:
+      name: outbound_exchange_transfer_created
+      title: Outbound Exchange Transfer Created
+      summary: 'Lorum ''outbound_exchange_transfer_created'' webhook event (category: exchange_transfer).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - outbound_exchange_transfer_created
+        properties:
+          type:
+            type: string
+            const: outbound_exchange_transfer_created
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          outbound_exchange_transfer_created:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    outbound_exchange_transfer_submitted:
+      name: outbound_exchange_transfer_submitted
+      title: Outbound Exchange Transfer Submitted
+      summary: 'Lorum ''outbound_exchange_transfer_submitted'' webhook event (category: exchange_transfer).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - outbound_exchange_transfer_submitted
+        properties:
+          type:
+            type: string
+            const: outbound_exchange_transfer_submitted
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          outbound_exchange_transfer_submitted:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    outbound_exchange_transfer_executed:
+      name: outbound_exchange_transfer_executed
+      title: Outbound Exchange Transfer Executed
+      summary: 'Lorum ''outbound_exchange_transfer_executed'' webhook event (category: exchange_transfer).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - outbound_exchange_transfer_executed
+        properties:
+          type:
+            type: string
+            const: outbound_exchange_transfer_executed
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          outbound_exchange_transfer_executed:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    inbound_exchange_transfer_settled:
+      name: inbound_exchange_transfer_settled
+      title: Inbound Exchange Transfer Settled
+      summary: 'Lorum ''inbound_exchange_transfer_settled'' webhook event (category: exchange_transfer).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - inbound_exchange_transfer_settled
+        properties:
+          type:
+            type: string
+            const: inbound_exchange_transfer_settled
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          inbound_exchange_transfer_settled:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    outbound_exchange_transfer_failed:
+      name: outbound_exchange_transfer_failed
+      title: Outbound Exchange Transfer Failed
+      summary: 'Lorum ''outbound_exchange_transfer_failed'' webhook event (category: exchange_transfer).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - outbound_exchange_transfer_failed
+        properties:
+          type:
+            type: string
+            const: outbound_exchange_transfer_failed
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          outbound_exchange_transfer_failed:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    onboarding_completed:
+      name: onboarding_completed
+      title: Onboarding Completed
+      summary: 'Lorum ''onboarding_completed'' webhook event (category: onboarding).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - onboarding_completed
+        properties:
+          type:
+            type: string
+            const: onboarding_completed
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          onboarding_completed:
+            type: object
+            description: Event-specific payload nested under the event type name.
+    onboarding_failed:
+      name: onboarding_failed
+      title: Onboarding Failed
+      summary: 'Lorum ''onboarding_failed'' webhook event (category: onboarding).'
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-Fuse-Timestamp:
+            type: string
+            format: date-time
+            description: ISO-8601 time the webhook was sent.
+      payload:
+        type: object
+        required:
+        - type
+        - event_id
+        - event_version
+        - onboarding_failed
+        properties:
+          type:
+            type: string
+            const: onboarding_failed
+          event_id:
+            type: string
+            format: uuid
+          event_version:
+            type: integer
+          onboarding_failed:
+            type: object
+            description: Event-specific payload nested under the event type name.

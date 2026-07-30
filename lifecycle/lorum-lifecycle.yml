@@ -1,0 +1,27 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/lorum-openapi-original.json
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://docs.lorum.com/docs/getting-started
+status_page: https://status.lorum.com/
+sla:
+  documented: false
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    No formal RFC 8594 deprecation/sunset policy page was found. The OpenAPI
+    marks the legacy account_type value 'payment' as deprecated in favour of
+    'virtual', and exposes a v2 shareholder surface (add_shareholder_v2,
+    list_shareholders_v2) alongside the v1 operations.
+deprecated_schema_values:
+- CreateAccountType.payment (use 'virtual' for new accounts)
+superseded_operations:
+- add_shareholder -> add_shareholder_v2
+- list_shareholders -> list_shareholders_v2
+certification_gate: >-
+  Production API access is gated behind an integration checklist covering token
+  caching, idempotency, and webhook handling.
+integration_checklist: https://docs.lorum.com/docs/integration-checklist

@@ -1,0 +1,24 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/lorum-openapi-original.json
+notes: >-
+  Packaged Agent Skills for the marquee Lorum (Fuse) flows. Every step is
+  grounded in a real operationId verified present in the harvested OpenAPI, plus
+  the provider's documented auth, idempotency, and webhook rules.
+skills:
+- file: lorum-onboard-customer-and-open-account.md
+  name: Onboard a customer and open an account
+  api: openapi/lorum-openapi-original.json
+  operations: [add_business, add_individual, onboard_customer, get_customer_onboarding, create_customer_account, get_customer_account]
+- file: lorum-create-outbound-payment.md
+  name: Estimate and create an outbound payment
+  api: openapi/lorum-openapi-original.json
+  operations: [customer_payment_fee_estimate, create_customer_payment, list_customer_transactions, get_transaction, get_transaction_confirmation_letter]
+- file: lorum-simulate-payments-in-sandbox.md
+  name: Simulate payment scheme actions in the sandbox
+  api: openapi/lorum-openapi-original.json
+  operations: [create_customer_payment, simulate_inbound_payment, simulate_execute_payment, simulate_fail_payment, simulate_return_payment]
+- file: lorum-currency-exchange-and-transfer.md
+  name: Quote and execute a currency exchange or internal transfer
+  api: openapi/lorum-openapi-original.json
+  operations: [get_exchange_quote, create_exchange, create_internal_transfer, list_all_customer_accounts, get_account_history]
