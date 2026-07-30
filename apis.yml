@@ -1,26 +1,212 @@
 aid: lorum
 name: Lorum
-description: 'Lorum is a company surfaced as a portfolio company of northzone and added to the API Evangelist
-  network as a stub for enrichment. Sector: fintech. This profile is a lead awaiting the enrichment pipeline.'
+description: >-
+  Lorum (developer brand "Fuse") is a fintech providing banking-grade clearing,
+  settlement, and treasury infrastructure - "built for clearing, not lending."
+  Through one API it offers multi-currency clearing across 30+ markets,
+  programmable segregated account infrastructure (including virtual IBANs), and
+  cash management with FX and liquidity sweeps. It targets payroll/EOR
+  platforms, fintechs and PSPs, trading and investment platforms, and
+  marketplaces that need to move and settle funds across global payment rails
+  without standing up local banking entities. The API (OAuth2 client-credentials
+  auth, idempotency-keyed money movement, and webhook event notifications)
+  covers customers/KYC, accounts, payments, internal transfers, currency
+  exchange, documents, batch payments, and full sandbox scheme simulation. Lorum
+  is backed by Northzone.
 url: https://raw.githubusercontent.com/api-evangelist/lorum/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - northzone
-x-tier: stub
+x-tier: enriched
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://cdn.prod.website-files.com/691dc048eb27bd1d29e459b1/692b0683e9466303595474d6_1ddad7f49147abb7075cab3048b9487b_Opengraph.png
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
 - Fintech
-apis: []
+- Payments
+- Banking
+- Clearing
+- Settlement
+- Treasury
+- Multi-Currency
+- Accounts
+- Foreign Exchange
+- Webhooks
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: lorum:lorum-accounts-api
+  name: Lorum Accounts API
+  description: The Accounts API from Lorum — 5 operation(s) for accounts.
+  humanURL: https://docs.lorum.com/docs/getting-started
+  baseURL: https://api.fuse.me
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/lorum-accounts-api-openapi.yml
+- aid: lorum:lorum-customers-api
+  name: Lorum Customers API
+  description: The Customers API from Lorum — 10 operation(s) for customers.
+  humanURL: https://docs.lorum.com/docs/getting-started
+  baseURL: https://api.fuse.me
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/lorum-customers-api-openapi.yml
+- aid: lorum:lorum-customers-v2-api
+  name: Lorum Customers V2 API
+  description: The Customers V2 API from Lorum — 1 operation(s) for customers v2.
+  humanURL: https://docs.lorum.com/docs/getting-started
+  baseURL: https://api.fuse.me
+  tags:
+  - Customers V2
+  properties:
+  - type: OpenAPI
+    url: openapi/lorum-customers-v2-api-openapi.yml
+- aid: lorum:lorum-documents-api
+  name: Lorum Documents API
+  description: The Documents API from Lorum — 2 operation(s) for documents.
+  humanURL: https://docs.lorum.com/docs/getting-started
+  baseURL: https://api.fuse.me
+  tags:
+  - Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/lorum-documents-api-openapi.yml
+- aid: lorum:lorum-exchange-api
+  name: Lorum Exchange API
+  description: The Exchange API from Lorum — 2 operation(s) for exchange.
+  humanURL: https://docs.lorum.com/docs/getting-started
+  baseURL: https://api.fuse.me
+  tags:
+  - Exchange
+  properties:
+  - type: OpenAPI
+    url: openapi/lorum-exchange-api-openapi.yml
+- aid: lorum:lorum-internal-transfers-api
+  name: Lorum Internal Transfers API
+  description: The Internal Transfers API from Lorum — 1 operation(s) for internal transfers.
+  humanURL: https://docs.lorum.com/docs/getting-started
+  baseURL: https://api.fuse.me
+  tags:
+  - Internal Transfers
+  properties:
+  - type: OpenAPI
+    url: openapi/lorum-internal-transfers-api-openapi.yml
+- aid: lorum:lorum-oauth-api
+  name: Lorum Oauth API
+  description: The Oauth API from Lorum — 1 operation(s) for oauth.
+  humanURL: https://docs.lorum.com/docs/getting-started
+  baseURL: https://api.fuse.me
+  tags:
+  - Oauth
+  properties:
+  - type: OpenAPI
+    url: openapi/lorum-oauth-api-openapi.yml
+- aid: lorum:lorum-payments-api
+  name: Lorum Payments API
+  description: The Payments API from Lorum — 2 operation(s) for payments.
+  humanURL: https://docs.lorum.com/docs/getting-started
+  baseURL: https://api.fuse.me
+  tags:
+  - Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/lorum-payments-api-openapi.yml
+- aid: lorum:lorum-simulation-api
+  name: Lorum Simulation API
+  description: The Simulation API from Lorum — 4 operation(s) for simulation.
+  humanURL: https://docs.lorum.com/docs/getting-started
+  baseURL: https://api.fuse.me
+  tags:
+  - Simulation
+  properties:
+  - type: OpenAPI
+    url: openapi/lorum-simulation-api-openapi.yml
+- aid: lorum:lorum-transactions-api
+  name: Lorum Transactions API
+  description: The Transactions API from Lorum — 8 operation(s) for transactions.
+  humanURL: https://docs.lorum.com/docs/getting-started
+  baseURL: https://api.fuse.me
+  tags:
+  - Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/lorum-transactions-api-openapi.yml
 common:
+- type: DeveloperPortal
+  url: https://docs.lorum.com/docs/getting-started
+- type: Documentation
+  url: https://docs.lorum.com/docs/getting-started
+- type: APIReference
+  url: https://docs.lorum.com/reference/getting-a-bearer-token
+- type: GettingStarted
+  url: https://docs.lorum.com/docs/getting-started
+- type: Authentication
+  url: authentication/lorum-authentication.yml
+- type: Conventions
+  url: conventions/lorum-conventions.yml
+- type: Idempotency
+  url: conventions/lorum-conventions.yml
+- type: ErrorCatalog
+  url: errors/lorum-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/lorum-lifecycle.yml
+- type: StatusPage
+  url: https://status.lorum.com/
+- type: Conformance
+  url: conformance/lorum-conformance.yml
+- type: Sandbox
+  url: sandbox/lorum-sandbox.yml
+- type: DataModel
+  url: data-model/lorum-data-model.yml
+- type: MCPServer
+  url: mcp/lorum-mcp.yml
+- type: WellKnown
+  url: well-known/lorum-well-known.yml
+- type: AsyncAPI
+  url: asyncapi/lorum-webhooks-asyncapi.yml
+- type: Webhooks
+  url: asyncapi/lorum-webhooks-asyncapi.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/lorum-llms.txt
+- type: DomainSecurity
+  url: security/lorum-domain-security.yml
+- type: Blog
+  url: https://www.lorum.com/blog
+- type: PrivacyPolicy
+  url: https://www.lorum.com/legal/privacy-policy
+- type: Login
+  url: https://app.lorum.com/
+- type: Support
+  url: https://www.lorum.com/contact-us
 - type: Website
   url: https://www.lorum.com
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 16
+  pass: local-v1
