@@ -155,6 +155,8 @@ apis:
   - type: OpenAPI
     url: openapi/lorum-transactions-api-openapi.yml
 common:
+- type: Overlay
+  url: overlays/lorum-openapi-overlay.yaml
 - type: DeveloperPortal
   url: https://docs.lorum.com/docs/getting-started
 - type: Documentation
