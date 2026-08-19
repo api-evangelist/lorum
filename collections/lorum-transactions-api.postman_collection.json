@@ -1,0 +1,1657 @@
+{
+  "item": [
+    {
+      "id": "a4930301-e9d8-47d8-a893-8c439960d62f",
+      "name": "Transactions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2750781d-0f76-4667-9e5a-6cca6e9fe822",
+          "name": "Get a single batch",
+          "request": {
+            "name": "Get a single batch",
+            "description": {
+              "content": "Get a single batch",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "transactions",
+                "batches",
+                ":batch_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "batch_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2a96d8ee-05f9-4c2e-8c63-fa183a7ec355",
+              "name": "Request to get batch completed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions",
+                    "batches",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "batch_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"batch_id\": \"f244a3f6-d65d-6779-db2e-d7def9c2a0e2\",\n  \"file_name\": \"string\",\n  \"record_count\": 773,\n  \"status\": \"Created\",\n  \"created_at\": \"1952-07-26T19:48:32.996Z\",\n  \"total_instructed_amount\": 8255,\n  \"records\": [\n    {\n      \"sequence_no\": 3897,\n      \"source_account_id\": \"9dde37f9-d8d4-0079-fea3-33a3c12854d8\",\n      \"instructed_amount\": 1712,\n      \"beneficiary_name\": \"string\",\n      \"beneficiary_bic\": \"stringstring\",\n      \"beneficiary_address_line1\": \"string\",\n      \"external_reference\": \"stringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstring\",\n      \"purpose\": \"none\",\n      \"beneficiary_account_number\": \"string\",\n      \"beneficiary_address_country\": \"string\",\n      \"beneficiary_address_line2\": \"string\",\n      \"beneficiary_address_line3\": \"string\",\n      \"beneficiary_address_line4\": \"string\",\n      \"beneficiary_bank_branch\": \"string\",\n      \"beneficiary_date_of_birth\": \"string\",\n      \"beneficiary_email\": \"string\",\n      \"beneficiary_iban\": \"string\",\n      \"beneficiary_id_number\": \"string\",\n      \"beneficiary_id_type\": \"string\",\n      \"beneficiary_nationality\": \"string\",\n      \"beneficiary_phone\": \"string\",\n      \"beneficiary_sort_code\": \"string\",\n      \"beneficiary_type\": \"business\",\n      \"beneficiary_wire_routing_number\": \"string\"\n    },\n    {\n      \"sequence_no\": 3950,\n      \"source_account_id\": \"85797449-f1c0-408d-46f2-26b2bd6bdb7f\",\n      \"instructed_amount\": 8488,\n      \"beneficiary_name\": \"string\",\n      \"beneficiary_bic\": \"stringstring\",\n      \"beneficiary_address_line1\": \"string\",\n      \"external_reference\": \"stringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstring\",\n      \"purpose\": \"corporate_card\",\n      \"beneficiary_account_number\": \"string\",\n      \"beneficiary_address_country\": \"string\",\n      \"beneficiary_address_line2\": \"string\",\n      \"beneficiary_address_line3\": \"string\",\n      \"beneficiary_address_line4\": \"string\",\n      \"beneficiary_bank_branch\": \"string\",\n      \"beneficiary_date_of_birth\": \"string\",\n      \"beneficiary_email\": \"string\",\n      \"beneficiary_iban\": \"string\",\n      \"beneficiary_id_number\": \"string\",\n      \"beneficiary_id_type\": \"string\",\n      \"beneficiary_nationality\": \"string\",\n      \"beneficiary_phone\": \"string\",\n      \"beneficiary_sort_code\": \"string\",\n      \"beneficiary_type\": \"individual\",\n      \"beneficiary_wire_routing_number\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7f01226a-380d-4324-ac24-4fa40711013c",
+          "name": "Get linked documents for a transaction",
+          "request": {
+            "name": "Get linked documents for a transaction",
+            "description": {
+              "content": "Get linked documents for a transaction",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "transactions",
+                ":transaction_id",
+                "documents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "transaction_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a84308ac-78ad-4196-be7f-df22df385303",
+              "name": "Successfully retrieved linked documents",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions",
+                    ":transaction_id",
+                    "documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"acc0f24b-60fe-75b5-7fc4-9b4cdf2ebb81\",\n    \"document_type\": \"articles_of_association\",\n    \"reference\": \"string\"\n  },\n  {\n    \"id\": \"5031cea4-75db-a7ef-a1cf-00de9ddfc2a0\",\n    \"document_type\": \"incorporation_cert\",\n    \"reference\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "946a63fb-4e40-4255-92a8-76d07967a298",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions",
+                    ":transaction_id",
+                    "documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73fb5931-10f3-44c7-b605-2775890884be",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions",
+                    ":transaction_id",
+                    "documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07843282-6cea-407f-905a-70347c3944bf",
+              "name": "Transaction not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions",
+                    ":transaction_id",
+                    "documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7d0377e-ad89-4f5d-aaf1-453e0070eaa9",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions",
+                    ":transaction_id",
+                    "documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5bbbc751-1bc2-4578-a7a1-1cbe8fd9c418",
+          "name": "Link a document to a transaction",
+          "request": {
+            "name": "Link a document to a transaction",
+            "description": {
+              "content": "Link a document to a transaction",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "transactions",
+                ":transaction_id",
+                "documents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "transaction_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document_id\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f357c249-318e-45d1-89d8-1e1512ce1d12",
+              "name": "Document successfully linked to transaction",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions",
+                    ":transaction_id",
+                    "documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "25ba58da-a56b-42c5-8254-083fe929f863",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions",
+                    ":transaction_id",
+                    "documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a4ea272-b681-4b97-b282-4e23cb1f1a96",
+              "name": "Authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions",
+                    ":transaction_id",
+                    "documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b816cc85-61ba-4226-a563-7c122f5ce9ba",
+              "name": "Transaction not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions",
+                    ":transaction_id",
+                    "documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ff8e9ef-c6a5-45cb-acdd-897df0967f94",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions",
+                    ":transaction_id",
+                    "documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "94a171e4-cf6f-43e8-99b9-d06fb27be461",
+          "name": "Get a transaction",
+          "request": {
+            "name": "Get a transaction",
+            "description": {
+              "content": "Get a transaction",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "transactions",
+                ":transaction_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "transaction_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "25678a8b-12f0-4f3f-831e-06a98678491d",
+              "name": "Successfully retrieved a transaction",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions",
+                    ":transaction_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_id\": \"9a990c1e-648b-54f3-2b64-1d9f3f9d7f9d\",\n  \"amount_with_fee\": 1153,\n  \"beneficiary\": {\n    \"name\": \"string\",\n    \"identifier\": {\n      \"iban\": \"string\"\n    }\n  },\n  \"created_at\": \"1975-06-08T12:15:16.205Z\",\n  \"currency\": \"SGD\",\n  \"direction\": \"Inbound\",\n  \"external_reference\": \"string\",\n  \"fee_amount\": 7960,\n  \"id\": \"431b11e3-dd13-7b51-c217-d5b2b5a5fceb\",\n  \"instructed_amount\": 6644,\n  \"purpose\": \"charity\",\n  \"remitter\": {\n    \"name\": \"string\",\n    \"identifier\": {\n      \"iban\": \"string\"\n    }\n  },\n  \"state\": \"Failed\",\n  \"type\": \"local_payment\",\n  \"authorised_at\": \"2019-01-26T07:53:25.792Z\",\n  \"batch\": null,\n  \"beneficiary_extra\": null,\n  \"executed_at\": \"2003-04-03T20:37:45.642Z\",\n  \"external_id\": \"string\",\n  \"failed_at\": \"1959-10-21T17:31:57.485Z\",\n  \"failure_reason\": null,\n  \"fee_source\": null,\n  \"scheme\": null,\n  \"submitted_at\": \"1989-03-19T11:25:40.112Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "513c82b7-22f6-4824-aacb-0229792bbe4e",
+          "name": "Get transaction confirmation letter",
+          "request": {
+            "name": "Get transaction confirmation letter",
+            "description": {
+              "content": "Get transaction confirmation letter\nThis endpoint is used to get a transaction confirmation letter for outbound transactions.\nConfirmation letters are only available for transactions in a `submitted` or `executed` state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "transactions",
+                ":transaction_id",
+                "confirmation-letter"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "transaction_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "887ee7ad-a61d-4948-8d54-5950ff5192e8",
+              "name": "Transaction",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions",
+                    ":transaction_id",
+                    "confirmation-letter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Filename",
+                  "key": "content-disposition",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "059c5eee-707e-41dd-bdc9-bd7138b00278",
+          "name": "List batches",
+          "request": {
+            "name": "List batches",
+            "description": {
+              "content": "List batches",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "transactions",
+                "batches"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Optional cursor for pagination. Base64-encoded value of ListBatchesPageParams."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Optional number of items to return per page. Default is typically used if not specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "file_name",
+                  "value": "<string>",
+                  "description": "Optional filter to return only batches that match the entire or part of the file name."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e488e8e-cbeb-433f-817a-1f62f79fd3ff",
+              "name": "Request to list batches completed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions",
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "file_name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pages\": {\n    \"size\": 8905,\n    \"next\": \"string\"\n  },\n  \"batches\": [\n    {\n      \"batch_id\": \"dcb931f2-489d-196a-086f-877fc3e3534b\",\n      \"file_name\": \"string\",\n      \"total_instructed_amount\": 2573,\n      \"record_count\": 9054,\n      \"status\": \"Created\",\n      \"created_at\": \"2010-12-29T11:43:12.335Z\"\n    },\n    {\n      \"batch_id\": \"12b37bda-7bbb-56ff-c8e7-884c0b04c09e\",\n      \"file_name\": \"string\",\n      \"total_instructed_amount\": 70,\n      \"record_count\": 6487,\n      \"status\": \"Created\",\n      \"created_at\": \"1955-08-16T14:08:51.324Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "286e2563-a936-4efb-a348-5275079c1b7a",
+          "name": "List transactions for an account",
+          "request": {
+            "name": "List transactions for an account",
+            "description": {
+              "content": "List transactions for an account",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "accounts",
+                ":account_id",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "transaction_state",
+                  "value": "<string>",
+                  "description": "Filter transactions by state"
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<dateTime>",
+                  "description": "ISO 8601 combined date and time with time zone, that specifies the lower limit of the time window you want to fetch transactions for."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<dateTime>",
+                  "description": "ISO 8601 combined date and time with time zone, that specifies the upper limit of the time window you want to fetch transactions for."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string,null-string>",
+                  "description": "Cursor to the next page in the result set. If set all the other fields will be ignored."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Number of resource to return. Max 2000"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "account_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6630abbf-8741-4c44-aac2-31ae45e0ed85",
+              "name": "Successfully retrieved transactions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":account_id",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "transaction_state",
+                      "value": "Failed"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string,null-string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "account_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pages\": {\n    \"size\": 3217,\n    \"next\": \"string\"\n  },\n  \"results\": [\n    {\n      \"account_id\": \"8f6d9cfc-954c-2295-0eaf-ad340fa37786\",\n      \"amount_with_fee\": 6192,\n      \"beneficiary\": {\n        \"name\": \"string\",\n        \"identifier\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"created_at\": \"1977-01-17T18:36:06.691Z\",\n      \"currency\": \"SGD\",\n      \"direction\": \"Outbound\",\n      \"external_reference\": \"string\",\n      \"fee_amount\": 5426,\n      \"id\": \"ff8cf95a-4ead-ef08-01cb-3bb18c1418ca\",\n      \"instructed_amount\": 9424,\n      \"purpose\": \"insurance\",\n      \"remitter\": {\n        \"name\": \"string\",\n        \"identifier\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"state\": \"Created\",\n      \"type\": \"local_payment\",\n      \"authorised_at\": \"2004-05-09T13:37:55.976Z\",\n      \"batch\": null,\n      \"beneficiary_extra\": null,\n      \"executed_at\": \"1976-05-21T00:07:35.376Z\",\n      \"external_id\": \"string\",\n      \"failed_at\": \"2010-10-12T04:53:43.527Z\",\n      \"failure_reason\": null,\n      \"fee_source\": null,\n      \"scheme\": null,\n      \"submitted_at\": \"1998-07-20T12:04:45.764Z\"\n    },\n    {\n      \"account_id\": \"f2dfb602-a82a-c1f8-9035-3bf049779e4a\",\n      \"amount_with_fee\": 9811,\n      \"beneficiary\": {\n        \"name\": \"string\",\n        \"identifier\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"created_at\": \"1976-12-12T16:59:52.458Z\",\n      \"currency\": \"AED\",\n      \"direction\": \"Outbound\",\n      \"external_reference\": \"string\",\n      \"fee_amount\": 6274,\n      \"id\": \"5d5b8f7d-2772-cc3a-64eb-90ab3b817246\",\n      \"instructed_amount\": 1067,\n      \"purpose\": \"credit_card\",\n      \"remitter\": {\n        \"name\": \"string\",\n        \"identifier\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"state\": \"Failed\",\n      \"type\": \"local_payment\",\n      \"authorised_at\": \"1947-07-27T18:12:09.268Z\",\n      \"batch\": null,\n      \"beneficiary_extra\": null,\n      \"executed_at\": \"2002-05-11T11:17:59.651Z\",\n      \"external_id\": \"string\",\n      \"failed_at\": \"2002-07-31T02:48:18.915Z\",\n      \"failure_reason\": null,\n      \"fee_source\": null,\n      \"scheme\": null,\n      \"submitted_at\": \"1955-02-23T20:58:22.142Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fef2bd65-0e2d-40d1-a808-5927b5fdb8a3",
+          "name": "Upload payment batch file.",
+          "request": {
+            "name": "Upload payment batch file.",
+            "description": {
+              "content": "Upload payment batch file.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "transactions",
+                "batches",
+                "files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                "key": "Idempotency-Key",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batch_type\": \"<string>\",\n  \"file_name\": \"<string>\",\n  \"file\": \"<binary>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "17f78bb1-f139-41a0-8910-164531ad6d41",
+              "name": "Batch file has successfully been created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions",
+                    "batches",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"batch_type\": \"LocalPayment\",\n  \"file_name\": \"<string>\",\n  \"file\": \"<binary>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"batch_id\": \"a230fffd-2c50-d6d6-6b79-3267b4fb4687\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e029c78-03d0-45d0-8e2a-0576c7169e1d",
+              "name": "Unable to upload batch file due to bad data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions",
+                    "batches",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"batch_type\": \"LocalPayment\",\n  \"file_name\": \"<string>\",\n  \"file\": \"<binary>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "de8e4237-20ac-4773-a19e-e44998ff8184",
+          "name": "Get all transactions across accounts",
+          "request": {
+            "name": "Get all transactions across accounts",
+            "description": {
+              "content": "Get all transactions across accounts",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "batch_id",
+                  "value": "<uuid>",
+                  "description": "Filter transactions by batch ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "transaction_state",
+                  "value": "<string>",
+                  "description": "Filter transactions by state"
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_type",
+                  "value": "<string>",
+                  "description": "Filter transactions payment type"
+                },
+                {
+                  "disabled": false,
+                  "key": "customer_account_id",
+                  "value": "<uuid>",
+                  "description": "Filter transactions by customer account ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<dateTime>",
+                  "description": "ISO 8601 combined date and time with time zone, that specifies the lower limit of the time window you want to fetch transactions for."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<dateTime>",
+                  "description": "ISO 8601 combined date and time with time zone, that specifies the upper limit of the time window you want to fetch transactions for."
+                },
+                {
+                  "disabled": false,
+                  "key": "reference",
+                  "value": "<string>",
+                  "description": "Filter transactions that match the part of the reference"
+                },
+                {
+                  "disabled": false,
+                  "key": "external_id",
+                  "value": "<string>",
+                  "description": "Filter transactions that match the external ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "account_name",
+                  "value": "<string>",
+                  "description": "Filter transactions by account display name (substring match)"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string,null-string>",
+                  "description": "Cursor to the next page in the result set. If set all the other fields will be ignored."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Number of resource to return. Max 2000"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c994d7f2-a210-409e-a7ad-c69cd7d6f0bd",
+              "name": "Successfully retrieved transactions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "batch_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "Failed"
+                    },
+                    {
+                      "key": "payment_type",
+                      "value": "LocalReturnPayment"
+                    },
+                    {
+                      "key": "customer_account_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "reference",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "external_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "account_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string,null-string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pages\": {\n    \"size\": 3217,\n    \"next\": \"string\"\n  },\n  \"results\": [\n    {\n      \"account_id\": \"8f6d9cfc-954c-2295-0eaf-ad340fa37786\",\n      \"amount_with_fee\": 6192,\n      \"beneficiary\": {\n        \"name\": \"string\",\n        \"identifier\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"created_at\": \"1977-01-17T18:36:06.691Z\",\n      \"currency\": \"SGD\",\n      \"direction\": \"Outbound\",\n      \"external_reference\": \"string\",\n      \"fee_amount\": 5426,\n      \"id\": \"ff8cf95a-4ead-ef08-01cb-3bb18c1418ca\",\n      \"instructed_amount\": 9424,\n      \"purpose\": \"insurance\",\n      \"remitter\": {\n        \"name\": \"string\",\n        \"identifier\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"state\": \"Created\",\n      \"type\": \"local_payment\",\n      \"authorised_at\": \"2004-05-09T13:37:55.976Z\",\n      \"batch\": null,\n      \"beneficiary_extra\": null,\n      \"executed_at\": \"1976-05-21T00:07:35.376Z\",\n      \"external_id\": \"string\",\n      \"failed_at\": \"2010-10-12T04:53:43.527Z\",\n      \"failure_reason\": null,\n      \"fee_source\": null,\n      \"scheme\": null,\n      \"submitted_at\": \"1998-07-20T12:04:45.764Z\"\n    },\n    {\n      \"account_id\": \"f2dfb602-a82a-c1f8-9035-3bf049779e4a\",\n      \"amount_with_fee\": 9811,\n      \"beneficiary\": {\n        \"name\": \"string\",\n        \"identifier\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"created_at\": \"1976-12-12T16:59:52.458Z\",\n      \"currency\": \"AED\",\n      \"direction\": \"Outbound\",\n      \"external_reference\": \"string\",\n      \"fee_amount\": 6274,\n      \"id\": \"5d5b8f7d-2772-cc3a-64eb-90ab3b817246\",\n      \"instructed_amount\": 1067,\n      \"purpose\": \"credit_card\",\n      \"remitter\": {\n        \"name\": \"string\",\n        \"identifier\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"state\": \"Failed\",\n      \"type\": \"local_payment\",\n      \"authorised_at\": \"1947-07-27T18:12:09.268Z\",\n      \"batch\": null,\n      \"beneficiary_extra\": null,\n      \"executed_at\": \"2002-05-11T11:17:59.651Z\",\n      \"external_id\": \"string\",\n      \"failed_at\": \"2002-07-31T02:48:18.915Z\",\n      \"failure_reason\": null,\n      \"fee_source\": null,\n      \"scheme\": null,\n      \"submitted_at\": \"1955-02-23T20:58:22.142Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.fuse.me",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "eae35c92-a222-4020-ae1d-8d00c0649527",
+    "name": "Fuse Accounts Transactions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Lorum (Fuse) clearing, settlement and treasury API: multi-currency accounts, payments, exchanges, transfers, customers/KYC, documents, batch payments and sandbox simulation. Harvested from the provider's public ReadMe reference (per-operation OpenAPI definitions).\n\nContact Support:\n Name: Lorum",
+      "type": "text/plain"
+    }
+  }
+}

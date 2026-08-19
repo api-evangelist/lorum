@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fuse Accounts Simulation API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Simulation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Simulate executed status for an outbound payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.fuse.me/v1/simulate/execute-payment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Simulate executed status for an outbound payment"
+        },
+        {
+          "info": {
+            "name": "Simulate failed status for an outbound payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.fuse.me/v1/simulate/fail-payment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Simulate failed status for an outbound payment"
+        },
+        {
+          "info": {
+            "name": "Simulate inbound payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.fuse.me/v1/simulate/inbound-payment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Simulate inbound payment"
+        },
+        {
+          "info": {
+            "name": "Simulate a return payment.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.fuse.me/v1/simulate/return-payment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Simulate a return payment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

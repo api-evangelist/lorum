@@ -1,0 +1,316 @@
+{
+  "item": [
+    {
+      "id": "abfd993c-6007-465c-baa8-f34dbea10bae",
+      "name": "Internal Transfers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0fb5122d-641a-4d2c-8302-ba550143f4c7",
+          "name": "Move funds between two accounts with the same currency",
+          "request": {
+            "name": "Move funds between two accounts with the same currency",
+            "description": {
+              "content": "Move funds between two accounts with the same currency",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "internal-transfers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                "key": "Idempotency-Key",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from_account_id\": \"<uuid>\",\n  \"to_account_id\": \"<uuid>\",\n  \"amount\": \"<long>\",\n  \"external_reference\": \"<string>\",\n  \"external_id\": \"<string,null-string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "14ed89c8-282f-4c26-90c1-4135f71cc597",
+              "name": "Internal transfer has been created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "internal-transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from_account_id\": \"<uuid>\",\n  \"to_account_id\": \"<uuid>\",\n  \"amount\": \"<long>\",\n  \"external_reference\": \"<string>\",\n  \"external_id\": \"<string,null-string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transaction_id\": \"168afdda-9fc2-a6ce-59f5-85ef37377b96\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1e0f19f-bd63-4acd-a4d2-8179b6afa856",
+              "name": "Unable to complete request with data provided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "internal-transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from_account_id\": \"<uuid>\",\n  \"to_account_id\": \"<uuid>\",\n  \"amount\": \"<long>\",\n  \"external_reference\": \"<string>\",\n  \"external_id\": \"<string,null-string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e2ae707a-6240-4d58-863b-48d659abfa7d",
+              "name": "Idempotency-Key concurrency conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "internal-transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from_account_id\": \"<uuid>\",\n  \"to_account_id\": \"<uuid>\",\n  \"amount\": \"<long>\",\n  \"external_reference\": \"<string>\",\n  \"external_id\": \"<string,null-string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4e2b8e0b-3b01-4cd2-b543-e7ff3cc3c0bc",
+              "name": "Idempotency-Key reuse for a different request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "internal-transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from_account_id\": \"<uuid>\",\n  \"to_account_id\": \"<uuid>\",\n  \"amount\": \"<long>\",\n  \"external_reference\": \"<string>\",\n  \"external_id\": \"<string,null-string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.fuse.me",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "71f8383b-df41-4c2b-9dbf-eedad2edfcfd",
+    "name": "Fuse Accounts Internal Transfers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Lorum (Fuse) clearing, settlement and treasury API: multi-currency accounts, payments, exchanges, transfers, customers/KYC, documents, batch payments and sandbox simulation. Harvested from the provider's public ReadMe reference (per-operation OpenAPI definitions).\n\nContact Support:\n Name: Lorum",
+      "type": "text/plain"
+    }
+  }
+}

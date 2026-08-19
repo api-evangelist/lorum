@@ -1,0 +1,189 @@
+{
+  "item": [
+    {
+      "id": "039dc33d-96de-4389-a21e-5e3d6e7def3c",
+      "name": "Oauth",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d27aa96f-64cd-46f7-995b-be9e26333218",
+          "name": "Get a bearer token",
+          "request": {
+            "name": "Get a bearer token",
+            "description": {
+              "content": "This API is designed to issue a bearer token for a valid user. The API will accept a request containing the user's credentials and return a response containing a bearer token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "oauth",
+                "token"
+              ],
+              "host": [
+                "auth",
+                "fuse",
+                "me"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"audience\": \"https://api.fuse.me\",\n  \"grant_type\": \"client_credentials\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0f2dd944-66c4-479e-a71b-25ced9a691c7",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "oauth",
+                    "token"
+                  ],
+                  "host": [
+                    "auth",
+                    "fuse",
+                    "me"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"audience\": \"https://api.fuse.me\",\n  \"grant_type\": \"client_credentials\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"access_token\\\": \\\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImYxMXhWYV9hUHM1cFFEZVNWdzZLYyJ9.eyJpc3MiOiJodHRwczovL2Z1c2ViYW5rZGV2LnVrLmF1dGgwLmNvbS8iLCJzdWIiOiJ0R2w3OWFlYkhOSEV1V2R5bWVtUmJQbXU3UkxnMVVrckBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9hcGkuZnVzZWJhbmsuaW8iLCJpYXQiOjE2Nzg1NTA3MTcsImV4cCI6MTY3ODYzNzExNywiYXpwIjoidEdsNzlhZWJITkhFdVdkeW1lbVJiUG11N1JMZzFVa3IiLCJzY29wZSI6InRlc3Rfc2NvcGUgcmVhZDp0ZXN0IiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.e3H87kiwczZeRHgPtw5q7vFL9z9jx1QqRgQu4bSjGjdZf20-lw_k6LkJcPuhFnxtssLDDCwXtmspFsPwU89WFvkklY-rZ99lP5PK-mMUEgnF1irKyv1WhC5hPGLhM9grsEMlfEr83KAL8HNno0RQHa_GID2jfNcnwrLafik2cm_vHn9z14gJOBt5pdk0HBYtAQem-_rbJOI3pAyJrX46N-AwVMkj3E1ReXcpMBgIvfhasQGtOL7UXDJh_sJDKBGJPmhc5ElWtqqzT23zc-AJpgE32FmzjIi6YofPKYLdQ83J90chYtZbDv95Wk6ELbaeIpFaokKILN399RArb8EshQ\\\",\\n  \\\"scope\\\": \\\"test_scope read:test\\\",\\n  \\\"expires_in\\\": 86400,\\n  \\\"token_type\\\": \\\"Bearer\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31d6e702-f346-468d-9a4a-695079c89a98",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "oauth",
+                    "token"
+                  ],
+                  "host": [
+                    "auth",
+                    "fuse",
+                    "me"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"audience\": \"https://api.fuse.me\",\n  \"grant_type\": \"client_credentials\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.fuse.me",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0ccee0a9-dfa0-4c99-9fca-0145f73b3005",
+    "name": "Fuse Accounts Oauth API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Lorum (Fuse) clearing, settlement and treasury API: multi-currency accounts, payments, exchanges, transfers, customers/KYC, documents, batch payments and sandbox simulation. Harvested from the provider's public ReadMe reference (per-operation OpenAPI definitions).\n\nContact Support:\n Name: Lorum",
+      "type": "text/plain"
+    }
+  }
+}

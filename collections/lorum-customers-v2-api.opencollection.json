@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fuse Accounts Customers V2 API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Customers V2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List shareholders for a business",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fuse.me/v2/customers/businesses/:business_id/shareholders",
+            "params": [
+              {
+                "name": "business_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the business"
+              }
+            ]
+          },
+          "docs": "List shareholders for a business"
+        },
+        {
+          "info": {
+            "name": "Add a shareholder to a business",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.fuse.me/v2/customers/businesses/:business_id/shareholders",
+            "params": [
+              {
+                "name": "business_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the business customer"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a shareholder to a business"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

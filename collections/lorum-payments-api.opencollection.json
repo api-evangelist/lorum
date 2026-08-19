@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fuse Accounts Payments API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create outbound payment for a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.fuse.me/v1/accounts/:account_id/payments",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create outbound payment for a customer"
+        },
+        {
+          "info": {
+            "name": "Estimate the fee for an outbound payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fuse.me/v1/accounts/:account_id/payments/estimate-fee/:amount",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The account id where the intended payment will be made from."
+              },
+              {
+                "name": "amount",
+                "value": "",
+                "type": "path",
+                "description": "The amount of the payment."
+              }
+            ]
+          },
+          "docs": "Estimate the fee for an outbound payment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

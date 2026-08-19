@@ -1,0 +1,297 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fuse Accounts Transactions API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a single batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fuse.me/v1/transactions/batches/:batch_id",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a single batch"
+        },
+        {
+          "info": {
+            "name": "Get linked documents for a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fuse.me/v1/transactions/:transaction_id/documents",
+            "params": [
+              {
+                "name": "transaction_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get linked documents for a transaction"
+        },
+        {
+          "info": {
+            "name": "Link a document to a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.fuse.me/v1/transactions/:transaction_id/documents",
+            "params": [
+              {
+                "name": "transaction_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Link a document to a transaction"
+        },
+        {
+          "info": {
+            "name": "Get a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fuse.me/v1/transactions/:transaction_id",
+            "params": [
+              {
+                "name": "transaction_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a transaction"
+        },
+        {
+          "info": {
+            "name": "Get transaction confirmation letter",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fuse.me/v1/transactions/:transaction_id/confirmation-letter",
+            "params": [
+              {
+                "name": "transaction_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get transaction confirmation letter\nThis endpoint is used to get a transaction confirmation letter for outbound transactions.\nConfirmation letters are only available for transactions in a `submitted` or `executed` state."
+        },
+        {
+          "info": {
+            "name": "List batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fuse.me/v1/transactions/batches",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Optional cursor for pagination. Base64-encoded value of ListBatchesPageParams."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Optional number of items to return per page. Default is typically used if not specified."
+              },
+              {
+                "name": "file_name",
+                "value": "",
+                "type": "query",
+                "description": "Optional filter to return only batches that match the entire or part of the file name."
+              }
+            ]
+          },
+          "docs": "List batches"
+        },
+        {
+          "info": {
+            "name": "List transactions for an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fuse.me/v1/accounts/:account_id/transactions",
+            "params": [
+              {
+                "name": "transaction_state",
+                "value": "",
+                "type": "query",
+                "description": "Filter transactions by state"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 combined date and time with time zone, that specifies the lower limit of the time window you want to fetch transactions for."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 combined date and time with time zone, that specifies the upper limit of the time window you want to fetch transactions for."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor to the next page in the result set. If set all the other fields will be ignored."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of resource to return. Max 2000"
+              },
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List transactions for an account"
+        },
+        {
+          "info": {
+            "name": "Upload payment batch file.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.fuse.me/v1/transactions/batches/files",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upload payment batch file."
+        },
+        {
+          "info": {
+            "name": "Get all transactions across accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fuse.me/v1/transactions",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter transactions by batch ID"
+              },
+              {
+                "name": "transaction_state",
+                "value": "",
+                "type": "query",
+                "description": "Filter transactions by state"
+              },
+              {
+                "name": "payment_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter transactions payment type"
+              },
+              {
+                "name": "customer_account_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter transactions by customer account ID"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 combined date and time with time zone, that specifies the lower limit of the time window you want to fetch transactions for."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 combined date and time with time zone, that specifies the upper limit of the time window you want to fetch transactions for."
+              },
+              {
+                "name": "reference",
+                "value": "",
+                "type": "query",
+                "description": "Filter transactions that match the part of the reference"
+              },
+              {
+                "name": "external_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter transactions that match the external ID"
+              },
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter transactions by account display name (substring match)"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor to the next page in the result set. If set all the other fields will be ignored."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of resource to return. Max 2000"
+              }
+            ]
+          },
+          "docs": "Get all transactions across accounts"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

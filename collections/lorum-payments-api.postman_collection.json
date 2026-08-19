@@ -1,0 +1,666 @@
+{
+  "item": [
+    {
+      "id": "ad351caa-d39b-4b31-bd78-b93d1ea4a47a",
+      "name": "Payments",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dc9b58a5-c858-4968-9d75-e7b6766e2af4",
+          "name": "Create outbound payment for a customer",
+          "request": {
+            "name": "Create outbound payment for a customer",
+            "description": {
+              "content": "Create outbound payment for a customer",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "accounts",
+                ":account_id",
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "account_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                "key": "Idempotency-Key",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<long>\",\n  \"beneficiary\": {\n    \"account_holder_name\": \"<string>\",\n    \"account_identifier\": {\n      \"iban\": \"<string>\"\n    },\n    \"address\": {\n      \"line_1\": \"<string>\",\n      \"country_code\": \"<string>\",\n      \"line_2\": \"<string,null-string>\",\n      \"line_3\": \"<string,null-string>\",\n      \"line_4\": \"<string,null-string>\"\n    },\n    \"type\": \"<string>\",\n    \"bank\": \"<null>\",\n    \"date_of_birth\": \"<string,null-date>\",\n    \"email\": \"<string,null-string>\",\n    \"identification\": \"<null>\",\n    \"nationality\": \"<string,null-string>\",\n    \"phone\": \"<string,null-string>\"\n  },\n  \"external_reference\": \"<string>\",\n  \"purpose\": \"<string>\",\n  \"external_id\": \"<string,null-string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a2982688-8b9e-48f8-bbc6-3f3480e0f50c",
+              "name": "Customer payment has been accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":account_id",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "account_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"beneficiary\": {\n    \"account_holder_name\": \"string\",\n    \"account_identifier\": {\n      \"iban\": \"string\"\n    },\n    \"address\": {\n      \"line_1\": \"string\",\n      \"country_code\": \"st\",\n      \"line_2\": \"string\",\n      \"line_3\": \"string\",\n      \"line_4\": \"string\"\n    },\n    \"type\": \"business\",\n    \"bank\": null,\n    \"date_of_birth\": \"1993-03-26\",\n    \"email\": \"string\",\n    \"identification\": null,\n    \"nationality\": \"string\",\n    \"phone\": \"string\"\n  },\n  \"external_reference\": \"<string>\",\n  \"purpose\": \"corporate_card\",\n  \"external_id\": \"<string,null-string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transaction_id\": \"202699ee-011e-922e-afe2-6b51c0cbb2f4\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a3b5a68-5457-4c0c-92ee-e38708f65f21",
+              "name": "Unable to complete request with data provided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":account_id",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "account_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"beneficiary\": {\n    \"account_holder_name\": \"string\",\n    \"account_identifier\": {\n      \"iban\": \"string\"\n    },\n    \"address\": {\n      \"line_1\": \"string\",\n      \"country_code\": \"st\",\n      \"line_2\": \"string\",\n      \"line_3\": \"string\",\n      \"line_4\": \"string\"\n    },\n    \"type\": \"business\",\n    \"bank\": null,\n    \"date_of_birth\": \"1993-03-26\",\n    \"email\": \"string\",\n    \"identification\": null,\n    \"nationality\": \"string\",\n    \"phone\": \"string\"\n  },\n  \"external_reference\": \"<string>\",\n  \"purpose\": \"corporate_card\",\n  \"external_id\": \"<string,null-string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5e7e2601-e1d0-4427-94f2-085b95c0f1e9",
+              "name": "Account not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":account_id",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "account_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"beneficiary\": {\n    \"account_holder_name\": \"string\",\n    \"account_identifier\": {\n      \"iban\": \"string\"\n    },\n    \"address\": {\n      \"line_1\": \"string\",\n      \"country_code\": \"st\",\n      \"line_2\": \"string\",\n      \"line_3\": \"string\",\n      \"line_4\": \"string\"\n    },\n    \"type\": \"business\",\n    \"bank\": null,\n    \"date_of_birth\": \"1993-03-26\",\n    \"email\": \"string\",\n    \"identification\": null,\n    \"nationality\": \"string\",\n    \"phone\": \"string\"\n  },\n  \"external_reference\": \"<string>\",\n  \"purpose\": \"corporate_card\",\n  \"external_id\": \"<string,null-string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "22b6fcc1-606f-4dfc-83f6-60286cadbfe1",
+              "name": "Idempotency-Key concurrency conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":account_id",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "account_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"beneficiary\": {\n    \"account_holder_name\": \"string\",\n    \"account_identifier\": {\n      \"iban\": \"string\"\n    },\n    \"address\": {\n      \"line_1\": \"string\",\n      \"country_code\": \"st\",\n      \"line_2\": \"string\",\n      \"line_3\": \"string\",\n      \"line_4\": \"string\"\n    },\n    \"type\": \"business\",\n    \"bank\": null,\n    \"date_of_birth\": \"1993-03-26\",\n    \"email\": \"string\",\n    \"identification\": null,\n    \"nationality\": \"string\",\n    \"phone\": \"string\"\n  },\n  \"external_reference\": \"<string>\",\n  \"purpose\": \"corporate_card\",\n  \"external_id\": \"<string,null-string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8f61065a-245c-4f86-8ff2-239daf4ca3b3",
+              "name": "Idempotency-Key reuse for a different request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":account_id",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "account_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"beneficiary\": {\n    \"account_holder_name\": \"string\",\n    \"account_identifier\": {\n      \"iban\": \"string\"\n    },\n    \"address\": {\n      \"line_1\": \"string\",\n      \"country_code\": \"st\",\n      \"line_2\": \"string\",\n      \"line_3\": \"string\",\n      \"line_4\": \"string\"\n    },\n    \"type\": \"business\",\n    \"bank\": null,\n    \"date_of_birth\": \"1993-03-26\",\n    \"email\": \"string\",\n    \"identification\": null,\n    \"nationality\": \"string\",\n    \"phone\": \"string\"\n  },\n  \"external_reference\": \"<string>\",\n  \"purpose\": \"corporate_card\",\n  \"external_id\": \"<string,null-string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9dca9e6a-3213-4194-a5c6-d58244c10c86",
+          "name": "Estimate the fee for an outbound payment",
+          "request": {
+            "name": "Estimate the fee for an outbound payment",
+            "description": {
+              "content": "Estimate the fee for an outbound payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "accounts",
+                ":account_id",
+                "payments",
+                "estimate-fee",
+                ":amount"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "account_id",
+                  "description": "(Required) The account id where the intended payment will be made from."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "amount",
+                  "description": "(Required) The amount of the payment."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c8adfdd4-78f9-40d3-b8b1-9907fa7b4db3",
+              "name": "Request to estimate fee has been successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":account_id",
+                    "payments",
+                    "estimate-fee",
+                    ":amount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "account_id",
+                      "description": "(Required) The account id where the intended payment will be made from."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "amount",
+                      "description": "(Required) The amount of the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_id\": \"3de52add-fcd3-a8c7-141b-42b916ac46bd\",\n  \"instructed_amount\": 8261,\n  \"fee_amount\": 4393,\n  \"amount_with_fee\": 1908,\n  \"currency\": \"SAR\",\n  \"estimated_at\": \"1951-11-07T22:19:07.683Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db0c03fb-7827-4466-bc01-468c33741097",
+              "name": "Unable to complete request with data provided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":account_id",
+                    "payments",
+                    "estimate-fee",
+                    ":amount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "account_id",
+                      "description": "(Required) The account id where the intended payment will be made from."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "amount",
+                      "description": "(Required) The amount of the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "46cef1dd-c2d5-4e10-bab5-baf0fa8373a8",
+              "name": "Account not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":account_id",
+                    "payments",
+                    "estimate-fee",
+                    ":amount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "account_id",
+                      "description": "(Required) The account id where the intended payment will be made from."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "amount",
+                      "description": "(Required) The amount of the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.fuse.me",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "69a9daf6-5123-4a37-aed2-471eb394a640",
+    "name": "Fuse Accounts Payments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Lorum (Fuse) clearing, settlement and treasury API: multi-currency accounts, payments, exchanges, transfers, customers/KYC, documents, batch payments and sandbox simulation. Harvested from the provider's public ReadMe reference (per-operation OpenAPI definitions).\n\nContact Support:\n Name: Lorum",
+      "type": "text/plain"
+    }
+  }
+}

@@ -2,236 +2,240 @@ generated: '2026-07-20'
 method: derived
 status: candidate
 source: openapi/lorum-openapi-original.json
-notes: >-
-  No official hosted/remote Lorum MCP server was found. This is a candidate
-  tool list derived one-to-one from the harvested OpenAPI operations, for use
-  in generating an MCP server; it is not a published endpoint.
+notes: No official hosted/remote Lorum MCP server was found. This is a candidate tool list derived one-to-one
+  from the harvested OpenAPI operations, for use in generating an MCP server; it is not a published endpoint.
 server:
   name: lorum
   transport: http
 tools:
 - name: add_business
-  description: "Add business"
+  description: Add business
   method: POST
-  path: "/v1/customers/businesses"
+  path: /v1/customers/businesses
   source_operation: openapi/lorum-openapi-original.json#add_business
 - name: add_individual
-  description: "Add individual"
+  description: Add individual
   method: POST
-  path: "/v1/customers/individuals"
+  path: /v1/customers/individuals
   source_operation: openapi/lorum-openapi-original.json#add_individual
 - name: add_shareholder
-  description: "Add a shareholder to a business"
+  description: Add a shareholder to a business
   method: POST
-  path: "/v1/customers/businesses/{customer_id}/shareholders"
+  path: /v1/customers/businesses/{customer_id}/shareholders
   source_operation: openapi/lorum-openapi-original.json#add_shareholder
 - name: list_shareholders
-  description: "List shareholders for a business"
+  description: List shareholders for a business
   method: GET
-  path: "/v1/customers/businesses/{customer_id}/shareholders"
+  path: /v1/customers/businesses/{customer_id}/shareholders
   source_operation: openapi/lorum-openapi-original.json#list_shareholders
 - name: add_shareholder_v2
-  description: "Add a shareholder to a business"
+  description: Add a shareholder to a business
   method: POST
-  path: "/v2/customers/businesses/{business_id}/shareholders"
+  path: /v2/customers/businesses/{business_id}/shareholders
   source_operation: openapi/lorum-openapi-original.json#add_shareholder_v2
 - name: list_shareholders_v2
-  description: "List shareholders for a business"
+  description: List shareholders for a business
   method: GET
-  path: "/v2/customers/businesses/{business_id}/shareholders"
+  path: /v2/customers/businesses/{business_id}/shareholders
   source_operation: openapi/lorum-openapi-original.json#list_shareholders_v2
 - name: archive_customer
-  description: "Archive the customer so it is no longer available for use in the system."
+  description: Archive the customer so it is no longer available for use in the system.
   method: PATCH
-  path: "/v1/customers/{customer_id}/archive"
+  path: /v1/customers/{customer_id}/archive
   source_operation: openapi/lorum-openapi-original.json#archive_customer
 - name: create_customer_account
-  description: "Create account"
+  description: Create account
   method: POST
-  path: "/v1/customers/{customer_id}/accounts"
+  path: /v1/customers/{customer_id}/accounts
   source_operation: openapi/lorum-openapi-original.json#create_customer_account
 - name: list_customer_accounts
-  description: "List a customer's accounts"
+  description: List a customer's accounts
   method: GET
-  path: "/v1/customers/{customer_id}/accounts"
+  path: /v1/customers/{customer_id}/accounts
   source_operation: openapi/lorum-openapi-original.json#list_customer_accounts
 - name: create_customer_payment
-  description: "Create outbound payment for a customer"
+  description: Create outbound payment for a customer
   method: POST
-  path: "/v1/accounts/{account_id}/payments"
+  path: /v1/accounts/{account_id}/payments
   source_operation: openapi/lorum-openapi-original.json#create_customer_payment
 - name: create_exchange
-  description: "Create a currency exchange between two accounts holding different currencies"
+  description: Create a currency exchange between two accounts holding different currencies
   method: POST
-  path: "/v1/exchange"
+  path: /v1/exchange
   source_operation: openapi/lorum-openapi-original.json#create_exchange
 - name: create_internal_transfer
-  description: "Move funds between two accounts with the same currency"
+  description: Move funds between two accounts with the same currency
   method: POST
-  path: "/v1/internal-transfers"
+  path: /v1/internal-transfers
   source_operation: openapi/lorum-openapi-original.json#create_internal_transfer
 - name: customer_payment_fee_estimate
-  description: "Estimate the fee for an outbound payment"
+  description: Estimate the fee for an outbound payment
   method: GET
-  path: "/v1/accounts/{account_id}/payments/estimate-fee/{amount}"
+  path: /v1/accounts/{account_id}/payments/estimate-fee/{amount}
   source_operation: openapi/lorum-openapi-original.json#customer_payment_fee_estimate
 - name: get_account_confirmation_letter
-  description: "Get account confirmation letter."
+  description: Get account confirmation letter.
   method: GET
-  path: "/v1/accounts/{account_id}/confirmation-letter"
+  path: /v1/accounts/{account_id}/confirmation-letter
   source_operation: openapi/lorum-openapi-original.json#get_account_confirmation_letter
 - name: get_account_history
-  description: "Get an account's balance history"
+  description: Get an account's balance history
   method: GET
-  path: "/v1/accounts/{account_id}/history"
+  path: /v1/accounts/{account_id}/history
   source_operation: openapi/lorum-openapi-original.json#get_account_history
 - name: get_batch
-  description: "Get a single batch"
+  description: Get a single batch
   method: GET
-  path: "/v1/transactions/batches/{batch_id}"
+  path: /v1/transactions/batches/{batch_id}
   source_operation: openapi/lorum-openapi-original.json#get_batch
 - name: get_customer
-  description: "Get customer"
+  description: Get customer
   method: GET
-  path: "/v1/customers/{customer_id}"
+  path: /v1/customers/{customer_id}
   source_operation: openapi/lorum-openapi-original.json#get_customer
 - name: update_customer
-  description: "Update customer"
+  description: Update customer
   method: PATCH
-  path: "/v1/customers/{customer_id}"
+  path: /v1/customers/{customer_id}
   source_operation: openapi/lorum-openapi-original.json#update_customer
 - name: get_customer_account
-  description: "Get an account"
+  description: Get an account
   method: GET
-  path: "/v1/accounts/{account_id}"
+  path: /v1/accounts/{account_id}
   source_operation: openapi/lorum-openapi-original.json#get_customer_account
 - name: patch_customer_account
-  description: "Update account data"
+  description: Update account data
   method: PATCH
-  path: "/v1/accounts/{account_id}"
+  path: /v1/accounts/{account_id}
   source_operation: openapi/lorum-openapi-original.json#patch_customer_account
 - name: get_customer_onboarding
-  description: "Get Customer Onboarding Status for a specific currency"
+  description: Get Customer Onboarding Status for a specific currency
   method: GET
-  path: "/v1/customers/{customer_id}/onboarding/{currency}"
+  path: /v1/customers/{customer_id}/onboarding/{currency}
   source_operation: openapi/lorum-openapi-original.json#get_customer_onboarding
 - name: onboard_customer
-  description: "Onboard a customer for a specific currency"
+  description: Onboard a customer for a specific currency
   method: POST
-  path: "/v1/customers/{customer_id}/onboarding/{currency}"
+  path: /v1/customers/{customer_id}/onboarding/{currency}
   source_operation: openapi/lorum-openapi-original.json#onboard_customer
 - name: get_document
-  description: "Get document"
+  description: Get document
   method: GET
-  path: "/v1/documents/{document_id}"
+  path: /v1/documents/{document_id}
   source_operation: openapi/lorum-openapi-original.json#get_document
 - name: get_documents_linked_to_transaction
-  description: "Get linked documents for a transaction"
+  description: Get linked documents for a transaction
   method: GET
-  path: "/v1/transactions/{transaction_id}/documents"
+  path: /v1/transactions/{transaction_id}/documents
   source_operation: openapi/lorum-openapi-original.json#get_documents_linked_to_transaction
 - name: link_document_to_transaction
-  description: "Link a document to a transaction"
+  description: Link a document to a transaction
   method: POST
-  path: "/v1/transactions/{transaction_id}/documents"
+  path: /v1/transactions/{transaction_id}/documents
   source_operation: openapi/lorum-openapi-original.json#link_document_to_transaction
 - name: get_exchange_quote
-  description: "Get a quote for an exchange between two currencies"
+  description: Get a quote for an exchange between two currencies
   method: GET
-  path: "/v1/exchange/quote"
+  path: /v1/exchange/quote
   source_operation: openapi/lorum-openapi-original.json#get_exchange_quote
 - name: get_shareholder
-  description: "Get a shareholder"
+  description: Get a shareholder
   method: GET
-  path: "/v1/customers/businesses/shareholders/{shareholder_id}"
+  path: /v1/customers/businesses/shareholders/{shareholder_id}
   source_operation: openapi/lorum-openapi-original.json#get_shareholder
 - name: update_shareholder
-  description: "Update a shareholder"
+  description: Update a shareholder
   method: PATCH
-  path: "/v1/customers/businesses/shareholders/{shareholder_id}"
+  path: /v1/customers/businesses/shareholders/{shareholder_id}
   source_operation: openapi/lorum-openapi-original.json#update_shareholder
 - name: get_transaction
-  description: "Get a transaction"
+  description: Get a transaction
   method: GET
-  path: "/v1/transactions/{transaction_id}"
+  path: /v1/transactions/{transaction_id}
   source_operation: openapi/lorum-openapi-original.json#get_transaction
 - name: get_transaction_confirmation_letter
-  description: "Get transaction confirmation letter"
+  description: Get transaction confirmation letter
   method: GET
-  path: "/v1/transactions/{transaction_id}/confirmation-letter"
+  path: /v1/transactions/{transaction_id}/confirmation-letter
   source_operation: openapi/lorum-openapi-original.json#get_transaction_confirmation_letter
 - name: link_document
-  description: "Submit a document"
+  description: Submit a document
   method: POST
-  path: "/v1/customers/{customer_id}/documents"
+  path: /v1/customers/{customer_id}/documents
   source_operation: openapi/lorum-openapi-original.json#link_document
 - name: list_all_customer_accounts
-  description: "List all accounts for organisation"
+  description: List all accounts for organisation
   method: GET
-  path: "/v1/accounts"
+  path: /v1/accounts
   source_operation: openapi/lorum-openapi-original.json#list_all_customer_accounts
 - name: list_batches
-  description: "List batches"
+  description: List batches
   method: GET
-  path: "/v1/transactions/batches"
+  path: /v1/transactions/batches
   source_operation: openapi/lorum-openapi-original.json#list_batches
 - name: list_customer_transactions
-  description: "List transactions for an account"
+  description: List transactions for an account
   method: GET
-  path: "/v1/accounts/{account_id}/transactions"
+  path: /v1/accounts/{account_id}/transactions
   source_operation: openapi/lorum-openapi-original.json#list_customer_transactions
 - name: list_customers
-  description: "List customers"
+  description: List customers
   method: GET
-  path: "/v1/customers"
+  path: /v1/customers
   source_operation: openapi/lorum-openapi-original.json#list_customers
 - name: list_documents
-  description: "List documents"
+  description: List documents
   method: GET
-  path: "/v1/documents"
+  path: /v1/documents
   source_operation: openapi/lorum-openapi-original.json#list_documents
 - name: upload_document
-  description: "Upload Document"
+  description: Upload Document
   method: POST
-  path: "/v1/documents"
+  path: /v1/documents
   source_operation: openapi/lorum-openapi-original.json#upload_document
 - name: post_batch_file
-  description: "Upload payment batch file."
+  description: Upload payment batch file.
   method: POST
-  path: "/v1/transactions/batches/files"
+  path: /v1/transactions/batches/files
   source_operation: openapi/lorum-openapi-original.json#post_batch_file
 - name: public_list_all_transactions
-  description: "Get all transactions across accounts"
+  description: Get all transactions across accounts
   method: GET
-  path: "/v1/transactions"
+  path: /v1/transactions
   source_operation: openapi/lorum-openapi-original.json#public_list_all_transactions
 - name: simulate_execute_payment
-  description: "Simulate executed status for an outbound payment"
+  description: Simulate executed status for an outbound payment
   method: POST
-  path: "/v1/simulate/execute-payment"
+  path: /v1/simulate/execute-payment
   source_operation: openapi/lorum-openapi-original.json#simulate_execute_payment
 - name: simulate_fail_payment
-  description: "Simulate failed status for an outbound payment"
+  description: Simulate failed status for an outbound payment
   method: POST
-  path: "/v1/simulate/fail-payment"
+  path: /v1/simulate/fail-payment
   source_operation: openapi/lorum-openapi-original.json#simulate_fail_payment
 - name: simulate_inbound_payment
-  description: "Simulate inbound payment"
+  description: Simulate inbound payment
   method: POST
-  path: "/v1/simulate/inbound-payment"
+  path: /v1/simulate/inbound-payment
   source_operation: openapi/lorum-openapi-original.json#simulate_inbound_payment
 - name: simulate_return_payment
-  description: "Simulate a return payment."
+  description: Simulate a return payment.
   method: POST
-  path: "/v1/simulate/return-payment"
+  path: /v1/simulate/return-payment
   source_operation: openapi/lorum-openapi-original.json#simulate_return_payment
 - name: unlink_document
-  description: "Unlink a document from a customer."
+  description: Unlink a document from a customer.
   method: DELETE
-  path: "/v1/customers/{customer_id}/documents/{document_id}"
+  path: /v1/customers/{customer_id}/documents/{document_id}
   source_operation: openapi/lorum-openapi-original.json#unlink_document
 - name: getting-a-bearer-token
-  description: "Get a bearer token"
+  description: Get a bearer token
   method: POST
-  path: "/oauth/token"
+  path: /oauth/token
   source_operation: openapi/lorum-openapi-original.json#getting-a-bearer-token
+deployment:
+  mode: none
+  verified: derived
+  tools: 45
+  checked: '2026-08-12'
+  source: catalog MCP census

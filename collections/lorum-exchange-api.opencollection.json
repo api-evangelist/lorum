@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fuse Accounts Exchange API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Exchange",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a currency exchange between two accounts holding different currencies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.fuse.me/v1/exchange",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a currency exchange between two accounts holding different currencies"
+        },
+        {
+          "info": {
+            "name": "Get a quote for an exchange between two currencies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fuse.me/v1/exchange/quote",
+            "params": [
+              {
+                "name": "from_amount",
+                "value": "",
+                "type": "query",
+                "description": "The amount to convert from"
+              },
+              {
+                "name": "from_account",
+                "value": "",
+                "type": "query",
+                "description": "The account the funds will be debited from"
+              },
+              {
+                "name": "to_amount",
+                "value": "",
+                "type": "query",
+                "description": "The amount to convert to"
+              },
+              {
+                "name": "to_account",
+                "value": "",
+                "type": "query",
+                "description": "The account the funds will be credited to"
+              }
+            ]
+          },
+          "docs": "Get a quote for an exchange between two currencies"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

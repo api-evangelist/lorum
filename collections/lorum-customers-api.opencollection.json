@@ -1,0 +1,337 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fuse Accounts Customers API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Customers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add business",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.fuse.me/v1/customers/businesses",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add business"
+        },
+        {
+          "info": {
+            "name": "Add individual",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.fuse.me/v1/customers/individuals",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add individual"
+        },
+        {
+          "info": {
+            "name": "List shareholders for a business",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fuse.me/v1/customers/businesses/:customer_id/shareholders",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the customer"
+              }
+            ]
+          },
+          "docs": "List shareholders for a business"
+        },
+        {
+          "info": {
+            "name": "Add a shareholder to a business",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.fuse.me/v1/customers/businesses/:customer_id/shareholders",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the customer"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a shareholder to a business"
+        },
+        {
+          "info": {
+            "name": "Archive the customer so it is no longer available for use in the system.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.fuse.me/v1/customers/:customer_id/archive",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Archive the customer so it is no longer available for use in the system.\ncustomer linked to an open account can not be archived."
+        },
+        {
+          "info": {
+            "name": "Get customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fuse.me/v1/customers/:customer_id",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the customer"
+              }
+            ]
+          },
+          "docs": "Get customer"
+        },
+        {
+          "info": {
+            "name": "Update customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.fuse.me/v1/customers/:customer_id",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update customer"
+        },
+        {
+          "info": {
+            "name": "Get Customer Onboarding Status for a specific currency",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fuse.me/v1/customers/:customer_id/onboarding/:currency",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "currency",
+                "value": "usd",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Customer Onboarding Status for a specific currency"
+        },
+        {
+          "info": {
+            "name": "Onboard a customer for a specific currency",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.fuse.me/v1/customers/:customer_id/onboarding/:currency",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "currency",
+                "value": "usd",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Onboard a customer for a specific currency"
+        },
+        {
+          "info": {
+            "name": "Get a shareholder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fuse.me/v1/customers/businesses/shareholders/:shareholder_id",
+            "params": [
+              {
+                "name": "shareholder_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the customer"
+              }
+            ]
+          },
+          "docs": "Get a shareholder"
+        },
+        {
+          "info": {
+            "name": "Update a shareholder",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.fuse.me/v1/customers/businesses/shareholders/:shareholder_id",
+            "params": [
+              {
+                "name": "shareholder_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the shareholder"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a shareholder"
+        },
+        {
+          "info": {
+            "name": "Submit a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.fuse.me/v1/customers/:customer_id/documents",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a document"
+        },
+        {
+          "info": {
+            "name": "List customers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fuse.me/v1/customers",
+            "params": [
+              {
+                "name": "reference",
+                "value": "",
+                "type": "query",
+                "description": "Filter customers by reference ID"
+              },
+              {
+                "name": "customer_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter customers by their type"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Base64 encoded pagination cursor for fetching subsequent pages"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of customers to return per page"
+              }
+            ]
+          },
+          "docs": "List customers"
+        },
+        {
+          "info": {
+            "name": "Unlink a document from a customer.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.fuse.me/v1/customers/:customer_id/documents/:document_id",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "document_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Unlink a document from a customer.\nA document belonging to a USD onboarded customer cannot be unlinked from the customer."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,668 @@
+{
+  "item": [
+    {
+      "id": "34fa141c-4847-4771-9d60-e760068688fc",
+      "name": "Exchange",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3f1c1148-aea5-4d95-b5fd-49ba6598471d",
+          "name": "Create a currency exchange between two accounts holding different currencies",
+          "request": {
+            "name": "Create a currency exchange between two accounts holding different currencies",
+            "description": {
+              "content": "Create a currency exchange between two accounts holding different currencies",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "exchange"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                "key": "Idempotency-Key",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"external_reference\": \"<string>\",\n  \"from\": {\n    \"account_id\": \"<uuid>\",\n    \"amount\": \"<integer,null-int64>\"\n  },\n  \"to\": {\n    \"account_id\": \"<uuid>\",\n    \"amount\": \"<integer,null-int64>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ca233b40-44ec-4b19-9472-4f33e404c8ab",
+              "name": "Customer payment has been created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "exchange"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_reference\": \"<string>\",\n  \"from\": {\n    \"account_id\": \"3fc07c32-3d14-31a7-512a-f6f60ab45f9a\",\n    \"amount\": 4297\n  },\n  \"to\": {\n    \"account_id\": \"ac917233-0668-951d-a8e3-3b018426d0d1\",\n    \"amount\": 1249\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transaction_id\": \"5e5c1c31-e10b-7612-cfd1-960e7e3d4f7d\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6357acb5-3398-44f1-b329-6d887d3f2307",
+              "name": "Unable to complete request with data provided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "exchange"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_reference\": \"<string>\",\n  \"from\": {\n    \"account_id\": \"3fc07c32-3d14-31a7-512a-f6f60ab45f9a\",\n    \"amount\": 4297\n  },\n  \"to\": {\n    \"account_id\": \"ac917233-0668-951d-a8e3-3b018426d0d1\",\n    \"amount\": 1249\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4006428c-6305-4376-ba30-395234180d5b",
+              "name": "Account not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "exchange"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_reference\": \"<string>\",\n  \"from\": {\n    \"account_id\": \"3fc07c32-3d14-31a7-512a-f6f60ab45f9a\",\n    \"amount\": 4297\n  },\n  \"to\": {\n    \"account_id\": \"ac917233-0668-951d-a8e3-3b018426d0d1\",\n    \"amount\": 1249\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1f8a6593-092e-4994-ab66-6449a034707c",
+              "name": "Idempotency-Key concurrency conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "exchange"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_reference\": \"<string>\",\n  \"from\": {\n    \"account_id\": \"3fc07c32-3d14-31a7-512a-f6f60ab45f9a\",\n    \"amount\": 4297\n  },\n  \"to\": {\n    \"account_id\": \"ac917233-0668-951d-a8e3-3b018426d0d1\",\n    \"amount\": 1249\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "642cee79-86bf-4da2-b3e6-e6af20480617",
+              "name": "Idempotency-Key reuse for a different request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "exchange"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Idempotency key to allow safe retrying of the operation. The value should be a unique UUID for each distinct operation. See our understanding idempotency guide for full details.",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_reference\": \"<string>\",\n  \"from\": {\n    \"account_id\": \"3fc07c32-3d14-31a7-512a-f6f60ab45f9a\",\n    \"amount\": 4297\n  },\n  \"to\": {\n    \"account_id\": \"ac917233-0668-951d-a8e3-3b018426d0d1\",\n    \"amount\": 1249\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "03f6e20c-469a-45c6-a8e0-48ce0c61c982",
+          "name": "Get a quote for an exchange between two currencies",
+          "request": {
+            "name": "Get a quote for an exchange between two currencies",
+            "description": {
+              "content": "Get a quote for an exchange between two currencies",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "exchange",
+                "quote"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from_amount",
+                  "value": "<integer>",
+                  "description": "The amount to convert from"
+                },
+                {
+                  "disabled": false,
+                  "key": "from_account",
+                  "value": "<uuid>",
+                  "description": "(Required) The account the funds will be debited from"
+                },
+                {
+                  "disabled": false,
+                  "key": "to_amount",
+                  "value": "<integer>",
+                  "description": "The amount to convert to"
+                },
+                {
+                  "disabled": false,
+                  "key": "to_account",
+                  "value": "<uuid>",
+                  "description": "(Required) The account the funds will be credited to"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c362e121-d1b8-425e-b204-2f7aadf3fcfe",
+              "name": "Successfully retrieved exchange rate",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "exchange",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from_amount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "from_account",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "to_amount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "to_account",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"exchange_rate\": 2853.6578862314323,\n  \"from_amount\": 5754,\n  \"from_currency\": \"EUR\",\n  \"to_amount\": 2231,\n  \"to_currency\": \"EUR\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db3cf08d-f238-42a7-ac14-ad5af2323239",
+              "name": "Fuse does not support currency exchange between {from_currency} and {to_currency}.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "exchange",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from_amount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "from_account",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "to_amount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "to_account",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9847ec8f-b652-4368-b01a-bca4ef816362",
+              "name": "Unable to obtain an exchange rate from {from_currency} to {to_currency}. Please contact support.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "exchange",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from_amount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "from_account",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "to_amount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "to_account",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "84e4e5fe-8d17-44ab-814f-4dc5a2f5b882",
+              "name": "Exchange rates haven't been configured yet. Please contact support.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "exchange",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from_amount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "from_account",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "to_amount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "to_account",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.fuse.me",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1ff6ec1e-bbae-4eca-9bb3-06ca22ae50ec",
+    "name": "Fuse Accounts Exchange API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Lorum (Fuse) clearing, settlement and treasury API: multi-currency accounts, payments, exchanges, transfers, customers/KYC, documents, batch payments and sandbox simulation. Harvested from the provider's public ReadMe reference (per-operation OpenAPI definitions).\n\nContact Support:\n Name: Lorum",
+      "type": "text/plain"
+    }
+  }
+}
