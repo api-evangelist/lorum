@@ -45,6 +45,18 @@ tags:
 - Settlement
 - Treasury
 - Multi-Currency
+- Account
+- Foreign Exchange
+- Webhook
+tags_raw:
+- Company
+- Fintech
+- Payments
+- Banking
+- Clearing
+- Settlement
+- Treasury
+- Multi-Currency
 - Accounts
 - Foreign Exchange
 - Webhooks
@@ -60,6 +72,8 @@ apis:
   humanURL: https://docs.lorum.com/docs/getting-started
   baseURL: https://api.fuse.me
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -120,6 +134,8 @@ apis:
   humanURL: https://docs.lorum.com/docs/getting-started
   baseURL: https://api.fuse.me
   tags:
+  - Authentication
+  tags_raw:
   - Oauth
   properties:
   - type: OpenAPI
@@ -150,6 +166,8 @@ apis:
   humanURL: https://docs.lorum.com/docs/getting-started
   baseURL: https://api.fuse.me
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
