@@ -185,6 +185,9 @@ apis:
   - type: OpenAPI
     url: openapi/lorum-transactions-api-openapi.yml
 common:
+- type: CapabilityMap
+  url: capabilities/lorum-capability-edges.yml
+  name: Lorum Business Capability Map
 - type: Overlay
   url: overlays/lorum-openapi-overlay.yaml
 - type: DeveloperPortal
