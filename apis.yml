@@ -140,18 +140,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/lorum-internal-transfers-api-openapi.yml
-- aid: lorum:lorum-oauth-api
-  name: Lorum Oauth API
-  description: The Oauth API from Lorum — 1 operation(s) for oauth.
-  humanURL: https://docs.lorum.com/docs/getting-started
-  baseURL: https://api.fuse.me
-  tags:
-  - Authentication
-  tags_raw:
-  - Oauth
-  properties:
-  - type: OpenAPI
-    url: openapi/lorum-oauth-api-openapi.yml
 - aid: lorum:lorum-payments-api
   name: Lorum Payments API
   description: The Payments API from Lorum — 2 operation(s) for payments.
@@ -184,6 +172,16 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/lorum-transactions-api-openapi.yml
+- aid: lorum:lorum-oauth-api
+  name: Lorum OAUTH API
+  description: The Oauth API from Lorum — 1 operation(s) for oauth.
+  humanURL: https://docs.lorum.com/docs/getting-started
+  baseURL: https://api.fuse.me
+  tags:
+  - Oauth
+  properties:
+  - type: OpenAPI
+    url: openapi/lorum-oauth-api-openapi.yml
 common:
 - type: CapabilityMap
   url: capabilities/lorum-capability-edges.yml
