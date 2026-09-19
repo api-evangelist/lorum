@@ -178,6 +178,8 @@ apis:
   humanURL: https://docs.lorum.com/docs/getting-started
   baseURL: https://api.fuse.me
   tags:
+  - Authentication
+  tags_raw:
   - Oauth
   properties:
   - type: OpenAPI
