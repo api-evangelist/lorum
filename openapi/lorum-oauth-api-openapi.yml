@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Fuse Accounts Oauth API
+  title: Fuse OAUTH API
   description: 'Lorum (Fuse) clearing, settlement and treasury API: multi-currency accounts, payments, exchanges, transfers, customers/KYC, documents, batch payments and sandbox simulation. Harvested from the provider''s public ReadMe reference (per-operation OpenAPI definitions).'
   contact:
     name: Lorum
@@ -16,7 +16,7 @@ servers:
 security:
 - OAuth2: []
 tags:
-- name: Oauth
+- name: OAuth
 paths:
   /oauth/token:
     post:
@@ -89,7 +89,7 @@ paths:
       security:
       - {}
       tags:
-      - Oauth
+      - OAuth
 components:
   securitySchemes:
     OAuth2:

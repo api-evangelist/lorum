@@ -1,16 +1,7 @@
 {
   "provider": "lorum",
   "sources": [
-    "lorum-accounts-api-openapi.yml",
-    "lorum-customers-api-openapi.yml",
-    "lorum-customers-v2-api-openapi.yml",
-    "lorum-documents-api-openapi.yml",
-    "lorum-exchange-api-openapi.yml",
-    "lorum-internal-transfers-api-openapi.yml",
-    "lorum-oauth-api-openapi.yml",
-    "lorum-payments-api-openapi.yml",
-    "lorum-simulation-api-openapi.yml",
-    "lorum-transactions-api-openapi.yml"
+    "_original/lorum-openapi-original.json"
   ],
   "outputs": [
     "lorum-accounts-api-openapi.yml",
@@ -24,9 +15,38 @@
     "lorum-simulation-api-openapi.yml",
     "lorum-transactions-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "lorum-openapi-original.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "lorum-openapi-original.json: tagged paths POST /oauth/token -> Oauth",
+    "lorum-openapi-original.json: declared missing tag: Accounts",
+    "lorum-openapi-original.json: declared missing tag: Customers",
+    "lorum-openapi-original.json: declared missing tag: Customers V2",
+    "lorum-openapi-original.json: declared missing tag: Documents",
+    "lorum-openapi-original.json: declared missing tag: Exchange",
+    "lorum-openapi-original.json: declared missing tag: Internal Transfers",
+    "lorum-openapi-original.json: declared missing tag: Oauth",
+    "lorum-openapi-original.json: declared missing tag: Payments",
+    "lorum-openapi-original.json: declared missing tag: Simulation",
+    "lorum-openapi-original.json: declared missing tag: Transactions",
+    "superseded outputs removed: lorum-o-auth-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 10 total)"
+  ],
+  "skipped": [
+    "lorum-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lorum-customers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lorum-customers-v2-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lorum-documents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lorum-exchange-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lorum-internal-transfers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lorum-o-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lorum-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lorum-simulation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lorum-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
