@@ -81,46 +81,6 @@ paths:
           description: Request to create a returned payment has completed
 components:
   schemas:
-    WireBankDetails:
-      type: object
-      required:
-      - account_number
-      - routing_number
-      properties:
-        account_number:
-          type: string
-          format: string
-          maxLength: 27
-        routing_number:
-          type: string
-          format: string
-          maxLength: 12
-    SimulateReturnedPaymentRequest:
-      type: object
-      description: Parameters to simulate executing a payment.
-      required:
-      - outbound_transaction_id
-      properties:
-        outbound_transaction_id:
-          type: string
-          format: uuid
-          description: 'The id of the outbound payment to be returned.
-
-            Must be in an executed state.'
-    ScanDetails:
-      type: object
-      required:
-      - sort_code
-      - account_number
-      properties:
-        account_number:
-          type: string
-          format: string
-          maxLength: 8
-        sort_code:
-          type: string
-          format: string
-          maxLength: 6
     SimulateFailPaymentRequest:
       type: object
       description: Parameters for failing a payment.
@@ -135,30 +95,32 @@ components:
           type: string
           format: uuid
           description: The id of the transaction to fail.
-    AccountDetailsIdentifier:
-      oneOf:
-      - type: object
-        title: IBAN
-        required:
-        - iban
-        properties:
-          iban:
-            type: string
-            format: string
-      - type: object
-        title: Wire
-        required:
-        - wire
-        properties:
-          wire:
-            $ref: '#/components/schemas/WireBankDetails'
-      - type: object
-        title: SCAN
-        required:
-        - scan
-        properties:
-          scan:
-            $ref: '#/components/schemas/ScanDetails'
+    SimulateReturnedPaymentRequest:
+      type: object
+      description: Parameters to simulate executing a payment.
+      required:
+      - outbound_transaction_id
+      properties:
+        outbound_transaction_id:
+          type: string
+          format: uuid
+          description: 'The id of the outbound payment to be returned.
+
+            Must be in an executed state.'
+    WireBankDetails:
+      type: object
+      required:
+      - account_number
+      - routing_number
+      properties:
+        account_number:
+          type: string
+          format: string
+          maxLength: 27
+        routing_number:
+          type: string
+          format: string
+          maxLength: 12
     SimulateInboundRequest:
       type: object
       description: Parameters to simulate an inbound payment.
@@ -213,6 +175,20 @@ components:
             If not provided, topup will be used as the default value.'
           maxLength: 140
           minLength: 1
+    ScanDetails:
+      type: object
+      required:
+      - sort_code
+      - account_number
+      properties:
+        account_number:
+          type: string
+          format: string
+          maxLength: 8
+        sort_code:
+          type: string
+          format: string
+          maxLength: 6
     SimulateExecutePaymentRequest:
       type: object
       description: Parameters to simulate executing a payment.
@@ -223,6 +199,30 @@ components:
           type: string
           format: uuid
           description: The id of the payment that should transition into executed.
+    AccountDetailsIdentifier:
+      oneOf:
+      - type: object
+        title: IBAN
+        required:
+        - iban
+        properties:
+          iban:
+            type: string
+            format: string
+      - type: object
+        title: Wire
+        required:
+        - wire
+        properties:
+          wire:
+            $ref: '#/components/schemas/WireBankDetails'
+      - type: object
+        title: SCAN
+        required:
+        - scan
+        properties:
+          scan:
+            $ref: '#/components/schemas/ScanDetails'
   securitySchemes:
     OAuth2:
       type: http

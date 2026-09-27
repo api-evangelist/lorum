@@ -94,6 +94,117 @@ paths:
           description: Account not found
 components:
   schemas:
+    BeneficiaryBank:
+      type: object
+      description: Bank details of payment beneficiary bank.
+      properties:
+        branch:
+          type:
+          - string
+          - 'null'
+          format: string
+          description: The branch of the bank where the beneficiary account is held.
+          maxLength: 50
+        code:
+          type:
+          - string
+          - 'null'
+          description: 'The BIC code of the bank where the beneficiary account is held.
+
+            Optional for AED payments. Mandatory for USD payments.'
+          minLength: 8
+        intermediary_bank:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/IntermediaryBank'
+            description: The intermediary bank details.
+    EstimateFeeResponse:
+      type: object
+      required:
+      - account_id
+      - instructed_amount
+      - fee_amount
+      - amount_with_fee
+      - currency
+      - estimated_at
+      properties:
+        account_id:
+          type: string
+          format: uuid
+        amount_with_fee:
+          type: integer
+          format: int64
+          minimum: 0
+        currency:
+          $ref: '#/components/schemas/Currency'
+        estimated_at:
+          type: string
+          format: date-time
+        fee_amount:
+          type: integer
+          format: int64
+          minimum: 0
+        instructed_amount:
+          type: integer
+          format: int64
+          minimum: 0
+    Identification:
+      oneOf:
+      - allOf:
+        - $ref: '#/components/schemas/uae_id'
+        - type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              enum:
+              - uae_id
+      - allOf:
+        - $ref: '#/components/schemas/passport'
+        - type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              enum:
+              - passport
+      description: The identification field is **not** required. When provided, then all UAE_ID fields or PASSPORT fields are required.
+    Address:
+      type: object
+      required:
+      - line_1
+      - country_code
+      properties:
+        country_code:
+          type: string
+          format: string
+          maxLength: 2
+          minLength: 2
+        line_1:
+          type: string
+          format: string
+          maxLength: 50
+        line_2:
+          type:
+          - string
+          - 'null'
+          format: string
+          description: '***optional*** for `AED` payments but ***mandatory*** for `USD` payments'
+          maxLength: 50
+        line_3:
+          type:
+          - string
+          - 'null'
+          format: string
+          maxLength: 50
+        line_4:
+          type:
+          - string
+          - 'null'
+          format: string
+          maxLength: 50
     WireBankDetails:
       type: object
       required:
@@ -108,19 +219,59 @@ components:
           type: string
           format: string
           maxLength: 12
-    IntermediaryBank:
+    uae_id:
       type: object
       required:
-      - code
+      - number
+      properties:
+        number:
+          type: string
+          format: string
+          maxLength: 50
+    BicCode:
+      type: string
+      description: BIC Code to identify a bank.
+    ScanDetails:
+      type: object
+      required:
+      - sort_code
+      - account_number
       properties:
         account_number:
-          type:
-          - string
-          - 'null'
+          type: string
           format: string
-          maxLength: 25
-        code:
-          $ref: '#/components/schemas/BicCode'
+          maxLength: 8
+        sort_code:
+          type: string
+          format: string
+          maxLength: 6
+    CreatePaymentResponse:
+      type: object
+      required:
+      - transaction_id
+      properties:
+        transaction_id:
+          type: string
+          format: uuid
+          description: Id of the created payment.
+    CounterpartType:
+      type: string
+      enum:
+      - individual
+      - business
+    passport:
+      type: object
+      required:
+      - number
+      - country_of_issue
+      properties:
+        country_of_issue:
+          type: string
+          format: string
+        number:
+          type: string
+          format: string
+          maxLength: 50
     PaymentDetails:
       type: object
       description: Account details of the payment beneficiary.
@@ -189,72 +340,43 @@ components:
         type:
           $ref: '#/components/schemas/CounterpartType'
       example: {}
-    Identification:
+    AccountDetailsIdentifier:
       oneOf:
-      - allOf:
-        - $ref: '#/components/schemas/uae_id'
-        - type: object
-          required:
-          - type
-          properties:
-            type:
-              type: string
-              enum:
-              - uae_id
-      - allOf:
-        - $ref: '#/components/schemas/passport'
-        - type: object
-          required:
-          - type
-          properties:
-            type:
-              type: string
-              enum:
-              - passport
-      description: The identification field is **not** required. When provided, then all UAE_ID fields or PASSPORT fields are required.
-    Address:
+      - type: object
+        title: IBAN
+        required:
+        - iban
+        properties:
+          iban:
+            type: string
+            format: string
+      - type: object
+        title: Wire
+        required:
+        - wire
+        properties:
+          wire:
+            $ref: '#/components/schemas/WireBankDetails'
+      - type: object
+        title: SCAN
+        required:
+        - scan
+        properties:
+          scan:
+            $ref: '#/components/schemas/ScanDetails'
+    IntermediaryBank:
       type: object
       required:
-      - line_1
-      - country_code
+      - code
       properties:
-        country_code:
-          type: string
-          format: string
-          maxLength: 2
-          minLength: 2
-        line_1:
-          type: string
-          format: string
-          maxLength: 50
-        line_2:
+        account_number:
           type:
           - string
           - 'null'
           format: string
-          description: '***optional*** for `AED` payments but ***mandatory*** for `USD` payments'
-          maxLength: 50
-        line_3:
-          type:
-          - string
-          - 'null'
-          format: string
-          maxLength: 50
-        line_4:
-          type:
-          - string
-          - 'null'
-          format: string
-          maxLength: 50
-    uae_id:
-      type: object
-      required:
-      - number
-      properties:
-        number:
-          type: string
-          format: string
-          maxLength: 50
+          maxLength: 25
+        code:
+          $ref: '#/components/schemas/BicCode'
     Currency:
       type: string
       enum:
@@ -338,128 +460,6 @@ components:
         purpose:
           $ref: '#/components/schemas/PurposeCode'
           description: Reason for the transaction.
-    BicCode:
-      type: string
-      description: BIC Code to identify a bank.
-    AccountDetailsIdentifier:
-      oneOf:
-      - type: object
-        title: IBAN
-        required:
-        - iban
-        properties:
-          iban:
-            type: string
-            format: string
-      - type: object
-        title: Wire
-        required:
-        - wire
-        properties:
-          wire:
-            $ref: '#/components/schemas/WireBankDetails'
-      - type: object
-        title: SCAN
-        required:
-        - scan
-        properties:
-          scan:
-            $ref: '#/components/schemas/ScanDetails'
-    passport:
-      type: object
-      required:
-      - number
-      - country_of_issue
-      properties:
-        country_of_issue:
-          type: string
-          format: string
-        number:
-          type: string
-          format: string
-          maxLength: 50
-    ScanDetails:
-      type: object
-      required:
-      - sort_code
-      - account_number
-      properties:
-        account_number:
-          type: string
-          format: string
-          maxLength: 8
-        sort_code:
-          type: string
-          format: string
-          maxLength: 6
-    CreatePaymentResponse:
-      type: object
-      required:
-      - transaction_id
-      properties:
-        transaction_id:
-          type: string
-          format: uuid
-          description: Id of the created payment.
-    EstimateFeeResponse:
-      type: object
-      required:
-      - account_id
-      - instructed_amount
-      - fee_amount
-      - amount_with_fee
-      - currency
-      - estimated_at
-      properties:
-        account_id:
-          type: string
-          format: uuid
-        amount_with_fee:
-          type: integer
-          format: int64
-          minimum: 0
-        currency:
-          $ref: '#/components/schemas/Currency'
-        estimated_at:
-          type: string
-          format: date-time
-        fee_amount:
-          type: integer
-          format: int64
-          minimum: 0
-        instructed_amount:
-          type: integer
-          format: int64
-          minimum: 0
-    CounterpartType:
-      type: string
-      enum:
-      - individual
-      - business
-    BeneficiaryBank:
-      type: object
-      description: Bank details of payment beneficiary bank.
-      properties:
-        branch:
-          type:
-          - string
-          - 'null'
-          format: string
-          description: The branch of the bank where the beneficiary account is held.
-          maxLength: 50
-        code:
-          type:
-          - string
-          - 'null'
-          description: 'The BIC code of the bank where the beneficiary account is held.
-
-            Optional for AED payments. Mandatory for USD payments.'
-          minLength: 8
-        intermediary_bank:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/IntermediaryBank'
-            description: The intermediary bank details.
   securitySchemes:
     OAuth2:
       type: http

@@ -105,33 +105,6 @@ paths:
           description: Exchange rates haven't been configured yet. Please contact support.
 components:
   schemas:
-    ExchangeAccountDetails:
-      type: object
-      required:
-      - account_id
-      properties:
-        account_id:
-          type: string
-          format: uuid
-        amount:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          minimum: 0
-    Currency:
-      type: string
-      enum:
-      - AED
-      - USD
-      - JOD
-      - EGP
-      - SAR
-      - GBP
-      - EUR
-      - HKD
-      - CNH
-      - SGD
     GetExchangeRateResponse:
       type: object
       required:
@@ -156,14 +129,6 @@ components:
           minimum: 0
         to_currency:
           $ref: '#/components/schemas/Currency'
-    CreateExchangeResponse:
-      type: object
-      required:
-      - transaction_id
-      properties:
-        transaction_id:
-          type: string
-          format: uuid
     CreateExchangeRequest:
       type: object
       required:
@@ -178,6 +143,41 @@ components:
           $ref: '#/components/schemas/ExchangeAccountDetails'
         to:
           $ref: '#/components/schemas/ExchangeAccountDetails'
+    CreateExchangeResponse:
+      type: object
+      required:
+      - transaction_id
+      properties:
+        transaction_id:
+          type: string
+          format: uuid
+    Currency:
+      type: string
+      enum:
+      - AED
+      - USD
+      - JOD
+      - EGP
+      - SAR
+      - GBP
+      - EUR
+      - HKD
+      - CNH
+      - SGD
+    ExchangeAccountDetails:
+      type: object
+      required:
+      - account_id
+      properties:
+        account_id:
+          type: string
+          format: uuid
+        amount:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          minimum: 0
   securitySchemes:
     OAuth2:
       type: http

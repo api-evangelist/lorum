@@ -15,9 +15,7 @@
     "lorum-simulation-api-openapi.yml",
     "lorum-transactions-api-openapi.yml"
   ],
-  "archived": [
-    "deleted 1 superseded output(s) from the previous generation"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -34,8 +32,7 @@
     "lorum-openapi-original.json: declared missing tag: Payments",
     "lorum-openapi-original.json: declared missing tag: Simulation",
     "lorum-openapi-original.json: declared missing tag: Transactions",
-    "superseded outputs removed: lorum-o-auth-api-openapi.yml",
-    "apis.yml register: written (+1 apis, 10 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "lorum-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -44,7 +41,7 @@
     "lorum-documents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "lorum-exchange-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "lorum-internal-transfers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "lorum-o-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lorum-oauth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "lorum-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "lorum-simulation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "lorum-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
