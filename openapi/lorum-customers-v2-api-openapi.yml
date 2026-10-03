@@ -101,6 +101,34 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    AddShareholderRequestV2:
+      type: object
+      required:
+      - ownership_percentage
+      properties:
+        customer_id:
+          type:
+          - string
+          - 'null'
+          format: Uuid
+          description: '`customer_id` of the shareholder.'
+        ownership_percentage:
+          type: integer
+          format: int32
+          minimum: 0
+    ShareholderSummaryV2:
+      type: object
+      required:
+      - customer_id
+      - holding_percent
+      properties:
+        customer_id:
+          type: string
+          format: Uuid
+        holding_percent:
+          type: integer
+          format: int32
+          minimum: 0
     ErrorResponse:
       type: object
       description: 'User-facing error type.
@@ -121,34 +149,6 @@ components:
         message:
           type: string
           description: Renaming of `error`. Human-readable description of the error.
-    ShareholderSummaryV2:
-      type: object
-      required:
-      - customer_id
-      - holding_percent
-      properties:
-        customer_id:
-          type: string
-          format: Uuid
-        holding_percent:
-          type: integer
-          format: int32
-          minimum: 0
-    AddShareholderRequestV2:
-      type: object
-      required:
-      - ownership_percentage
-      properties:
-        customer_id:
-          type:
-          - string
-          - 'null'
-          format: Uuid
-          description: '`customer_id` of the shareholder.'
-        ownership_percentage:
-          type: integer
-          format: int32
-          minimum: 0
   securitySchemes:
     OAuth2:
       type: http

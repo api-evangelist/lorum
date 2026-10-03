@@ -587,143 +587,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    AedLicenseIssuer:
-      type: string
-      enum:
-      - mainland
-      - freezone
-      - international
-    DocumentType:
-      type: string
-      description: Types of documents that can be uploaded for customers and transactions.
-      enum:
-      - passport
-      - visa
-      - national_id
-      - trade_licence
-      - commercial_licence
-      - identity_verification_biometrics
-      - incorporation_cert
-      - incumbency_cert
-      - memorandum_articles
-      - bank_statement
-      - photo
-      - proof_of_address
-      - regulatory_license
-      - articles_of_association
-      - source_of_funds
-      - aml_cft_sanctions_ind_audit
-      - aml_cft_sanctions_policy
-      - compliance_officer_resume
-      - financial_statements
-      - share_certificate
-      - corporate_resolution
-      - wolfsberg_gcbddq
-      - edd_concentration_form
-      - other
-    Address:
-      type: object
-      required:
-      - line_1
-      - country_code
-      properties:
-        country_code:
-          type: string
-          format: string
-          maxLength: 2
-          minLength: 2
-        line_1:
-          type: string
-          format: string
-          maxLength: 50
-        line_2:
-          type:
-          - string
-          - 'null'
-          format: string
-          description: '***optional*** for `AED` payments but ***mandatory*** for `USD` payments'
-          maxLength: 50
-        line_3:
-          type:
-          - string
-          - 'null'
-          format: string
-          maxLength: 50
-        line_4:
-          type:
-          - string
-          - 'null'
-          format: string
-          maxLength: 50
-    ListCustomersResponse:
-      type: object
-      required:
-      - pages
-      - customers
-      properties:
-        customers:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomerSummary'
-        pages:
-          $ref: '#/components/schemas/Cursor_String'
-    Cursor_String:
-      type: object
-      required:
-      - size
-      properties:
-        next:
-          type:
-          - string
-          - 'null'
-        size:
-          type: integer
-          minimum: 0
-    OnboardingCurrency:
-      type: string
-      enum:
-      - usd
-      - eur
-      - gbp
-      - aed
-    UpdateShareholderRequest:
-      allOf:
-      - oneOf:
-        - type: 'null'
-        - $ref: '#/components/schemas/UpdateShareholder'
-      - type: object
-        properties:
-          holding_percentage:
-            type:
-            - integer
-            - 'null'
-            format: int32
-            minimum: 0
-          shareholder_of:
-            type:
-            - string
-            - 'null'
-            format: Uuid
-    WatchlistIdType:
-      type: string
-      enum:
-      - passport
-      - national_id
-    RejectionReason:
-      type: string
-      enum:
-      - prohibited
-      - sanction
-      - pep
-      - financial_crimes
-      - other
-    ApprovalStatus:
-      type: string
-      enum:
-      - auto_approved
-      - pending
-      - approved
-      - rejected
     AddIndividualRequest:
       type: object
       required:
@@ -789,6 +652,804 @@ components:
           - $ref: '#/components/schemas/CustomerRelationshipType'
             description: The relationship type of the customer to the organisation.
           default: direct
+    ShareholderType:
+      type: string
+      enum:
+      - shareholder
+      - business_shareholder
+    RegulatoryLicenseType:
+      type: string
+      enum:
+      - banking
+      - card_acquiring
+      - card_issuer
+      - crypto_asset
+      - electronic_money
+      - forex
+      - payments
+      - none
+      - other
+      - trading
+    BusinessCurrencyExtra:
+      oneOf:
+      - type: object
+        title: Usd
+        required:
+        - tax_number
+        - industry_code
+        - currency
+        properties:
+          currency:
+            type: string
+            enum:
+            - usd
+          industry_code:
+            type: string
+            format: string
+            description: 'US industry code as defined by the North American Industry Classification System (NAICS) system.
+
+              See https://reference.fuse.me/naics.html for supported list of codes.'
+            maxLength: 6
+            minLength: 6
+          ip_address:
+            type: string
+            format: string
+            description: Optional IP address to use as a Proof of Address. Can be in IPv4 or IPv6 format.
+            maxLength: 45
+            minLength: 2
+          tax_number:
+            type: string
+            format: string
+            description: Valid business tax number.
+            maxLength: 100
+            minLength: 1
+      - type: object
+        title: Aed
+        required:
+        - license_issuer
+        - currency
+        properties:
+          currency:
+            type: string
+            enum:
+            - aed
+          license_issuer:
+            $ref: '#/components/schemas/AedLicenseIssuer'
+            description: 'License issuer type. Use Mainland for businesses registered with the UAE mainland authority,
+
+              or Freezone for businesses registered in a UAE free zone.'
+          trade_license_expiry:
+            type:
+            - string
+            - 'null'
+            format: date
+      description: Represents the currency specific data for a business.
+    CustomerSummary:
+      type: object
+      required:
+      - id
+      - reference
+      - customer_type
+      - display_name
+      - created_at
+      - approval_status
+      properties:
+        approval_status:
+          $ref: '#/components/schemas/ApprovalStatus'
+        created_at:
+          type: string
+          format: date-time
+        customer_type:
+          $ref: '#/components/schemas/CustomerTypeFilter'
+        display_name:
+          type: string
+        id:
+          type: string
+          format: uuid
+        reference:
+          type: string
+          maxLength: 36
+    AddShareholderRequest:
+      allOf:
+      - $ref: '#/components/schemas/AddShareholder'
+      - type: object
+        required:
+        - holding_percentage
+        properties:
+          holding_percentage:
+            type: integer
+            format: int32
+            minimum: 0
+          shareholder_of:
+            type:
+            - string
+            - 'null'
+            format: Uuid
+      description: "Company 1\n  |--> Shareholder 1 (Business)\n  |    |--> Shareholder 3 (Individual)\n  |--> Shareholder 2 (Business)\n  |    |--> Shareholder 4 (Business)\n            |--> Shareholder 5 (Individual)\n\n"
+    UpdateAddress:
+      type: object
+      properties:
+        country_code:
+          type:
+          - string
+          - 'null'
+          format: string
+          maxLength: 2
+          minLength: 2
+        line_1:
+          type:
+          - string
+          - 'null'
+          format: string
+          maxLength: 50
+        line_2:
+          type:
+          - string
+          - 'null'
+          format: string
+          maxLength: 50
+        line_3:
+          type:
+          - string
+          - 'null'
+          format: string
+          maxLength: 50
+        line_4:
+          type:
+          - string
+          - 'null'
+          format: string
+          maxLength: 50
+    AddCustomerResponse:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          format: Uuid
+    AddBusinessRequest:
+      type: object
+      required:
+      - display_name
+      - reference
+      - address
+      - business_name
+      - registration_number
+      - country_of_issuance
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        business_name:
+          type: string
+          format: string
+          maxLength: 140
+        country_of_issuance:
+          type: string
+          format: string
+        currency_extra:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BusinessCurrencyExtra'
+        display_name:
+          type: string
+          format: string
+          maxLength: 140
+        issuance_authority:
+          type:
+          - string
+          - 'null'
+          format: string
+          maxLength: 140
+        linked_documents:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Document ids for the companies trading licenses.
+          deprecated: true
+        reference:
+          type: string
+          format: string
+          description: 'External ID used for correlating the resource with an external system. If specified during transaction creation,
+
+            this ID will be associated with and visible on all resources related to the customer.'
+          maxLength: 36
+        registration_date:
+          type:
+          - string
+          - 'null'
+          format: date
+        registration_number:
+          type: string
+          format: string
+          maxLength: 140
+        regulatory_licenses:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegulatoryLicenseType'
+          description: 'Select one or more license types that the customer holds. If the customer
+
+            does not hold any licenses then None should be selected.'
+        relationship_type:
+          oneOf:
+          - $ref: '#/components/schemas/CustomerRelationshipType'
+            description: The relationship type of the customer to the organisation.
+          default: direct
+    AddShareholderResponse:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          format: Uuid
+    CustomerExtraAPI:
+      oneOf:
+      - type: object
+        title: Individual
+        required:
+        - individual
+        properties:
+          individual:
+            type: object
+            required:
+            - first_name
+            - last_name
+            - date_of_birth
+            - gender
+            - nationality
+            - currency_extra
+            properties:
+              currency_extra:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IndividualCurrencyExtra'
+              date_of_birth:
+                type: string
+                format: date-time
+              first_name:
+                type: string
+              gender:
+                $ref: '#/components/schemas/Gender'
+              identification:
+                oneOf:
+                - type: 'null'
+                - $ref: '#/components/schemas/IndividualIdentification'
+              last_name:
+                type: string
+              middle_name:
+                type:
+                - string
+                - 'null'
+              nationality:
+                type: string
+                format: string
+                maxLength: 2
+                minLength: 2
+      - type: object
+        title: Business
+        required:
+        - business
+        properties:
+          business:
+            type: object
+            required:
+            - business_name
+            - registration_number
+            - country_of_issuance
+            - regulatory_licenses
+            - currency_extra
+            properties:
+              business_name:
+                type: string
+              country_of_issuance:
+                type: string
+                format: string
+                maxLength: 2
+                minLength: 2
+              currency_extra:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BusinessCurrencyExtra'
+              issuance_authority:
+                type:
+                - string
+                - 'null'
+              registration_date:
+                type:
+                - string
+                - 'null'
+                format: date
+              registration_number:
+                type: string
+              regulatory_licenses:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegulatoryLicenseType'
+    GetShareholderResponse:
+      allOf:
+      - $ref: '#/components/schemas/Shareholder'
+      - type: object
+        required:
+        - shareholder_type
+        - holding_percent
+        properties:
+          holding_percent:
+            type: integer
+            format: int32
+            minimum: 0
+          shareholder_of:
+            type:
+            - string
+            - 'null'
+            format: Uuid
+          shareholder_type:
+            $ref: '#/components/schemas/ShareholderType'
+    OnboardingStatus:
+      oneOf:
+      - type: string
+        enum:
+        - pending
+      - type: string
+        enum:
+        - completed
+      - type: object
+        required:
+        - failed
+        properties:
+          failed:
+            $ref: '#/components/schemas/OnboardingError'
+    WatchlistIdType:
+      type: string
+      enum:
+      - passport
+      - national_id
+    Cursor_String:
+      type: object
+      required:
+      - size
+      properties:
+        next:
+          type:
+          - string
+          - 'null'
+        size:
+          type: integer
+          minimum: 0
+    UpdateCustomerRequest:
+      allOf:
+      - oneOf:
+        - type: 'null'
+        - $ref: '#/components/schemas/UpdateCustomerExtraAPI'
+      - type: object
+        properties:
+          address:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/UpdateAddress'
+          display_name:
+            type:
+            - string
+            - 'null'
+            format: string
+            maxLength: 140
+          reference:
+            type:
+            - string
+            - 'null'
+            format: string
+            maxLength: 36
+    UpdateShareholderRequest:
+      allOf:
+      - oneOf:
+        - type: 'null'
+        - $ref: '#/components/schemas/UpdateShareholder'
+      - type: object
+        properties:
+          holding_percentage:
+            type:
+            - integer
+            - 'null'
+            format: int32
+            minimum: 0
+          shareholder_of:
+            type:
+            - string
+            - 'null'
+            format: Uuid
+    OnboardingError:
+      type: object
+      required:
+      - msg
+      - code
+      properties:
+        code:
+          $ref: '#/components/schemas/ErrorCode'
+        msg:
+          type: string
+    GetCustomerResponse:
+      allOf:
+      - $ref: '#/components/schemas/Customer'
+    ErrorResponse:
+      type: object
+      description: 'User-facing error type.
+
+
+        This is the general error structure returned by all api routes.'
+      required:
+      - error
+      - message
+      - code
+      properties:
+        code:
+          type: string
+          description: Specific error code.
+        error:
+          type: string
+          description: Soon to be deprecated.
+        message:
+          type: string
+          description: Renaming of `error`. Human-readable description of the error.
+    Gender:
+      type: string
+      enum:
+      - male
+      - female
+      - undefined
+    Shareholder:
+      oneOf:
+      - type: object
+        required:
+        - shareholder
+        properties:
+          shareholder:
+            type: object
+            required:
+            - first_name
+            - last_name
+            - dob
+            - pob
+            - id_type
+            - id_number
+            properties:
+              dob:
+                type: string
+                format: date
+              first_name:
+                type: string
+              id_number:
+                type: string
+              id_type:
+                type: string
+              last_name:
+                type: string
+              middle_name:
+                type:
+                - string
+                - 'null'
+              pob:
+                type: string
+      - type: object
+        required:
+        - business_shareholder
+        properties:
+          business_shareholder:
+            type: object
+            required:
+            - name
+            - registration_number
+            properties:
+              name:
+                type: string
+              registration_number:
+                type: string
+    ListCustomersResponse:
+      type: object
+      required:
+      - pages
+      - customers
+      properties:
+        customers:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerSummary'
+        pages:
+          $ref: '#/components/schemas/Cursor_String'
+    AedLicenseIssuer:
+      type: string
+      enum:
+      - mainland
+      - freezone
+      - international
+    CustomerRelationshipType:
+      oneOf:
+      - type: string
+        description: 'The customer is a direct customer of the organisation.
+
+          The customer is contracted with the organisation.'
+        enum:
+        - direct
+      - type: object
+        description: 'The customer is a sub-customer of the organisation.
+
+          The customer is contracted with a direct customer of the organisation.'
+        required:
+        - indirect
+        properties:
+          indirect:
+            type: object
+            description: 'The customer is a sub-customer of the organisation.
+
+              The customer is contracted with a direct customer of the organisation.'
+            required:
+            - parent_customer_id
+            properties:
+              parent_customer_id:
+                type: string
+                format: uuid
+      description: Represents the relationship between a customer and the organisation.
+    DocumentSummary:
+      type: object
+      required:
+      - id
+      - document_type
+      - reference
+      properties:
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        id:
+          type: string
+          format: uuid
+        reference:
+          type: string
+          format: string
+          maxLength: 35
+    Customer:
+      allOf:
+      - $ref: '#/components/schemas/CustomerExtraAPI'
+      - type: object
+        required:
+        - id
+        - reference
+        - display_name
+        - address
+        - documents
+        - approval_status
+        - relationship_type
+        properties:
+          address:
+            $ref: '#/components/schemas/Address'
+          approval_status:
+            $ref: '#/components/schemas/ApprovalStatus'
+          display_name:
+            type: string
+          documents:
+            type: array
+            items:
+              $ref: '#/components/schemas/DocumentSummary'
+          id:
+            type: string
+            format: uuid
+          reference:
+            type: string
+            maxLength: 36
+          rejection_reason:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/RejectionReason'
+          relationship_type:
+            $ref: '#/components/schemas/CustomerRelationshipType'
+    AddShareholder:
+      oneOf:
+      - type: object
+        title: Shareholder
+        required:
+        - shareholder
+        properties:
+          shareholder:
+            type: object
+            required:
+            - first_name
+            - last_name
+            - dob
+            - pob
+            - id_type
+            - id_number
+            properties:
+              dob:
+                type: string
+                format: date
+              first_name:
+                type: string
+                format: string
+                maxLength: 45
+              id_number:
+                type: string
+                format: string
+                maxLength: 50
+              id_type:
+                $ref: '#/components/schemas/WatchlistIdType'
+              last_name:
+                type: string
+                format: string
+                maxLength: 45
+              middle_name:
+                type:
+                - string
+                - 'null'
+                format: string
+                maxLength: 45
+              pob:
+                type: string
+                format: string
+      - type: object
+        title: BusinessShareholder
+        required:
+        - business_shareholder
+        properties:
+          business_shareholder:
+            type: object
+            required:
+            - name
+            - registration_number
+            properties:
+              name:
+                type: string
+                format: string
+                maxLength: 140
+              registration_number:
+                type: string
+                format: string
+                maxLength: 140
+    Onboarding:
+      type: object
+      required:
+      - currency
+      - customer_id
+      - status
+      properties:
+        currency:
+          $ref: '#/components/schemas/Currency'
+        customer_id:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/OnboardingStatus'
+    LinkDocumentRequest:
+      type: object
+      required:
+      - document_id
+      properties:
+        document_id:
+          type: string
+          format: uuid
+    DocumentType:
+      type: string
+      description: Types of documents that can be uploaded for customers and transactions.
+      enum:
+      - passport
+      - visa
+      - national_id
+      - trade_licence
+      - commercial_licence
+      - identity_verification_biometrics
+      - incorporation_cert
+      - incumbency_cert
+      - memorandum_articles
+      - bank_statement
+      - photo
+      - proof_of_address
+      - regulatory_license
+      - articles_of_association
+      - source_of_funds
+      - aml_cft_sanctions_ind_audit
+      - aml_cft_sanctions_policy
+      - compliance_officer_resume
+      - financial_statements
+      - share_certificate
+      - corporate_resolution
+      - wolfsberg_gcbddq
+      - edd_concentration_form
+      - other
+    IndividualIdentification:
+      oneOf:
+      - type: object
+        title: Passport
+        required:
+        - number
+        - expiry_date
+        - country_of_issuance
+        - type
+        properties:
+          country_of_issuance:
+            type: string
+            format: string
+            description: 'Country of issuance (i.e: US, AE)'
+            maxLength: 2
+            minLength: 2
+          expiry_date:
+            type: string
+            format: date
+            description: Expiry date of the passport.
+          number:
+            type: string
+            format: string
+            description: Passport number.
+            maxLength: 100
+            minLength: 1
+          type:
+            type: string
+            enum:
+            - passport
+      - type: object
+        title: NationalId
+        required:
+        - number
+        - expiry_date
+        - country_of_issuance
+        - type
+        properties:
+          country_of_issuance:
+            type: string
+            format: string
+            description: 'Country of issuance. (i.e: US, AE)'
+            maxLength: 2
+            minLength: 2
+          expiry_date:
+            type: string
+            format: date
+            description: Expiry date of the ID.
+          number:
+            type: string
+            format: string
+            description: National ID number.
+            maxLength: 100
+            minLength: 1
+          type:
+            type: string
+            enum:
+            - national_id
+      description: 'Individual Identification
+
+
+        Identification document of an individual.'
+    Address:
+      type: object
+      required:
+      - line_1
+      - country_code
+      properties:
+        country_code:
+          type: string
+          format: string
+          maxLength: 2
+          minLength: 2
+        line_1:
+          type: string
+          format: string
+          maxLength: 50
+        line_2:
+          type:
+          - string
+          - 'null'
+          format: string
+          description: '***optional*** for `AED` payments but ***mandatory*** for `USD` payments'
+          maxLength: 50
+        line_3:
+          type:
+          - string
+          - 'null'
+          format: string
+          maxLength: 50
+        line_4:
+          type:
+          - string
+          - 'null'
+          format: string
+          maxLength: 50
     UpdateCustomerExtraAPI:
       oneOf:
       - type: object
@@ -899,72 +1560,30 @@ components:
                 - 'null'
                 items:
                   $ref: '#/components/schemas/RegulatoryLicenseType'
-    DocumentSummary:
+    ShareholderSummary:
       type: object
       required:
       - id
-      - document_type
-      - reference
-      properties:
-        document_type:
-          $ref: '#/components/schemas/DocumentType'
-        id:
-          type: string
-          format: uuid
-        reference:
-          type: string
-          format: string
-          maxLength: 35
-    GetShareholderResponse:
-      allOf:
-      - $ref: '#/components/schemas/Shareholder'
-      - type: object
-        required:
-        - shareholder_type
-        - holding_percent
-        properties:
-          holding_percent:
-            type: integer
-            format: int32
-            minimum: 0
-          shareholder_of:
-            type:
-            - string
-            - 'null'
-            format: Uuid
-          shareholder_type:
-            $ref: '#/components/schemas/ShareholderType'
-    CustomerSummary:
-      type: object
-      required:
-      - id
-      - reference
-      - customer_type
+      - shareholder_type
+      - holding_percent
       - display_name
-      - created_at
-      - approval_status
       properties:
-        approval_status:
-          $ref: '#/components/schemas/ApprovalStatus'
-        created_at:
-          type: string
-          format: date-time
-        customer_type:
-          $ref: '#/components/schemas/CustomerTypeFilter'
         display_name:
           type: string
+        holding_percent:
+          type: integer
+          format: int32
+          minimum: 0
         id:
           type: string
-          format: uuid
-        reference:
-          type: string
-          maxLength: 36
-    Gender:
-      type: string
-      enum:
-      - male
-      - female
-      - undefined
+          format: Uuid
+        shareholder_of:
+          type:
+          - string
+          - 'null'
+          format: Uuid
+        shareholder_type:
+          $ref: '#/components/schemas/ShareholderType'
     IndividualCurrencyExtra:
       oneOf:
       - type: object
@@ -1013,376 +1632,6 @@ components:
             maxLength: 6
             minLength: 6
       description: Represents the currency specific data for an individual.
-    UpdateAddress:
-      type: object
-      properties:
-        country_code:
-          type:
-          - string
-          - 'null'
-          format: string
-          maxLength: 2
-          minLength: 2
-        line_1:
-          type:
-          - string
-          - 'null'
-          format: string
-          maxLength: 50
-        line_2:
-          type:
-          - string
-          - 'null'
-          format: string
-          maxLength: 50
-        line_3:
-          type:
-          - string
-          - 'null'
-          format: string
-          maxLength: 50
-        line_4:
-          type:
-          - string
-          - 'null'
-          format: string
-          maxLength: 50
-    AddShareholder:
-      oneOf:
-      - type: object
-        title: Shareholder
-        required:
-        - shareholder
-        properties:
-          shareholder:
-            type: object
-            required:
-            - first_name
-            - last_name
-            - dob
-            - pob
-            - id_type
-            - id_number
-            properties:
-              dob:
-                type: string
-                format: date
-              first_name:
-                type: string
-                format: string
-                maxLength: 45
-              id_number:
-                type: string
-                format: string
-                maxLength: 50
-              id_type:
-                $ref: '#/components/schemas/WatchlistIdType'
-              last_name:
-                type: string
-                format: string
-                maxLength: 45
-              middle_name:
-                type:
-                - string
-                - 'null'
-                format: string
-                maxLength: 45
-              pob:
-                type: string
-                format: string
-      - type: object
-        title: BusinessShareholder
-        required:
-        - business_shareholder
-        properties:
-          business_shareholder:
-            type: object
-            required:
-            - name
-            - registration_number
-            properties:
-              name:
-                type: string
-                format: string
-                maxLength: 140
-              registration_number:
-                type: string
-                format: string
-                maxLength: 140
-    IndividualIdentification:
-      oneOf:
-      - type: object
-        title: Passport
-        required:
-        - number
-        - expiry_date
-        - country_of_issuance
-        - type
-        properties:
-          country_of_issuance:
-            type: string
-            format: string
-            description: 'Country of issuance (i.e: US, AE)'
-            maxLength: 2
-            minLength: 2
-          expiry_date:
-            type: string
-            format: date
-            description: Expiry date of the passport.
-          number:
-            type: string
-            format: string
-            description: Passport number.
-            maxLength: 100
-            minLength: 1
-          type:
-            type: string
-            enum:
-            - passport
-      - type: object
-        title: NationalId
-        required:
-        - number
-        - expiry_date
-        - country_of_issuance
-        - type
-        properties:
-          country_of_issuance:
-            type: string
-            format: string
-            description: 'Country of issuance. (i.e: US, AE)'
-            maxLength: 2
-            minLength: 2
-          expiry_date:
-            type: string
-            format: date
-            description: Expiry date of the ID.
-          number:
-            type: string
-            format: string
-            description: National ID number.
-            maxLength: 100
-            minLength: 1
-          type:
-            type: string
-            enum:
-            - national_id
-      description: 'Individual Identification
-
-
-        Identification document of an individual.'
-    CustomerTypeFilter:
-      type: string
-      enum:
-      - individual
-      - business
-    LinkDocumentRequest:
-      type: object
-      required:
-      - document_id
-      properties:
-        document_id:
-          type: string
-          format: uuid
-    AddBusinessRequest:
-      type: object
-      required:
-      - display_name
-      - reference
-      - address
-      - business_name
-      - registration_number
-      - country_of_issuance
-      properties:
-        address:
-          $ref: '#/components/schemas/Address'
-        business_name:
-          type: string
-          format: string
-          maxLength: 140
-        country_of_issuance:
-          type: string
-          format: string
-        currency_extra:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BusinessCurrencyExtra'
-        display_name:
-          type: string
-          format: string
-          maxLength: 140
-        issuance_authority:
-          type:
-          - string
-          - 'null'
-          format: string
-          maxLength: 140
-        linked_documents:
-          type: array
-          items:
-            type: string
-            format: uuid
-          description: Document ids for the companies trading licenses.
-          deprecated: true
-        reference:
-          type: string
-          format: string
-          description: 'External ID used for correlating the resource with an external system. If specified during transaction creation,
-
-            this ID will be associated with and visible on all resources related to the customer.'
-          maxLength: 36
-        registration_date:
-          type:
-          - string
-          - 'null'
-          format: date
-        registration_number:
-          type: string
-          format: string
-          maxLength: 140
-        regulatory_licenses:
-          type: array
-          items:
-            $ref: '#/components/schemas/RegulatoryLicenseType'
-          description: 'Select one or more license types that the customer holds. If the customer
-
-            does not hold any licenses then None should be selected.'
-        relationship_type:
-          oneOf:
-          - $ref: '#/components/schemas/CustomerRelationshipType'
-            description: The relationship type of the customer to the organisation.
-          default: direct
-    AddShareholderResponse:
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          format: Uuid
-    Onboarding:
-      type: object
-      required:
-      - currency
-      - customer_id
-      - status
-      properties:
-        currency:
-          $ref: '#/components/schemas/Currency'
-        customer_id:
-          type: string
-          format: uuid
-        status:
-          $ref: '#/components/schemas/OnboardingStatus'
-    RegulatoryLicenseType:
-      type: string
-      enum:
-      - banking
-      - card_acquiring
-      - card_issuer
-      - crypto_asset
-      - electronic_money
-      - forex
-      - payments
-      - none
-      - other
-      - trading
-    Customer:
-      allOf:
-      - $ref: '#/components/schemas/CustomerExtraAPI'
-      - type: object
-        required:
-        - id
-        - reference
-        - display_name
-        - address
-        - documents
-        - approval_status
-        - relationship_type
-        properties:
-          address:
-            $ref: '#/components/schemas/Address'
-          approval_status:
-            $ref: '#/components/schemas/ApprovalStatus'
-          display_name:
-            type: string
-          documents:
-            type: array
-            items:
-              $ref: '#/components/schemas/DocumentSummary'
-          id:
-            type: string
-            format: uuid
-          reference:
-            type: string
-            maxLength: 36
-          rejection_reason:
-            oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/RejectionReason'
-          relationship_type:
-            $ref: '#/components/schemas/CustomerRelationshipType'
-    ShareholderType:
-      type: string
-      enum:
-      - shareholder
-      - business_shareholder
-    BusinessCurrencyExtra:
-      oneOf:
-      - type: object
-        title: Usd
-        required:
-        - tax_number
-        - industry_code
-        - currency
-        properties:
-          currency:
-            type: string
-            enum:
-            - usd
-          industry_code:
-            type: string
-            format: string
-            description: 'US industry code as defined by the North American Industry Classification System (NAICS) system.
-
-              See https://reference.fuse.me/naics.html for supported list of codes.'
-            maxLength: 6
-            minLength: 6
-          ip_address:
-            type: string
-            format: string
-            description: Optional IP address to use as a Proof of Address. Can be in IPv4 or IPv6 format.
-            maxLength: 45
-            minLength: 2
-          tax_number:
-            type: string
-            format: string
-            description: Valid business tax number.
-            maxLength: 100
-            minLength: 1
-      - type: object
-        title: Aed
-        required:
-        - license_issuer
-        - currency
-        properties:
-          currency:
-            type: string
-            enum:
-            - aed
-          license_issuer:
-            $ref: '#/components/schemas/AedLicenseIssuer'
-            description: 'License issuer type. Use Mainland for businesses registered with the UAE mainland authority,
-
-              or Freezone for businesses registered in a UAE free zone.'
-          trade_license_expiry:
-            type:
-            - string
-            - 'null'
-            format: date
-      description: Represents the currency specific data for a business.
     ErrorCode:
       type: string
       enum:
@@ -1403,6 +1652,34 @@ components:
       - invalid_customer_name
       - invalid_shareholder_name
       - invalid_customer_address
+    RejectionReason:
+      type: string
+      enum:
+      - prohibited
+      - sanction
+      - pep
+      - financial_crimes
+      - other
+    OnboardingCurrency:
+      type: string
+      enum:
+      - usd
+      - eur
+      - gbp
+      - aed
+    Currency:
+      type: string
+      enum:
+      - AED
+      - USD
+      - JOD
+      - EGP
+      - SAR
+      - GBP
+      - EUR
+      - HKD
+      - CNH
+      - SGD
     UpdateShareholder:
       oneOf:
       - type: object
@@ -1470,295 +1747,18 @@ components:
                 - 'null'
                 format: string
                 maxLength: 140
-    CustomerExtraAPI:
-      oneOf:
-      - type: object
-        title: Individual
-        required:
-        - individual
-        properties:
-          individual:
-            type: object
-            required:
-            - first_name
-            - last_name
-            - date_of_birth
-            - gender
-            - nationality
-            - currency_extra
-            properties:
-              currency_extra:
-                type: array
-                items:
-                  $ref: '#/components/schemas/IndividualCurrencyExtra'
-              date_of_birth:
-                type: string
-                format: date-time
-              first_name:
-                type: string
-              gender:
-                $ref: '#/components/schemas/Gender'
-              identification:
-                oneOf:
-                - type: 'null'
-                - $ref: '#/components/schemas/IndividualIdentification'
-              last_name:
-                type: string
-              middle_name:
-                type:
-                - string
-                - 'null'
-              nationality:
-                type: string
-                format: string
-                maxLength: 2
-                minLength: 2
-      - type: object
-        title: Business
-        required:
-        - business
-        properties:
-          business:
-            type: object
-            required:
-            - business_name
-            - registration_number
-            - country_of_issuance
-            - regulatory_licenses
-            - currency_extra
-            properties:
-              business_name:
-                type: string
-              country_of_issuance:
-                type: string
-                format: string
-                maxLength: 2
-                minLength: 2
-              currency_extra:
-                type: array
-                items:
-                  $ref: '#/components/schemas/BusinessCurrencyExtra'
-              issuance_authority:
-                type:
-                - string
-                - 'null'
-              registration_date:
-                type:
-                - string
-                - 'null'
-                format: date
-              registration_number:
-                type: string
-              regulatory_licenses:
-                type: array
-                items:
-                  $ref: '#/components/schemas/RegulatoryLicenseType'
-    GetCustomerResponse:
-      allOf:
-      - $ref: '#/components/schemas/Customer'
-    Shareholder:
-      oneOf:
-      - type: object
-        required:
-        - shareholder
-        properties:
-          shareholder:
-            type: object
-            required:
-            - first_name
-            - last_name
-            - dob
-            - pob
-            - id_type
-            - id_number
-            properties:
-              dob:
-                type: string
-                format: date
-              first_name:
-                type: string
-              id_number:
-                type: string
-              id_type:
-                type: string
-              last_name:
-                type: string
-              middle_name:
-                type:
-                - string
-                - 'null'
-              pob:
-                type: string
-      - type: object
-        required:
-        - business_shareholder
-        properties:
-          business_shareholder:
-            type: object
-            required:
-            - name
-            - registration_number
-            properties:
-              name:
-                type: string
-              registration_number:
-                type: string
-    ShareholderSummary:
-      type: object
-      required:
-      - id
-      - shareholder_type
-      - holding_percent
-      - display_name
-      properties:
-        display_name:
-          type: string
-        holding_percent:
-          type: integer
-          format: int32
-          minimum: 0
-        id:
-          type: string
-          format: Uuid
-        shareholder_of:
-          type:
-          - string
-          - 'null'
-          format: Uuid
-        shareholder_type:
-          $ref: '#/components/schemas/ShareholderType'
-    OnboardingError:
-      type: object
-      required:
-      - msg
-      - code
-      properties:
-        code:
-          $ref: '#/components/schemas/ErrorCode'
-        msg:
-          type: string
-    UpdateCustomerRequest:
-      allOf:
-      - oneOf:
-        - type: 'null'
-        - $ref: '#/components/schemas/UpdateCustomerExtraAPI'
-      - type: object
-        properties:
-          address:
-            oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/UpdateAddress'
-          display_name:
-            type:
-            - string
-            - 'null'
-            format: string
-            maxLength: 140
-          reference:
-            type:
-            - string
-            - 'null'
-            format: string
-            maxLength: 36
-    CustomerRelationshipType:
-      oneOf:
-      - type: string
-        description: 'The customer is a direct customer of the organisation.
-
-          The customer is contracted with the organisation.'
-        enum:
-        - direct
-      - type: object
-        description: 'The customer is a sub-customer of the organisation.
-
-          The customer is contracted with a direct customer of the organisation.'
-        required:
-        - indirect
-        properties:
-          indirect:
-            type: object
-            description: 'The customer is a sub-customer of the organisation.
-
-              The customer is contracted with a direct customer of the organisation.'
-            required:
-            - parent_customer_id
-            properties:
-              parent_customer_id:
-                type: string
-                format: uuid
-      description: Represents the relationship between a customer and the organisation.
-    ErrorResponse:
-      type: object
-      description: 'User-facing error type.
-
-
-        This is the general error structure returned by all api routes.'
-      required:
-      - error
-      - message
-      - code
-      properties:
-        code:
-          type: string
-          description: Specific error code.
-        error:
-          type: string
-          description: Soon to be deprecated.
-        message:
-          type: string
-          description: Renaming of `error`. Human-readable description of the error.
-    Currency:
+    CustomerTypeFilter:
       type: string
       enum:
-      - AED
-      - USD
-      - JOD
-      - EGP
-      - SAR
-      - GBP
-      - EUR
-      - HKD
-      - CNH
-      - SGD
-    AddShareholderRequest:
-      allOf:
-      - $ref: '#/components/schemas/AddShareholder'
-      - type: object
-        required:
-        - holding_percentage
-        properties:
-          holding_percentage:
-            type: integer
-            format: int32
-            minimum: 0
-          shareholder_of:
-            type:
-            - string
-            - 'null'
-            format: Uuid
-      description: "Company 1\n  |--> Shareholder 1 (Business)\n  |    |--> Shareholder 3 (Individual)\n  |--> Shareholder 2 (Business)\n  |    |--> Shareholder 4 (Business)\n            |--> Shareholder 5 (Individual)\n\n"
-    AddCustomerResponse:
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          format: Uuid
-    OnboardingStatus:
-      oneOf:
-      - type: string
-        enum:
-        - pending
-      - type: string
-        enum:
-        - completed
-      - type: object
-        required:
-        - failed
-        properties:
-          failed:
-            $ref: '#/components/schemas/OnboardingError'
+      - individual
+      - business
+    ApprovalStatus:
+      type: string
+      enum:
+      - auto_approved
+      - pending
+      - approved
+      - rejected
   securitySchemes:
     OAuth2:
       type: http

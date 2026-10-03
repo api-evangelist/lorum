@@ -239,24 +239,14 @@ paths:
                 $ref: '#/components/schemas/ListAccountsPagedResponse'
 components:
   schemas:
-    AccountType:
-      type: string
-      enum:
-      - primary
-      - payment
-      - virtual
-    Cursor_String:
+    CreateAccountResponse:
       type: object
       required:
-      - size
+      - account_id
       properties:
-        next:
-          type:
-          - string
-          - 'null'
-        size:
-          type: integer
-          minimum: 0
+        account_id:
+          type: string
+          format: uuid
     WireBankDetails:
       type: object
       required:
@@ -271,46 +261,17 @@ components:
           type: string
           format: string
           maxLength: 12
-    CreateAccountResponse:
-      type: object
-      required:
-      - account_id
-      properties:
-        account_id:
-          type: string
-          format: uuid
-    ScanDetails:
-      type: object
-      required:
-      - sort_code
-      - account_number
-      properties:
-        account_number:
-          type: string
-          format: string
-          maxLength: 8
-        sort_code:
-          type: string
-          format: string
-          maxLength: 6
-    AccountStatus:
+    PaymentScheme:
       type: string
       enum:
-      - open
-      - frozen
-      - closed
-    ListAccountsPagedResponse:
-      type: object
-      required:
-      - pages
-      - results
-      properties:
-        pages:
-          $ref: '#/components/schemas/Cursor_String'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Account'
+      - uae_fts
+      - uae_ipp
+      - swift
+      - fedwire
+      - ach
+      - sepa
+      - sepa_instant
+      - faster_payments
     Account:
       type: object
       description: Account.
@@ -391,48 +352,26 @@ components:
         status:
           $ref: '#/components/schemas/AccountStatus'
           description: 'Which state the account is in: Open, Closed, Frozen.'
-    AccountHistory:
-      type: object
-      description: Balance history for an account.
-      required:
-      - id
-      - history
-      properties:
-        history:
-          type: array
-          items:
-            $ref: '#/components/schemas/History'
-          description: List of daily summaries.
-        id:
-          type: string
-          format: uuid
-          description: Account id.
-    PaymentScheme:
+    AccountStatus:
       type: string
       enum:
-      - uae_fts
-      - uae_ipp
-      - swift
-      - fedwire
-      - ach
-      - sepa
-      - sepa_instant
-      - faster_payments
-    History:
+      - open
+      - frozen
+      - closed
+    PatchAccountRequest:
       type: object
-      required:
-      - date
-      - closing_balance
       properties:
-        closing_balance:
-          type: integer
-          format: int64
-          description: End of day balance.
-          minimum: 0
-        date:
+        account_name:
           type: string
-          format: date
-          description: Summary date.
+          format: string
+          description: Friendly label set by the client
+          maxLength: 140
+        external_id:
+          type: string
+          format: string
+          description: External account identifier
+          maxLength: 36
+      minProperties: 1
     AccountDetailsIdentifier:
       oneOf:
       - type: object
@@ -457,6 +396,12 @@ components:
         properties:
           scan:
             $ref: '#/components/schemas/ScanDetails'
+    AccountType:
+      type: string
+      enum:
+      - primary
+      - payment
+      - virtual
     Currency:
       type: string
       enum:
@@ -470,20 +415,20 @@ components:
       - HKD
       - CNH
       - SGD
-    PatchAccountRequest:
+    AddressableDetails:
       type: object
+      description: Account details with supported payment schemes.
+      required:
+      - account_details
+      - payment_schemes
       properties:
-        account_name:
-          type: string
-          format: string
-          description: Friendly label set by the client
-          maxLength: 140
-        external_id:
-          type: string
-          format: string
-          description: External account identifier
-          maxLength: 36
-      minProperties: 1
+        account_details:
+          $ref: '#/components/schemas/AccountDetailsIdentifier'
+        payment_schemes:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentScheme'
+          description: List of payment schemes that this account details are addressable over.
     CreateAccountType:
       type: string
       description: 'The type of account to be created.
@@ -494,6 +439,44 @@ components:
       enum:
       - payment
       - virtual
+    ScanDetails:
+      type: object
+      required:
+      - sort_code
+      - account_number
+      properties:
+        account_number:
+          type: string
+          format: string
+          maxLength: 8
+        sort_code:
+          type: string
+          format: string
+          maxLength: 6
+    ListAccountsPagedResponse:
+      type: object
+      required:
+      - pages
+      - results
+      properties:
+        pages:
+          $ref: '#/components/schemas/Cursor_String'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+    Cursor_String:
+      type: object
+      required:
+      - size
+      properties:
+        next:
+          type:
+          - string
+          - 'null'
+        size:
+          type: integer
+          minimum: 0
     CreateAccountRequest:
       type: object
       required:
@@ -520,20 +503,37 @@ components:
           format: string
           description: Id to be set by the client
           maxLength: 36
-    AddressableDetails:
+    AccountHistory:
       type: object
-      description: Account details with supported payment schemes.
+      description: Balance history for an account.
       required:
-      - account_details
-      - payment_schemes
+      - id
+      - history
       properties:
-        account_details:
-          $ref: '#/components/schemas/AccountDetailsIdentifier'
-        payment_schemes:
+        history:
           type: array
           items:
-            $ref: '#/components/schemas/PaymentScheme'
-          description: List of payment schemes that this account details are addressable over.
+            $ref: '#/components/schemas/History'
+          description: List of daily summaries.
+        id:
+          type: string
+          format: uuid
+          description: Account id.
+    History:
+      type: object
+      required:
+      - date
+      - closing_balance
+      properties:
+        closing_balance:
+          type: integer
+          format: int64
+          description: End of day balance.
+          minimum: 0
+        date:
+          type: string
+          format: date
+          description: Summary date.
   securitySchemes:
     OAuth2:
       type: http
