@@ -84,34 +84,15 @@ paths:
                 $ref: '#/components/schemas/UploadDocumentResponse'
 components:
   schemas:
-    DocumentType:
-      type: string
-      description: Types of documents that can be uploaded for customers and transactions.
-      enum:
-      - passport
-      - visa
-      - national_id
-      - trade_licence
-      - commercial_licence
-      - identity_verification_biometrics
-      - incorporation_cert
-      - incumbency_cert
-      - memorandum_articles
-      - bank_statement
-      - photo
-      - proof_of_address
-      - regulatory_license
-      - articles_of_association
-      - source_of_funds
-      - aml_cft_sanctions_ind_audit
-      - aml_cft_sanctions_policy
-      - compliance_officer_resume
-      - financial_statements
-      - share_certificate
-      - corporate_resolution
-      - wolfsberg_gcbddq
-      - edd_concentration_form
-      - other
+    ListDocumentsResponse:
+      type: object
+      required:
+      - documents
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentSummary'
     Document:
       type: object
       required:
@@ -140,31 +121,6 @@ components:
           minimum: 0
         url:
           type: string
-    DocumentSummary:
-      type: object
-      required:
-      - id
-      - document_type
-      - reference
-      properties:
-        document_type:
-          $ref: '#/components/schemas/DocumentType'
-        id:
-          type: string
-          format: uuid
-        reference:
-          type: string
-          format: string
-          maxLength: 35
-    ListDocumentsResponse:
-      type: object
-      required:
-      - documents
-      properties:
-        documents:
-          type: array
-          items:
-            $ref: '#/components/schemas/DocumentSummary'
     UploadDocumentResponse:
       type: object
       required:
@@ -192,6 +148,50 @@ components:
           type: string
           format: string
           maxLength: 35
+    DocumentSummary:
+      type: object
+      required:
+      - id
+      - document_type
+      - reference
+      properties:
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        id:
+          type: string
+          format: uuid
+        reference:
+          type: string
+          format: string
+          maxLength: 35
+    DocumentType:
+      type: string
+      description: Types of documents that can be uploaded for customers and transactions.
+      enum:
+      - passport
+      - visa
+      - national_id
+      - trade_licence
+      - commercial_licence
+      - identity_verification_biometrics
+      - incorporation_cert
+      - incumbency_cert
+      - memorandum_articles
+      - bank_statement
+      - photo
+      - proof_of_address
+      - regulatory_license
+      - articles_of_association
+      - source_of_funds
+      - aml_cft_sanctions_ind_audit
+      - aml_cft_sanctions_policy
+      - compliance_officer_resume
+      - financial_statements
+      - share_certificate
+      - corporate_resolution
+      - wolfsberg_gcbddq
+      - edd_concentration_form
+      - other
   securitySchemes:
     OAuth2:
       type: http

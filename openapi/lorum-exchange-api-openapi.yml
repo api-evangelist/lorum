@@ -105,20 +105,30 @@ paths:
           description: Exchange rates haven't been configured yet. Please contact support.
 components:
   schemas:
-    ExchangeAccountDetails:
+    GetExchangeRateResponse:
       type: object
       required:
-      - account_id
+      - exchange_rate
+      - from_amount
+      - from_currency
+      - to_amount
+      - to_currency
       properties:
-        account_id:
-          type: string
-          format: uuid
-        amount:
-          type:
-          - integer
-          - 'null'
+        exchange_rate:
+          type: number
+          format: float
+        from_amount:
+          type: integer
           format: int64
           minimum: 0
+        from_currency:
+          $ref: '#/components/schemas/Currency'
+        to_amount:
+          type: integer
+          format: int64
+          minimum: 0
+        to_currency:
+          $ref: '#/components/schemas/Currency'
     CreateExchangeResponse:
       type: object
       required:
@@ -154,30 +164,20 @@ components:
           $ref: '#/components/schemas/ExchangeAccountDetails'
         to:
           $ref: '#/components/schemas/ExchangeAccountDetails'
-    GetExchangeRateResponse:
+    ExchangeAccountDetails:
       type: object
       required:
-      - exchange_rate
-      - from_amount
-      - from_currency
-      - to_amount
-      - to_currency
+      - account_id
       properties:
-        exchange_rate:
-          type: number
-          format: float
-        from_amount:
-          type: integer
+        account_id:
+          type: string
+          format: uuid
+        amount:
+          type:
+          - integer
+          - 'null'
           format: int64
           minimum: 0
-        from_currency:
-          $ref: '#/components/schemas/Currency'
-        to_amount:
-          type: integer
-          format: int64
-          minimum: 0
-        to_currency:
-          $ref: '#/components/schemas/Currency'
   securitySchemes:
     OAuth2:
       type: http

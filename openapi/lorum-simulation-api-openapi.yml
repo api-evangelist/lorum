@@ -81,20 +81,6 @@ paths:
           description: Request to create a returned payment has completed
 components:
   schemas:
-    WireBankDetails:
-      type: object
-      required:
-      - account_number
-      - routing_number
-      properties:
-        account_number:
-          type: string
-          format: string
-          maxLength: 27
-        routing_number:
-          type: string
-          format: string
-          maxLength: 12
     AccountDetailsIdentifier:
       oneOf:
       - type: object
@@ -119,56 +105,20 @@ components:
         properties:
           scan:
             $ref: '#/components/schemas/ScanDetails'
-    SimulateFailPaymentRequest:
-      type: object
-      description: Parameters for failing a payment.
-      required:
-      - transaction_id
-      - failure_reason
-      properties:
-        failure_reason:
-          type: string
-          description: State a reason for the payment failure.
-        transaction_id:
-          type: string
-          format: uuid
-          description: The id of the transaction to fail.
-    SimulateReturnedPaymentRequest:
-      type: object
-      description: Parameters to simulate executing a payment.
-      required:
-      - outbound_transaction_id
-      properties:
-        outbound_transaction_id:
-          type: string
-          format: uuid
-          description: 'The id of the outbound payment to be returned.
-
-            Must be in an executed state.'
-    SimulateExecutePaymentRequest:
-      type: object
-      description: Parameters to simulate executing a payment.
-      required:
-      - transaction_id
-      properties:
-        transaction_id:
-          type: string
-          format: uuid
-          description: The id of the payment that should transition into executed.
-    ScanDetails:
+    WireBankDetails:
       type: object
       required:
-      - sort_code
       - account_number
+      - routing_number
       properties:
         account_number:
           type: string
           format: string
-          maxLength: 8
-        sort_code:
+          maxLength: 27
+        routing_number:
           type: string
           format: string
-          maxLength: 6
+          maxLength: 12
     SimulateInboundRequest:
       type: object
       description: Parameters to simulate an inbound payment.
@@ -223,6 +173,56 @@ components:
             If not provided, topup will be used as the default value.'
           maxLength: 140
           minLength: 1
+    SimulateExecutePaymentRequest:
+      type: object
+      description: Parameters to simulate executing a payment.
+      required:
+      - transaction_id
+      properties:
+        transaction_id:
+          type: string
+          format: uuid
+          description: The id of the payment that should transition into executed.
+    ScanDetails:
+      type: object
+      required:
+      - sort_code
+      - account_number
+      properties:
+        account_number:
+          type: string
+          format: string
+          maxLength: 8
+        sort_code:
+          type: string
+          format: string
+          maxLength: 6
+    SimulateReturnedPaymentRequest:
+      type: object
+      description: Parameters to simulate executing a payment.
+      required:
+      - outbound_transaction_id
+      properties:
+        outbound_transaction_id:
+          type: string
+          format: uuid
+          description: 'The id of the outbound payment to be returned.
+
+            Must be in an executed state.'
+    SimulateFailPaymentRequest:
+      type: object
+      description: Parameters for failing a payment.
+      required:
+      - transaction_id
+      - failure_reason
+      properties:
+        failure_reason:
+          type: string
+          description: State a reason for the payment failure.
+        transaction_id:
+          type: string
+          format: uuid
+          description: The id of the transaction to fail.
   securitySchemes:
     OAuth2:
       type: http
