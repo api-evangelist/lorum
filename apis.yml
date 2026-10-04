@@ -48,6 +48,9 @@ image: https://cdn.prod.website-files.com/691dc048eb27bd1d29e459b1/692b0683e9466
 specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-07-20'
+x-docs-platform: readme
+x-docs-platform-confidence: high
+x-docs-platform-checked: 2026-10-03
 tags:
 - Company
 - Fintech
