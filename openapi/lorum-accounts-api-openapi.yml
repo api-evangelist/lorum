@@ -239,6 +239,140 @@ paths:
                 $ref: '#/components/schemas/ListAccountsPagedResponse'
 components:
   schemas:
+    AccountHistory:
+      type: object
+      description: Balance history for an account.
+      required:
+      - id
+      - history
+      properties:
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/History'
+          description: List of daily summaries.
+        id:
+          type: string
+          format: uuid
+          description: Account id.
+    CreateAccountRequest:
+      type: object
+      required:
+      - account_name
+      - external_id
+      - currency
+      - account_type
+      properties:
+        account_name:
+          type: string
+          format: string
+          description: Friendly label set by the client
+          maxLength: 140
+        account_type:
+          $ref: '#/components/schemas/CreateAccountType'
+          description: 'The account type of the account.
+
+            Note: ''payment'' is deprecated and not supported for new accounts. Use ''virtual'' instead.'
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: The desired currency for the account.
+        external_id:
+          type: string
+          format: string
+          description: Id to be set by the client
+          maxLength: 36
+    CreateAccountType:
+      type: string
+      description: 'The type of account to be created.
+
+        Note: ''Payment'' is deprecated and not supported for new accounts.
+
+        Account type will always be ''Virtual''.'
+      enum:
+      - payment
+      - virtual
+    ScanDetails:
+      type: object
+      required:
+      - sort_code
+      - account_number
+      properties:
+        account_number:
+          type: string
+          format: string
+          maxLength: 8
+        sort_code:
+          type: string
+          format: string
+          maxLength: 6
+    PaymentScheme:
+      type: string
+      enum:
+      - uae_fts
+      - uae_ipp
+      - swift
+      - fedwire
+      - ach
+      - sepa
+      - sepa_instant
+      - faster_payments
+    AccountStatus:
+      type: string
+      enum:
+      - open
+      - frozen
+      - closed
+    History:
+      type: object
+      required:
+      - date
+      - closing_balance
+      properties:
+        closing_balance:
+          type: integer
+          format: int64
+          description: End of day balance.
+          minimum: 0
+        date:
+          type: string
+          format: date
+          description: Summary date.
+    PatchAccountRequest:
+      type: object
+      properties:
+        account_name:
+          type: string
+          format: string
+          description: Friendly label set by the client
+          maxLength: 140
+        external_id:
+          type: string
+          format: string
+          description: External account identifier
+          maxLength: 36
+      minProperties: 1
+    CreateAccountResponse:
+      type: object
+      required:
+      - account_id
+      properties:
+        account_id:
+          type: string
+          format: uuid
+    WireBankDetails:
+      type: object
+      required:
+      - account_number
+      - routing_number
+      properties:
+        account_number:
+          type: string
+          format: string
+          maxLength: 27
+        routing_number:
+          type: string
+          format: string
+          maxLength: 12
     AccountDetailsIdentifier:
       oneOf:
       - type: object
@@ -263,55 +397,24 @@ components:
         properties:
           scan:
             $ref: '#/components/schemas/ScanDetails'
-    WireBankDetails:
-      type: object
-      required:
-      - account_number
-      - routing_number
-      properties:
-        account_number:
-          type: string
-          format: string
-          maxLength: 27
-        routing_number:
-          type: string
-          format: string
-          maxLength: 12
-    PaymentScheme:
+    AccountType:
       type: string
       enum:
-      - uae_fts
-      - uae_ipp
-      - swift
-      - fedwire
-      - ach
-      - sepa
-      - sepa_instant
-      - faster_payments
-    PatchAccountRequest:
-      type: object
-      properties:
-        account_name:
-          type: string
-          format: string
-          description: Friendly label set by the client
-          maxLength: 140
-        external_id:
-          type: string
-          format: string
-          description: External account identifier
-          maxLength: 36
-      minProperties: 1
-    CreateAccountType:
-      type: string
-      description: 'The type of account to be created.
-
-        Note: ''Payment'' is deprecated and not supported for new accounts.
-
-        Account type will always be ''Virtual''.'
-      enum:
+      - primary
       - payment
       - virtual
+    ListAccountsPagedResponse:
+      type: object
+      required:
+      - pages
+      - results
+      properties:
+        pages:
+          $ref: '#/components/schemas/Cursor_String'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
     AddressableDetails:
       type: object
       description: Account details with supported payment schemes.
@@ -326,58 +429,18 @@ components:
           items:
             $ref: '#/components/schemas/PaymentScheme'
           description: List of payment schemes that this account details are addressable over.
-    Currency:
-      type: string
-      enum:
-      - AED
-      - USD
-      - JOD
-      - EGP
-      - SAR
-      - GBP
-      - EUR
-      - HKD
-      - CNH
-      - SGD
-    CreateAccountResponse:
+    Cursor_String:
       type: object
       required:
-      - account_id
+      - size
       properties:
-        account_id:
-          type: string
-          format: uuid
-    AccountHistory:
-      type: object
-      description: Balance history for an account.
-      required:
-      - id
-      - history
-      properties:
-        history:
-          type: array
-          items:
-            $ref: '#/components/schemas/History'
-          description: List of daily summaries.
-        id:
-          type: string
-          format: uuid
-          description: Account id.
-    History:
-      type: object
-      required:
-      - date
-      - closing_balance
-      properties:
-        closing_balance:
+        next:
+          type:
+          - string
+          - 'null'
+        size:
           type: integer
-          format: int64
-          description: End of day balance.
           minimum: 0
-        date:
-          type: string
-          format: date
-          description: Summary date.
     Account:
       type: object
       description: Account.
@@ -458,82 +521,19 @@ components:
         status:
           $ref: '#/components/schemas/AccountStatus'
           description: 'Which state the account is in: Open, Closed, Frozen.'
-    ScanDetails:
-      type: object
-      required:
-      - sort_code
-      - account_number
-      properties:
-        account_number:
-          type: string
-          format: string
-          maxLength: 8
-        sort_code:
-          type: string
-          format: string
-          maxLength: 6
-    AccountStatus:
+    Currency:
       type: string
       enum:
-      - open
-      - frozen
-      - closed
-    ListAccountsPagedResponse:
-      type: object
-      required:
-      - pages
-      - results
-      properties:
-        pages:
-          $ref: '#/components/schemas/Cursor_String'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Account'
-    Cursor_String:
-      type: object
-      required:
-      - size
-      properties:
-        next:
-          type:
-          - string
-          - 'null'
-        size:
-          type: integer
-          minimum: 0
-    CreateAccountRequest:
-      type: object
-      required:
-      - account_name
-      - external_id
-      - currency
-      - account_type
-      properties:
-        account_name:
-          type: string
-          format: string
-          description: Friendly label set by the client
-          maxLength: 140
-        account_type:
-          $ref: '#/components/schemas/CreateAccountType'
-          description: 'The account type of the account.
-
-            Note: ''payment'' is deprecated and not supported for new accounts. Use ''virtual'' instead.'
-        currency:
-          $ref: '#/components/schemas/Currency'
-          description: The desired currency for the account.
-        external_id:
-          type: string
-          format: string
-          description: Id to be set by the client
-          maxLength: 36
-    AccountType:
-      type: string
-      enum:
-      - primary
-      - payment
-      - virtual
+      - AED
+      - USD
+      - JOD
+      - EGP
+      - SAR
+      - GBP
+      - EUR
+      - HKD
+      - CNH
+      - SGD
   securitySchemes:
     OAuth2:
       type: http

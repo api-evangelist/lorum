@@ -84,43 +84,6 @@ paths:
                 $ref: '#/components/schemas/UploadDocumentResponse'
 components:
   schemas:
-    ListDocumentsResponse:
-      type: object
-      required:
-      - documents
-      properties:
-        documents:
-          type: array
-          items:
-            $ref: '#/components/schemas/DocumentSummary'
-    Document:
-      type: object
-      required:
-      - id
-      - reference
-      - document_type
-      - checksum
-      - url
-      properties:
-        checksum:
-          type: string
-        document_type:
-          $ref: '#/components/schemas/DocumentType'
-        id:
-          type: string
-          format: uuid
-        reference:
-          type: string
-          format: string
-          maxLength: 35
-        size_bytes:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          minimum: 0
-        url:
-          type: string
     UploadDocumentResponse:
       type: object
       required:
@@ -144,22 +107,6 @@ components:
         file:
           type: string
           format: binary
-        reference:
-          type: string
-          format: string
-          maxLength: 35
-    DocumentSummary:
-      type: object
-      required:
-      - id
-      - document_type
-      - reference
-      properties:
-        document_type:
-          $ref: '#/components/schemas/DocumentType'
-        id:
-          type: string
-          format: uuid
         reference:
           type: string
           format: string
@@ -192,6 +139,59 @@ components:
       - wolfsberg_gcbddq
       - edd_concentration_form
       - other
+    ListDocumentsResponse:
+      type: object
+      required:
+      - documents
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentSummary'
+    DocumentSummary:
+      type: object
+      required:
+      - id
+      - document_type
+      - reference
+      properties:
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        id:
+          type: string
+          format: uuid
+        reference:
+          type: string
+          format: string
+          maxLength: 35
+    Document:
+      type: object
+      required:
+      - id
+      - reference
+      - document_type
+      - checksum
+      - url
+      properties:
+        checksum:
+          type: string
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        id:
+          type: string
+          format: uuid
+        reference:
+          type: string
+          format: string
+          maxLength: 35
+        size_bytes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          minimum: 0
+        url:
+          type: string
   securitySchemes:
     OAuth2:
       type: http
