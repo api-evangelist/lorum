@@ -64,6 +64,141 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Lorum is a company surfaced as a portfolio company of northzone and added to the API Evangelist network as a stub for enrichment. Sector: fintech. This profile is a lead awaiting the enrichment pipeline.
+Lorum (developer brand "Fuse") is a fintech providing banking-grade clearing, settlement, and treasury infrastructure - "built for clearing, not lending." Through one API it offers multi-currency clearing across 30+ markets, programmable segregated account infrastructure (including virtual IBANs), and cash management with FX and liquidity sweeps. It targets payroll/EOR platforms, fintechs and PSPs, trading and investment platforms, and marketplaces that need to move and settle funds across global payment rails without standing up local banking entities. The API (OAuth2 client-credentials auth, idempotency-keyed money movement, and webhook event notifications) covers customers/KYC, accounts, payments, internal transfers, currency exchange, documents, batch payments, and full sandbox scheme simulation. Lorum is backed by Northzone.
 
-Backed by: northzone — https://www.lorum.com
+**Areas:** Company · Fintech · Payments · Banking · Clearing · Settlement · Treasury · Multi-Currency · Account · Foreign Exchange · Webhook
+
+## Lorum on APIs.io
+
+Everything profiled for Lorum is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/lorum/](https://apis.io/providers/lorum/)** — or go straight to one of the APIs or properties below.
+
+### APIs (10)
+
+- [Lorum Accounts API](https://apis.io/apis/lorum/lorum-accounts-api/) — The Accounts API from Lorum — 5 operation(s) for accounts.
+- [Lorum Customers API](https://apis.io/apis/lorum/lorum-customers-api/) — The Customers API from Lorum — 10 operation(s) for customers.
+- [Lorum Customers V2 API](https://apis.io/apis/lorum/lorum-customers-v2-api/) — The Customers V2 API from Lorum — 1 operation(s) for customers v2.
+- [Lorum Documents API](https://apis.io/apis/lorum/lorum-documents-api/) — The Documents API from Lorum — 2 operation(s) for documents.
+- [Lorum Exchange API](https://apis.io/apis/lorum/lorum-exchange-api/) — The Exchange API from Lorum — 2 operation(s) for exchange.
+- [Lorum Internal Transfers API](https://apis.io/apis/lorum/lorum-internal-transfers-api/) — The Internal Transfers API from Lorum — 1 operation(s) for internal transfers.
+- [Lorum Payments API](https://apis.io/apis/lorum/lorum-payments-api/) — The Payments API from Lorum — 2 operation(s) for payments.
+- [Lorum Simulation API](https://apis.io/apis/lorum/lorum-simulation-api/) — The Simulation API from Lorum — 4 operation(s) for simulation.
+- [Lorum Transactions API](https://apis.io/apis/lorum/lorum-transactions-api/) — The Transactions API from Lorum — 8 operation(s) for transactions.
+- [Lorum OAUTH API](https://apis.io/apis/lorum/lorum-oauth-api/) — The Oauth API from Lorum — 1 operation(s) for oauth.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Lorum (Fuse) Webhooks](https://apis.io/asyncapis/lorum/lorum-webhooks-asyncapi/)
+
+#### Event channels (1)
+
+Individual events and webhooks the provider emits.
+
+- [{configuredWebhookUrl}](https://apis.io/channels/lorum/configuredwebhookurl/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [lorum](https://apis.io/servers/lorum/lorum/)
+
+#### Collections (10)
+
+Postman and Open Collection request collections.
+
+- [Fuse Accounts API](https://apis.io/collections/lorum/open-lorum-accounts-api/)
+- [Fuse Accounts Customers API](https://apis.io/collections/lorum/open-lorum-customers-api/)
+- [Fuse Accounts Customers V2 API](https://apis.io/collections/lorum/open-lorum-customers-v2-api/)
+- [Fuse Accounts Documents API](https://apis.io/collections/lorum/open-lorum-documents-api/)
+- [Fuse Accounts Exchange API](https://apis.io/collections/lorum/open-lorum-exchange-api/)
+- [Fuse Accounts Internal Transfers API](https://apis.io/collections/lorum/open-lorum-internal-transfers-api/)
+- [Fuse Accounts Oauth API](https://apis.io/collections/lorum/open-lorum-oauth-api/)
+- [Fuse Accounts Payments API](https://apis.io/collections/lorum/open-lorum-payments-api/)
+- [Fuse Accounts Simulation API](https://apis.io/collections/lorum/open-lorum-simulation-api/)
+- [Fuse Accounts Transactions API](https://apis.io/collections/lorum/open-lorum-transactions-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Lorum Openapi Overlay](https://apis.io/overlays/lorum/lorum-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Lorum Authentication](https://apis.io/security/lorum/lorum-authentication/)
+- [Lorum Domain Security](https://apis.io/security/lorum/lorum-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.lorum.com)
+- [Documentation](https://docs.lorum.com/docs/getting-started)
+- [Getting started](https://docs.lorum.com/docs/getting-started)
+- [API reference](https://docs.lorum.com/reference/getting-a-bearer-token)
+- [Support](https://www.lorum.com/contact-us)
+- [Blog](https://www.lorum.com/blog)
+- [Privacy policy](https://www.lorum.com/legal/privacy-policy)
+- [Status](https://status.lorum.com/)
+
+## API Evangelist rating
+
+**Kin Score 39.3** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 56.1 |
+| Contract governance | 4.5 |
+| Operational transparency | 23.7 |
+| Developer ergonomics | 47.0 |
+| Access clarity | 17.1 |
+
+**Agent readiness 46.1** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | verified |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 16.5** — Banking & Open Finance
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/lorum/](https://apis.io/providers/lorum/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Lorum: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/lorum/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
